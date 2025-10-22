@@ -1,6 +1,4 @@
-/* ===========================
-   🧱 Main Container
-=========================== */
+/* ✅ Main Container */
 .notePadContainer {
   display: flex;
   flex-direction: column;
@@ -9,16 +7,9 @@
   width: 100%;
   padding: 40px 10px;
   box-sizing: border-box;
-  min-height: 100vh;
-  background-color: #ffffff;
-  background-image: url("https://www.transparenttextures.com/patterns/brick-wall-dark.png");
-  background-repeat: repeat;
-  background-position: center;
 }
 
-/* ===========================
-   📒 Note Pad Section
-=========================== */
+/* ✅ Note Pad Section */
 .notePad {
   position: relative;
   display: flex;
@@ -27,42 +18,37 @@
   width: 100%;
   max-width: 600px;
   background-color: #fafafa;
-  padding: 20px 15px; /* 🆕 balanced padding for all screens */
+  padding: 0 10px;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 3px solid #ab0303; /* 🆕 match app color theme */
-  box-sizing: border-box;
+  border: 2px solid;
 }
 
-/* ===========================
-   🖋 Title / Header
-=========================== */
+/* ✅ Title */
 .notePadName {
   text-align: center;
-  margin: 10px 0 20px;
+  margin-bottom: 20px;
   font-size: 2rem;
-  color: white;
-  padding: 50px 20px;
+  color: #333;
+  padding: 50px;
   box-sizing: border-box;
   border-radius: 10px;
   width: 100%;
+  margin-top: 10px;
   background-image: url("/images/pexels-jessbaileydesign-750913.jpg");
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   background-size: cover;
-  border: 4px solid #ab0303;
-  text-shadow: 1px 1px 3px black;
+  border: 4px solid #333;
 }
 
-/* ===========================
-   ✍️ Text Area
-=========================== */
+/* ✅ Textarea */
 .text {
   width: 100%;
   height: 200px;
   max-width: 600px;
   padding: 15px;
-  border: 2px solid #ab0303; /* 🆕 match theme */
+  border: 1px solid #ddd;
   border-radius: 8px;
   resize: none;
   outline: none;
@@ -80,40 +66,30 @@
   background: white;
 }
 
-/* ===========================
-   ➕ Add Button Container
-=========================== */
+/* ✅ Button Container - Better positioning */
 .notePadButtonContainer {
   width: 100%;
   max-width: 600px;
-  margin-top: 20px;
+
   margin-bottom: 30px;
-  display: flex;
-  justify-content: flex-end;
-  position: relative;
 }
 
-/* ===========================
-   🟥 Floating Add Button
-=========================== */
+/* ✅ Add Button - Positioned correctly */
 .notePadButton {
   position: absolute !important;
   right: 10px;
-  bottom: -30px;
-  width: 60px !important;
-  height: 60px !important;
   border-radius: 50% !important;
-  font-size: 22px;
+  width: 50px !important;
+  height: 50px !important;
+  min-width: 50px;
+  font-size: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   border: 1px solid black;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
-  background-color: #ab0303 !important;
+  background-color: #8b0000 !important;
   color: white;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .notePadButton:hover {
@@ -125,27 +101,21 @@
   transform: scale(0.98);
 }
 
-/* ===========================
-   🗒 Notes List Header
-=========================== */
+/* ✅ Notes Heading */
 .notes {
   text-align: center;
   margin: 40px 0 20px;
   font-size: 1.5rem;
-  color: #ab0303;
-  font-weight: 700;
-  text-decoration: underline #ab0303;
+  color: #444;
 }
 
-/* ===========================
-   📄 Individual Saved Notes
-=========================== */
+/* ✅ Each Saved Note */
 .savedNotes {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   background-color: white;
-  border: 2px solid #ab0303; /* 🆕 unified color */
+  border: 1.5px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 500px;
@@ -153,8 +123,8 @@
   padding: 12px 15px;
   margin-bottom: 15px;
   word-wrap: break-word;
-  overflow-wrap: anywhere;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow-wrap: anywhere;
 }
 
 .savedNotes:hover {
@@ -162,7 +132,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* 📝 Note text */
+/* ✅ Note text */
 .savedNotes p {
   flex: 1;
   margin: 0;
@@ -172,7 +142,7 @@
   padding-right: 10px;
 }
 
-/* 🗑 Icons (edit/delete) */
+/* ✅ Action icons */
 .savedNotes svg {
   cursor: pointer;
   margin-left: 10px;
@@ -182,58 +152,23 @@
 }
 
 .savedNotes svg:hover {
-  color: #ab0303;
+  color: #1976d2;
   transform: scale(1.15);
 }
 
-/* ===========================
-   📱 Responsive Design
-=========================== */
-
-/* Small screens */
-@media (max-width: 767px) {
-  .notePad {
-    max-width: 90%;
-    padding: 15px;
-  }
-
-  .notePadName {
-    font-size: 1.4rem;
-    padding: 30px 15px;
-  }
-
-  .text {
-    height: 150px;
-    font-size: 12px;
-  }
-
-  .notePadButton {
-    font-size: 16px;
-    right: 15px;
-    bottom: -25px;
-    width: 55px !important;
-    height: 55px !important;
-  }
-
-  .savedNotes {
-    padding: 10px 10px;
-    font-size: 14px;
-  }
-}
-
-/* Tablet */
-@media (min-width: 768px) and (max-width: 1199px) {
+/* ✅ Responsive Design */
+@media (min-width: 768px) {
   .text {
     height: 250px;
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .notePadButton {
-    font-size: 20px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
     right: 15px;
     bottom: -30px;
-    width: 65px !important;
-    height: 65px !important;
   }
 
   .savedNotes {
@@ -241,19 +176,18 @@
   }
 }
 
-/* Desktop */
 @media (min-width: 1200px) {
   .text {
     height: 300px;
-    font-size: 16px;
+    font-size: 18px;
   }
 
   .notePadButton {
-    font-size: 24px;
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
     right: 20px;
     bottom: -35px;
-    width: 70px !important;
-    height: 70px !important;
   }
 
   .savedNotes {

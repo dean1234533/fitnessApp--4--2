@@ -1,55 +1,38 @@
-/* ==============================
-   📖 Diary Container
-============================== */
 .DiaryContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 40px auto 100px auto;
-  width: 85%;
-  max-width: 900px; /* 🆕 prevents overscaling on large screens */
-  border: 4px solid #ab0303; /* 🆕 consistent with app’s red-accent theme */
+  margin: 0 auto 100px auto;
+  width: 80%;
+  border: 5px solid black;
   border-radius: 20px;
   background-color: white;
-  padding: 20px 0;
-  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+  padding-bottom: 0px;
+  box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
   color: white;
-  overflow: hidden;
 }
 
-/* ==============================
-   🕑 Timestamp & Meal Type
-============================== */
+.mealSelect:focus {
+  border-color: #ab0303 !important;
+  box-shadow: 0 0 5px rgba(108, 99, 255, 0.4);
+  outline: none;
+}
+
 .mealType {
   font-size: 25px;
-  color: #000;
-  font-weight: 600;
 }
 
 .timeStamp {
-  margin-left: auto;
+  margin-left: 66%;
   font-size: 12px;
-  text-align: right;
-  padding-right: 20px;
-  color: #555;
-}
-
-/* ==============================
-   💧 Water Intake Section
-============================== */
-.waterIntake {
-  text-align: left;
-  margin: 20px 40px;
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
 }
 
 .waterIntake div {
-  border-left: 3px solid #ab0303;
-  width: 80%;
+  border-left: 1px solid red;
+
+  width: 70%;
   border-radius: 10px;
   padding: 20px;
   background-image: repeating-linear-gradient(
@@ -61,22 +44,15 @@
   );
 }
 
-/* ==============================
-   🍎 Food Item Section
-============================== */
-.foodItem {
-  margin: 30px 40px;
+.waterIntake {
+  text-align: left;
+  margin-left: 40px;
   display: flex;
   flex-direction: column;
-  text-align: left;
-  font-size: 16px;
 }
-
 .foodItem div {
-  border-left: 3px solid #ab0303;
-  width: 80%;
-  border-radius: 10px;
-  padding: 30px;
+  border-left: 1px solid red;
+  width: 70%;
   background-image: repeating-linear-gradient(
     45deg,
     transparent,
@@ -84,201 +60,162 @@
     rgba(255, 255, 255, 0.1),
     rgba(255, 255, 255, 0.1)
   );
+  padding: 30px;
+
+  border-radius: 10px;
 }
 
-/* ==============================
-   📝 Form Inputs
-============================== */
+.foodItem {
+  margin-top: 30px;
+  text-align: left;
+  margin-left: 40px;
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
 .DiaryInput {
-  border: 2px solid #ab0303;
+  border: 1px solid black;
   border-radius: 30px;
   width: 80%;
   margin-top: 10px;
   text-align: center;
   max-width: 470px;
-  height: 40px;
+  height: 30px;
   box-sizing: border-box;
-  font-size: 16px;
-  transition: border-color 0.3s ease;
 }
 
-.DiaryInput:focus {
-  border-color: black;
-  outline: none;
-}
-
-/* ==============================
-   🔘 Add Entry Button
-============================== */
 .DiaryButton {
-  border: none;
+  border: 1px solid black;
   border-radius: 30px !important;
+  border-style: none;
   background-color: #ab0303 !important;
-  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
-  color: white;
-  margin-top: 15px;
+  margin-top: 10px;
   margin-bottom: 40px !important;
   width: 80%;
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
   max-width: 470px;
   cursor: pointer;
-  font-size: 16px;
-  padding: 12px;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
 }
 
-.DiaryButton:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* ==============================
-   🧾 Header Section
-============================== */
 .foodDiaryH2 {
-  padding: 50px;
+  padding: 40px;
+  border: 10px solid black;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
-  font-family: "Lucida Sans", "Lucida Grande", sans-serif;
   box-shadow: 1px 3px 9px rgba(0, 0, 0, 0.3);
-  color: white;
-  background-image: url("/images/pexels-taryn-elliott-4099236.jpg");
+  color: rgb(21, 21, 26);
+  background-image: url("/../images/pexels-taryn-elliott-4099236.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-style: none;
   width: 100%;
+  margin-top: 0px;
   text-align: center;
-  font-size: 32px;
-  margin: 0;
   box-sizing: border-box;
+  color: white;
 }
 
-/* ==============================
-   📋 Diary Entries Section
-============================== */
 .DiaryEntries {
-  width: 95%;
-  background-color: black;
-  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png");
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+  width: 95%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+  background-color: black;
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png");
   margin-bottom: 20px !important;
   text-align: center;
-  padding: 20px;
 }
 
-/* ==============================
-   📱 Mobile Styles
-============================== */
-@media (max-width: 767px) {
+@media (min-width: 768px) {
   .DiaryContainer {
-    max-width: 95%;
+    max-width: 100%;
     padding: 10px;
+    box-sizing: border-box;
   }
-
-  .foodDiaryH2 {
-    padding: 30px;
-    font-size: 18px;
-  }
-
-  .mealType {
-    font-size: 16px;
-  }
-
-  .DiaryInput {
-    max-width: 95%;
-    height: 35px;
-  }
-
-  .DiaryButton {
-    max-width: 95%;
-    font-size: 14px;
-    padding: 10px;
-  }
-
-  .timeStamp {
-    font-size: 10px;
-    margin-left: auto;
-    padding-right: 10px;
-  }
-
-  .waterIntake,
-  .foodItem {
-    font-size: 12px;
-    margin: 15px;
-  }
-
-  .waterIntake div,
-  .foodItem div {
-    width: 90%;
-    padding: 15px;
-  }
-}
-
-/* ==============================
-   💻 Tablet Styles
-============================== */
-@media (min-width: 768px) and (max-width: 1199px) {
-  .DiaryContainer {
-    max-width: 90%;
-    padding: 20px;
-  }
-
-  .foodDiaryH2 {
-    padding: 50px;
-    font-size: 28px;
-  }
-
-  .mealType {
-    font-size: 24px;
-  }
-
-  .DiaryInput {
-    padding: 15px;
-  }
-
-  .timeStamp {
-    font-size: 14px;
-  }
-
-  .waterIntake,
-  .foodItem {
-    font-size: 18px;
-    padding: 15px;
-  }
-}
-
-/* ==============================
-   🖥 Desktop Styles
-============================== */
-@media (min-width: 1200px) {
-  .DiaryContainer {
-    max-width: 80%;
-  }
-
-  .foodDiaryH2 {
-    padding: 70px;
-    font-size: 40px;
-  }
-
   .mealType {
     font-size: 30px;
   }
 
+  .foodDiaryH2 {
+    padding: 50px;
+    font-size: 30px;
+    width: 100%;
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+  }
+
   .DiaryInput {
-    padding: 18px;
+    max-width: 100%;
+    padding: 20px;
   }
 
   .DiaryButton {
-    padding: 14px;
-    font-size: 18px;
+    max-width: 100%;
+    padding: 12px;
+  }
+  .DiaryEntries {
+    width: 100%;
+  }
+  .timeStamp {
+    margin-left: 66%;
+    font-size: 14px;
   }
 
+  .waterIntake {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .foodItem {
+    font-size: 20px;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 900px) {
+  .DiaryContainer {
+    max-width: 95%;
+    padding: 10px;
+  }
+
+  .mealType {
+    font-size: 35px;
+  }
+
+  .foodDiaryH2 {
+    padding: 70px;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-top: 0px;
+    font-size: 40px;
+  }
+
+  .DiaryInput {
+    max-width: 100%;
+    padding: 25px;
+  }
+
+  .DiaryButton {
+    max-width: 100%;
+
+    padding: 14px;
+  }
   .timeStamp {
+    margin-left: 70%;
     font-size: 16px;
   }
 
-  .waterIntake,
+  .waterIntake {
+    padding: 20px;
+    font-size: 22px;
+  }
+
   .foodItem {
     font-size: 22px;
     padding: 20px;

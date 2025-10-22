@@ -1,17 +1,24 @@
-// components/LoginPage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import "../styles/Login.css";
-import Header from "../components/header";
 
+// ✅ Corrected path — public files aren't imported directly
+// Move `Login.css` into `src/styles/` or `src/` then import like this:
+import "../styles/Login.css";
+
+// ✅ Corrected folder name (should be components, not componants)
+import Header from "../components/Header";
+
+// ✅ Firebase config path — from src/firebaseConfig.js
+import { auth, db } from "../utils/firebaseConfig";
+
+// ✅ Firebase auth & firestore imports
 import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { auth, db } from "../utils/firebaseConfig";
 import {
   doc,
   setDoc,
@@ -23,7 +30,6 @@ import {
 
 function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   const navigate = useNavigate();
-
   const [mode, setMode] = useState(showSignup ? "signup" : "login");
   const [role, setRole] = useState("client");
   const [trainers, setTrainers] = useState([]);
@@ -31,7 +37,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   const [loadingTrainers, setLoadingTrainers] = useState(false);
   const [chooseManually, setChooseManually] = useState(false);
 
-  // --------- Load trainers (PUBLIC directory) for client signup ----------
+  // -------- Load Trainers ----------
   useEffect(() => {
     const needDropdown =
       mode === "signup" &&
@@ -69,7 +75,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
       const snap = await getDoc(ref);
 
       if (!snap.exists()) {
-        // Create a minimal profile if it doesn't exist (rare, but avoids a dead end)
         await setDoc(
           ref,
           {
@@ -102,12 +107,10 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
     const name = e.currentTarget.name?.value?.trim() || "";
 
     try {
-      // Create Firebase user
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       const user = cred.user;
 
       if (role === "client") {
-        // pick trainer from dropdown or via invite token
         const trainerId =
           chooseManually || !inviteToken
             ? selectedTrainerId
@@ -118,7 +121,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
           return;
         }
 
-        // Create client profile (private, user-owned doc)
         await setDoc(
           doc(db, "profiles", user.uid),
           {
@@ -151,7 +153,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
         });
         navigate("/Profile");
       } else {
-        // Trainer signup: create profile AND publish to public directory
         await setDoc(
           doc(db, "profiles", user.uid),
           {
@@ -168,7 +169,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
           { merge: true }
         );
 
-        // Public trainer directory (readable by anyone before login)
         await setDoc(
           doc(db, "trainerDirectory", user.uid),
           {
@@ -195,8 +195,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   return (
     <div className="loginFormContainer">
       <Header />
-      {/* ================= LOGIN ================= */}
-      {mode === "login" && (
+      {mode === "login" ? (
         <>
           <form className="loginForm" onSubmit={handleLogin}>
             <input
@@ -213,7 +212,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               placeholder="Password"
               required
             />
-
             <Button className="submitButton" type="submit" variant="contained">
               Login
             </Button>
@@ -224,9 +222,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               type="button"
               className="forgotPasswordButton"
               onClick={async () => {
-                const email = prompt(
-                  "Enter your email to reset your password:"
-                );
+                const email = prompt("Enter your email to reset your password:");
                 if (!email) return;
                 try {
                   await sendPasswordResetEmail(auth, email, {
@@ -249,28 +245,10 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               </Link>
             </p>
           )}
-
-          {showSignup && (
-            <p className="switchText">
-              Don’t have an account?{" "}
-              <Button
-                className="switchButton"
-                type="button"
-                onClick={() => setMode("signup")}
-                variant="text"
-              >
-                Sign Up
-              </Button>
-            </p>
-          )}
         </>
-      )}
-
-      {/* ================= SIGN UP ================= */}
-      {mode === "signup" && (
+      ) : (
         <>
           <form className="loginForm" onSubmit={handleSignup}>
-            {/* Role toggle */}
             <div className="roleToggle">
               <label>
                 <input
@@ -316,7 +294,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               required
             />
 
-            {/* Client must select a trainer */}
             {role === "client" && (
               <div className="trainerSelectContainer">
                 {!inviteToken || chooseManually ? (
@@ -339,11 +316,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                         ))}
                       </select>
                     )}
-
-                    <p className="inviteNotice" style={{ marginTop: 8 }}>
-                      Don’t see your trainer? Ask them to sign up first (or
-                      refresh after they do).
-                    </p>
                   </>
                 ) : (
                   <p className="inviteNotice">

@@ -61,7 +61,6 @@
   overflow-x: hidden;
   min-height: 100vh;
   padding: 20px;
-  background-color: transparent; /* 🆕 ensures consistent base */
 }
 
 /* ---------- Header / Hero Section ---------- */
@@ -89,7 +88,6 @@
   overflow: hidden;
   border: 2px solid #ab0303;
   font-size: clamp(1.5rem, 5vw, 2.5rem);
-  transition: all 0.3s ease; /* 🆕 smoother resize on screen change */
 }
 
 /* ---------- Section Headings ---------- */
@@ -106,7 +104,6 @@
   text-align: center;
   background-color: #ab0303;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
-  color: white; /* 🆕 ensures readable heading text */
 }
 
 /* ---------- Workout Form ---------- */
@@ -154,14 +151,20 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.DisplayExercise table {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  overflow: hidden;
+}
+
 /* ---------- Table Styling ---------- */
 table {
   width: 100%;
   border-collapse: collapse;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px; /* 🔧 unified corners */
-  overflow: hidden; /* 🆕 ensures rounded corners stay visible */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .DisplayExercise th,
@@ -184,6 +187,11 @@ table {
   color: #333;
 }
 
+.DisplayExercise tr:hover,
+.DisplayWorkouts tr:hover {
+  background-color: #f8f9fa;
+}
+
 /* ---------- Video Styling ---------- */
 .exerciseVideo {
   width: 100%;
@@ -196,10 +204,31 @@ table {
   box-sizing: border-box;
 }
 
+/* For older browsers without aspect-ratio support */
 @supports not (aspect-ratio: 16/9) {
   .exerciseVideo {
     height: 169px;
   }
+}
+
+.videoWrapper {
+  display: block;
+  width: 100%;
+  max-width: 700px;
+  margin: 15px auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.videoUrlText {
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #007bff;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
 }
 
 /* ---------- Workout Card Container ---------- */
@@ -215,6 +244,7 @@ table {
 
 /* ---------- Workout Name Header ---------- */
 .workoutName {
+  color: white;
   margin: 0;
   padding: 19px;
   color: black;
@@ -237,14 +267,16 @@ table {
   min-width: 40px;
   background-color: white;
   padding: 8px;
-  margin-left: auto; /* 🔧 replaces fixed 90% positioning */
+  margin-left: 90%;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
   color: #ab0303 !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
 }
 
 .deleteWorkoutButton:hover {
@@ -259,45 +291,8 @@ table {
   margin-bottom: 15px;
 }
 
-/* ---------- Responsive Design ---------- */
-
-/* 📱 Small Screens (≤767px) */
-@media (max-width: 767px) {
-  .workoutsH1 {
-    max-width: 90%; /* 🔧 percentage for better scaling */
-    padding: 30px;
-    min-height: 210px;
-  }
-
-  .workoutName {
-    padding: 20px;
-    font-size: 1.3rem;
-  }
-
-  .workoutsForm {
-    max-width: 95%;
-    padding: 20px;
-  }
-
-  .DisplayExercise,
-  .DisplayWorkouts,
-  .workoutCardContainer {
-    max-width: 95%;
-  }
-
-  .exerciseVideo {
-    max-width: 280px;
-  }
-
-  .deleteWorkoutButton {
-    width: 40px;
-    height: 40px;
-    padding: 7px;
-  }
-}
-
-/* 💻 Tablet (≥768px and ≤1199px) */
-@media (min-width: 768px) and (max-width: 1199px) {
+/* ---------- Responsive Tweaks ---------- */
+@media (min-width: 768px) {
   .workoutsH1 {
     max-width: 500px;
     padding: 40px;
@@ -327,12 +322,12 @@ table {
   .deleteWorkoutButton {
     width: 45px;
     height: 45px;
+    min-width: 45px;
     padding: 10px;
   }
 }
 
-/* 🖥️ Desktop (≥1200px) */
-@media (min-width: 1200px) {
+@media (min-width: 900px) {
   .workoutsH1 {
     max-width: 600px;
     padding: 50px;
@@ -362,6 +357,7 @@ table {
   .deleteWorkoutButton {
     width: 47px;
     height: 47px;
+    min-width: 47px;
     padding: 11px;
   }
 }

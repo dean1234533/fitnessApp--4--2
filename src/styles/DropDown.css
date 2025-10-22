@@ -1,129 +1,89 @@
-/* ===============================
-   🌐 App Container
-=============================== */
-.App {
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
 
-/* ===============================
-   📂 Dropdown Container
-=============================== */
+.App{display: flex;
+}
 .DropDownContainer {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end; /* 🔧 aligns dropdown neatly to the right */
-  padding: 20px;
-  position: relative;
-  box-sizing: border-box;
-  width: 100%;
-  z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    min-height: 5vh;
+    top: 20px 
+    right: 10px 
+    width:100%;
+    box-sizing:border-box;
 }
 
-/* ===============================
-   🔘 Dropdown Button
-=============================== */
 .DropDownButton {
-  position: fixed !important;
+    position: fixed !important;
   top: 15px !important;
   right: 15px !important;
-  z-index: 1000;
-  transform: scale(1.2);
-  background-color: #ab0303 !important; /* 🆕 matches app theme */
-  color: white !important;
-  border: none !important;
-  border-radius: 8px !important;
-  padding: 10px 14px !important;
-  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
+ z-index: 1000;
+  transform:scale(1.2);
+
 }
 
-.DropDownButton:hover {
-  transform: scale(1.25);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
 
-/* ===============================
-   📜 Dropdown List
-=============================== */
+
 .List {
+  z-index: 1000;
   position: fixed !important;
-  top: 65px !important;
-  right: 20px !important;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
-  padding: 15px 10px;
-  list-style: none;
-  text-align: center;
-  cursor: pointer;
-  z-index: 999;
-  transform: scale(1.1);
-  transition: opacity 0.3s ease, transform 0.2s ease;
-  font-size: 15px;
-  width: 180px;
-  border: 2px solid #ab0303; /* 🆕 subtle red accent */
-}
+    top: 60px !important;
+    right: 20px !important;
+    line-height:1.6;
+    cursor: pointer;
+    list-style: none;
+    border: 1px solid black;
+    text-align: center;
+    padding-right: 10px;
+    padding-left: 10px;
+border-radius: 5px;
+padding: 20px;
+font-size: 15px;
+box-shadow: 2px 3px 5px;
+border-style: none;
+background-color: white;
+transform:scale(1.2);
+box-sizing:border-box;
+ }
 
-.List li {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  transition: background-color 0.3s ease, color 0.2s ease;
-}
 
-.List li:last-child {
-  border-bottom: none;
-}
-
-.List li:hover {
-  background-color: #ab0303;
-  color: white;
-}
-
-/* ===============================
-   📱 Mobile Styles
-=============================== */
-@media (max-width: 767px) {
+/* Responsive Design */
+@media (min-width: 768px) {
+  .DropDownContainer{max-width: 500px;}
+ 
   .DropDownButton {
-    transform: scale(1);
-    padding: 8px 12px !important;
-  }
-
-  .List {
-    width: 150px;
-    font-size: 14px;
-    top: 55px !important;
+   
+    top: 15px !important;
     right: 15px !important;
+    
   }
-}
 
-/* ===============================
-   💻 Tablet
-=============================== */
-@media (min-width: 768px) and (max-width: 1199px) {
-  .DropDownContainer {
-    max-width: 500px;
-  }
+  
 
   .List {
-    width: 200px;
-    font-size: 17px;
-  }
+   max-width:200px;
+    line-height:1.6;
+    font-size:18px;
+    
+ }
 }
 
-/* ===============================
-   🖥 Desktop
-=============================== */
 @media (min-width: 1200px) {
-  .DropDownContainer {
-    max-width: 600px;
+  .DropDownContainer{max-width:600px;}
+  
+  .DropDownButton {
+   
+    top: 15px !important;
+    right: 15px !important;
+    
   }
 
+  
+
   .List {
-    width: 250px;
-    font-size: 18px;
+    max-width:300px;
+    line-height:1.6;
+    font-size:20px;
+ }
   }
-}
 

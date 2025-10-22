@@ -13,20 +13,15 @@
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
+  min-width: 500px;
   border: 4px solid #ab0303 !important;
-  transition: all 0.3s ease; /* 🆕 smooth resize on different screens */
 }
-
-/* ===========================
-   Edit Buttons
-=========================== */
 .EditProfileButton {
   border-radius: 50px !important;
   margin-top: 10px !important;
   background: #ab0303
-    url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
-  border: 1px solid white !important;
-  color: white; /* 🆕 ensure consistent text color */
+    url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+  border: 1px solid white;
 }
 
 .editProfile {
@@ -35,9 +30,7 @@
   background: #ab0303
     url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
   border: 1px solid white;
-  color: white; /* 🆕 consistent with EditProfileButton */
 }
-
 /* ===========================
    Avatar Section
 =========================== */
@@ -74,11 +67,12 @@
 .activityLevel {
   border: 2px solid #ab0303;
   border-radius: 15px;
+
   margin-bottom: 10px;
   padding: 15px 25px;
   cursor: pointer;
   text-align: left;
-  width: 100%; /* 🔧 allows flex container to control sizing */
+  width: 450px;
   background-color: #fff;
   color: #000;
   font-size: 18px;
@@ -133,43 +127,8 @@
    Responsive Design
 =========================== */
 
-/* 📱 Small screens (≤767px) */
-@media (max-width: 767px) {
-  .container {
-    padding: 15px;
-    width: 95% !important;
-    border-width: 3px;
-    max-width: 400px; /* 🆕 limit container width for narrow phones */
-  }
-
-  .editProfile {
-    padding: 12px;
-  }
-
-  .profileAvatar {
-    width: 100px !important;
-    height: 100px !important;
-  }
-
-  .EditProfileButton {
-    padding: 10px;
-  }
-
-  .phone,
-  .email,
-  .weight,
-  .bodyFat,
-  .height,
-  .fitnessGoal,
-  .activityLevel {
-    font-size: 14px;
-    padding: 12px 16px; /* 🔧 reduced padding for small devices */
-    width: 100%; /* 🆕 replaces fixed 400px */
-  }
-}
-
-/* 💻 Tablet (≥768px and ≤1199px) */
-@media (min-width: 768px) and (max-width: 1199px) {
+/* Tablet (≥768px) */
+@media (min-width: 768px) {
   .container {
     padding: 30px;
     max-width: 550px !important;
@@ -180,8 +139,12 @@
   }
 
   .profileAvatar {
-    width: 180px !important; /* 🔧 slightly smaller than desktop */
-    height: 180px !important;
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .EditProfileButton {
+    padding: 13px;
   }
 
   .EditProfileButton {
@@ -195,19 +158,18 @@
   .height,
   .fitnessGoal,
   .activityLevel {
-    font-size: 16px;
-    padding: 16px 20px;
-    width: 100%;
+    font-size: 18px;
+    padding: 16px 22px;
+    width: 500px;
   }
 }
 
-/* 🖥️ Desktop (≥1200px) */
+/* Desktop (≥900px) */
 @media (min-width: 1200px) {
   .container {
     padding: 40px;
     max-width: 600px !important;
   }
-
   .editProfile {
     padding: 18px;
   }
@@ -230,6 +192,6 @@
   .activityLevel {
     font-size: 18px;
     padding: 20px 25px;
-    width: 100%;
+    width: 550px;
   }
 }
