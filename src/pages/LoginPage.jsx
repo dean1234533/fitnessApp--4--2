@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import "../styles/Login.css";
 
 // ✅ Corrected folder name (should be components, not componants)
-import Header from "../components/Header";
+import Header from "../components/header";
 
 // ✅ Firebase config path — from src/firebaseConfig.js
 import { auth, db } from "../utils/firebaseConfig";
