@@ -194,7 +194,27 @@
     transform: translateY(0);
   }
 }
+@media (max-width: 767px){  .foodGenContainer {
+    max-width: 80%;
+    margin: 10px auto;
+    border-radius: 15px;
+    min-height: 50vh !important;
+  }
 
+  .foodGenH1 {
+    font-size: 1.2rem;
+  }
+
+  .foodGenDisplay {
+    font-size: 12px;
+    padding: 10px;
+    max-width: 70%;
+  }
+
+  .foodGenSubmitButton {
+    padding: 10px;
+    max-width: 70%;
+  }}
 /* ==============================
    Media Queries
 ============================== */

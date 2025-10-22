@@ -290,7 +290,38 @@ table {
 .ExercisesPreview {
   margin-bottom: 15px;
 }
+@media (max-width: 767px) {.workoutsH1 {
+    max-width: 400px;
+    padding: 30px;
+    min-height: 210px;
+  }
 
+  .workoutName {
+    padding: 25px;
+    font-size: 1.5rem;
+  }
+
+  .workoutsForm {
+    max-width: 500px;
+    padding: 20px;
+  }
+
+  .DisplayExercise,
+  .DisplayWorkouts,
+  .workoutCardContainer {
+    max-width: 600px;
+  }
+
+  .exerciseVideo {
+    max-width: 300px;
+  }
+
+  .deleteWorkoutButton {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    padding: 7px;
+  }}
 /* ---------- Responsive Tweaks ---------- */
 @media (min-width: 768px) {
   .workoutsH1 {
@@ -327,7 +358,7 @@ table {
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .workoutsH1 {
     max-width: 600px;
     padding: 50px;

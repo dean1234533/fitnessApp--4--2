@@ -153,7 +153,22 @@
   color: #1976d2;
   transform: scale(1.15);
 }
+@media (max-width: 767px){
+  .text {
+    height: 150px;
+    font-size: 10px;
+  }
 
+  .notePadButton {
+    font-size: 16px;
+    right: 15px;
+    bottom: -30px;
+  height: 60px !important;
+  }
+
+  .savedNotes {
+    padding: 10px 10px;
+  }}
 /* ✅ Responsive Design */
 @media (min-width: 768px) {
   .text {
@@ -165,7 +180,6 @@
     font-size: 24px;
     right: 15px;
     bottom: -30px;
-     width: 60px !important;
   height: 60px !important;
   }
 

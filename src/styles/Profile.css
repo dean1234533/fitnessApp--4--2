@@ -93,6 +93,35 @@ input {
   margin-bottom: 10px;
 }
 
+@media (max-width: 767px){ 
+  .profileFormContainer {
+    max-width: 95%;
+  }
+
+  .gender {
+    width: 350px;
+    padding: 9px;
+  }
+
+  .ProfileForm,
+  input {
+    width: 350px;
+    padding: 9px;
+  }
+
+  .profilePic {
+    width: 150px;
+    height: 150px;
+  }
+  .formButton {
+    font-size: 16px;
+}
+    .ProfileForm, 
+    select {
+  width: 350px !important; padding: 7px;
+}
+}
+
 @media (min-width: 768px) {
   .profileFormContainer {
     max-width: 550px;

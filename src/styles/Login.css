@@ -90,7 +90,9 @@
   color: black;
   text-decoration: underline #ab0303;
 }
-
+@media (max-width: 767px) {.loginFormContainer{
+    max-width: 95%}
+}
 /* ===========================
    Responsive Design
 =========================== */

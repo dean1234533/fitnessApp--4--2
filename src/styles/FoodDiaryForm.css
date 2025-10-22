@@ -129,7 +129,52 @@
   margin-bottom: 20px !important;
   text-align: center;
 }
+@media (max-width: 767px){
+  .DiaryContainer {
+    max-width: 95%;
+    padding: 7px;
+    box-sizing: border-box;
+  }
+  .mealType {
+    font-size: 16px;
+  }
 
+  .foodDiaryH2 {
+    padding: 20px;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 0px;
+    margin-left: 20px;
+    margin-right: 20px;
+    box-sizing: border-box;
+  }
+
+  .DiaryInput {
+    max-width: 95%;
+    padding: 10px;
+  }
+
+  .DiaryButton {
+    max-width: 95%;
+  }
+  .DiaryEntries {
+    width: 95%;
+  }
+  .timeStamp {
+    margin-left: 56%;
+    font-size: 8px;
+  }
+
+  .waterIntake {
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .foodItem {
+    font-size: 10px;
+    padding: 8px;
+  }
+}
 @media (min-width: 768px) {
   .DiaryContainer {
     max-width: 100%;

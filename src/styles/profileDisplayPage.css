@@ -13,7 +13,6 @@
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  min-width: 500px;
   border: 4px solid #ab0303 !important;
 }
 
@@ -76,7 +75,7 @@
   padding: 15px 25px;
   cursor: pointer;
   text-align: left;
-  width: 450px;
+  width: 100%;
   background-color: #fff;
   color: #000;
   font-size: 18px;
@@ -130,7 +129,36 @@
 /* ===========================
    Responsive Design
 =========================== */
+@media (max-width: 767px) {.container {
+    padding: 15px;
+   width: 95% !important;
+   border-width: 3px;
+  }
 
+  .editProfile {
+    padding: 12px;
+  }
+
+  .profileAvatar {
+    width: 100px !important;
+    height: 100px !important;
+  }
+
+  .EditProfileButton {
+    padding: 10px;
+  }
+
+  .phone,
+  .email,
+  .weight,
+  .bodyFat,
+  .height,
+  .fitnessGoal,
+  .activityLevel {
+    font-size: 14px;
+    padding: 14px 20px;
+    width: 400px;
+  }}
 /* Tablet (≥768px) */
 @media (min-width: 768px) {
   .container {
