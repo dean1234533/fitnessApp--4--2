@@ -1,0 +1,7 @@
+{
+  "name": "fitnessapp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

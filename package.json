@@ -1,0 +1,35 @@
+{
+  "name": "fitness-app",
+  "version": "1.0.0",
+  "description": "Full Fitness App built with React and Vite",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^7.8.1",
+    "firebase": "^12.2.1",
+    "@mui/material": "^7.3.1",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.1",
+    "lucide-react": "^0.540.0",
+    "bootstrap": "^5.3.7",
+    "react-bootstrap": "^2.10.10",
+    "@supabase/supabase-js": "^2.56.1"
+  },
+  "devDependencies": {
+    "vite": "^6.4.1",
+    "@vitejs/plugin-react": "^4.3.2"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

@@ -1,0 +1,55 @@
+.Title {
+  text-align: center;
+  font-size: 30px;
+}
+.clientListContainer {
+  transform: scale(1.1);
+}
+.ButtonAvatar {
+  width: 65px !important;
+  height: 65px !important;
+}
+.clientNames strong {
+  width: 400px;
+  text-align: left;
+  font-size: 18px;
+}
+
+.clientNames {
+  background-color: black !important;
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
+  border-color: white !important;
+  border-radius: 15px !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  padding: 10px;
+}
+@media (min-width: 768px) {
+  .clientNames strong {
+    width: 500px;
+    font-size: 20px;
+  }
+  .ButtonAvatar {
+    width: 75px !important;
+    height: 75px !important;
+  }
+
+  .Tittle {
+    font-size: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .clientNames strong {
+    width: 600px;
+    font-size: 22px;
+  }
+
+  .ButtonAvatar {
+    width: 85px !important;
+    height: 85px !important;
+  }
+
+  .Tittle {
+    font-size: 50px;
+  }
+}

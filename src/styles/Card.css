@@ -1,0 +1,68 @@
+.cardContainer {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0; /* Start small for mobile */
+  margin-bottom: 30px;
+  box-sizing: border-box;
+}
+
+.cardAvatar {
+  width: 130px !important;
+  height: 130px !important;
+  border: 2px solid;
+}
+
+.avatarContainer {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.cardH1 {
+  text-align: center;
+  font-size: 1.7rem; /* Start small for mobile */
+  font-weight: 600;
+  color: #333;
+  margin: 15px 0; /* Start small for mobile */
+  padding: 0 20px;
+  line-height: 1.4;
+}
+
+/* Trainer Dashboard specific styles */
+.cardContainer .MuiTypography-h6 {
+  text-align: center;
+  color: #555;
+  font-weight: 500;
+}
+
+/* Tablet and up - make things BIGGER */
+@media (min-width: 768px) {
+  .cardContainer {
+    max-width: 100%;
+  }
+
+  .cardH1 {
+    font-size: 2rem;
+    margin: 20px 0;
+  }
+  .cardAvatar {
+    width: 160px !important;
+    height: 160px !important;
+  }
+}
+
+/* Desktop and up - make things even BIGGER */
+@media (min-width: 1200px) {
+  .cardContainer {
+    max-width: 100%;
+  }
+  .cardH1 {
+    font-size: 3rem;
+    margin: 10px 0;
+  }
+  .cardAvatar {
+    width: 190px !important;
+    height: 190px !important;
+  }
+}

@@ -1,0 +1,107 @@
+/* ===========================
+   Login Form Container
+=========================== */
+.loginFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+  min-height: 10vh;
+  padding: 20px;
+  transform: scale(1.2);
+  width: 100%;
+  max-width: 600px;
+  box-sizing: border-box;
+}
+
+/* ===========================
+   Login Form
+=========================== */
+.loginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 100%;
+}
+
+/* ===========================
+   Input Fields
+=========================== */
+.loginInput {
+  border-radius: 30px;
+  border: 2px solid #ddd;
+  padding: 12px 20px;
+  margin-top: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.loginInput:focus {
+  outline: none;
+  border-color: #9e0303;
+}
+
+/* ===========================
+   Submit Button
+=========================== */
+.submitButton {
+  margin-top: 20px !important;
+  padding: 8px !important;
+  border: 1px solid white !important;
+  border-radius: 25px !important;
+  background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
+  color: white;
+  background-color: #9e0303 !important;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.submitButton:hover {
+  background-color: rgb(88, 3, 3) !important;
+  color: black !important;
+}
+
+/* ===========================
+   Other Buttons
+=========================== */
+.CoachDashboardButton {
+  padding: 10px 20px;
+  margin-top: 15px;
+  box-sizing: border-box;
+}
+
+.forgotPasswordButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.linkButton {
+  color: black;
+  text-decoration: underline #ab0303;
+}
+
+/* ===========================
+   Responsive Design
+=========================== */
+@media (min-width: 768px) {
+  .loginFormContainer {
+    max-width: 500px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .loginFormContainer {
+    max-width: 600px;
+  }
+}

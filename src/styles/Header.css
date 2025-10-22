@@ -1,0 +1,27 @@
+.headerImg {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  width: 100%;
+  max-width: 200px;
+  height: 200px;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  transform: scale(1.1);
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .headerImg {
+    max-width: 250px;
+    height: 250px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .headerImg {
+    max-width: 300px;
+    height: 300px;
+  }
+}
