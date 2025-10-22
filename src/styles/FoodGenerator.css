@@ -1,29 +1,28 @@
 /* ==============================
-   Food Generator Main Container
+   🥗 Food Generator Container
 ============================== */
 .foodGenContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  min-height: 50vh !important;
-  padding-bottom: 10px;
-  background: #fdfdfd;
-  border-radius: 20px;
-  border: 2px solid black;
   width: 90%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   margin: 40px auto;
+  padding-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 20px;
+  background: #fdfdfd;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
   overflow: hidden;
   transition: all 0.3s ease;
+  min-height: 60vh; /* 🔧 unified height for consistency */
 }
 
 /* ==============================
-   Header
+   🍽 Header / Hero Section
 ============================== */
 .foodGenH1 {
-  display: block;
   text-align: center;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
@@ -39,11 +38,11 @@
   box-sizing: border-box;
   box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.4);
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
-  margin-top: 0;
+  margin: 0;
 }
 
 /* ==============================
-   Meal Type Select
+   🍴 Meal Type Select
 ============================== */
 .foodTypeContainer {
   width: 100%;
@@ -63,13 +62,9 @@
   margin-bottom: 10px;
   color: #333;
   font-size: 1.1rem;
-  
-  
- 
 }
 
 .foodType {
-  
   margin: 0 auto;
   width: 100%;
   padding: 12px;
@@ -81,13 +76,13 @@
 }
 
 .foodType:focus {
-  border-color: #6c63ff;
-  box-shadow: 0 0 5px rgba(108, 99, 255, 0.4);
+  border-color: #ab0303;
+  box-shadow: 0 0 5px rgba(171, 3, 3, 0.3);
   outline: none;
 }
 
 /* ==============================
-   Generate Button
+   🔘 Generate Button
 ============================== */
 .foodGenSubmitButton {
   display: flex !important;
@@ -99,9 +94,9 @@
   padding: 15px !important;
   margin-top: 30px !important;
   border: 2px solid black;
+  border-radius: 10px !important;
   background-color: #ab0303 !important;
   background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
-  border-radius: 10px !important;
   color: #fff !important;
   font-size: 1rem !important;
   font-weight: bold !important;
@@ -113,8 +108,12 @@
 .foodGenSubmitButton:hover {
   background-color: rgb(87, 4, 4) !important;
   color: black !important;
+  transform: translateY(-2px);
 }
 
+/* ==============================
+   ⚠️ Error Message
+============================== */
 .errorMessage {
   color: red;
   font-size: 16px;
@@ -123,12 +122,14 @@
 }
 
 /* ==============================
-   Recipe Display Card
+   📜 Recipe Display Card
 ============================== */
 .foodGenDisplay {
-  background: #fff;
+  background: black;
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
+  color: white;
   border-radius: 15px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+  border: 2px solid #ab0303;
   width: 90%;
   max-width: 600px;
   box-sizing: border-box;
@@ -138,10 +139,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
-  background-color: black;
-  color: white;
-  border: 2px solid #ab0303;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
   font-size: 18px;
   line-height: 1.6;
   animation: fadeInUp 0.4s ease;
@@ -152,37 +150,33 @@
   margin-bottom: 10px;
   color: white;
   border-bottom: 2px solid #ab0303;
-  padding-bottom: 5px;
+  padding: 20px 0;
   width: 100%;
-  padding: 20px;
+  text-align: center;
 }
 
 .foodGenDisplay ul {
   list-style-type: disc;
   padding-left: 20px;
- 
-  margin-bottom: 15px;
- align-items: center;
- justify-content: center;
- display: flex;
- flex-direction: column;
-  margin: 0 auto;
+  margin: 0 auto 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .foodGenDisplay li {
-   margin-top: 20px;
-  margin-bottom: 6px;
+  margin: 10px 0;
   text-align: center;
 }
 
 .foodGenDisplay p {
   margin: 5px 0;
   color: white;
-  
 }
 
 /* ==============================
-   Animations
+   ✨ Animation
 ============================== */
 @keyframes fadeInUp {
   0% {
@@ -194,36 +188,47 @@
     transform: translateY(0);
   }
 }
-@media (max-width: 767px){  .foodGenContainer {
-    max-width: 80%;
-    margin: 10px auto;
+
+/* ==============================
+   📱 Small Screens
+============================== */
+@media (max-width: 767px) {
+  .foodGenContainer {
+    max-width: 90%;
+    margin: 20px auto;
     border-radius: 15px;
     min-height: 50vh !important;
   }
 
   .foodGenH1 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    padding: 40px 15px;
+  }
+
+  .foodTypeContainer {
+    max-width: 90%;
   }
 
   .foodGenDisplay {
-    font-size: 12px;
-    padding: 10px;
-    max-width: 70%;
+    font-size: 14px;
+    padding: 15px;
+    max-width: 85%;
   }
 
   .foodGenSubmitButton {
-    padding: 10px;
-    max-width: 70%;
-  }}
+    padding: 12px;
+    font-size: 0.9rem !important;
+    max-width: 85%;
+  }
+}
+
 /* ==============================
-   Media Queries
+   💻 Tablet
 ============================== */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (max-width: 1199px) {
   .foodGenContainer {
     max-width: 90%;
-    margin: 20px auto;
     border-radius: 15px;
-    min-height: 60vh !important;
   }
 
   .foodGenH1 {
@@ -231,29 +236,37 @@
   }
 
   .foodGenDisplay {
-    font-size: 20px;
-    padding: 15px;
+    font-size: 18px;
+    padding: 18px;
     max-width: 80%;
   }
 
   .foodGenSubmitButton {
-    padding: 10px;
-    max-width: 80%;
+    padding: 14px;
+    max-width: 75%;
   }
-
 }
 
+/* ==============================
+   🖥 Desktop
+============================== */
 @media (min-width: 1200px) {
   .foodGenContainer {
     max-width: 90%;
-    margin: 20px auto;
     border-radius: 15px;
-    min-height: 60vh !important;
+  }
+
+  .foodGenH1 {
+    font-size: 2rem;
+  }
+
+  .foodGenDisplay {
+    font-size: 20px;
+    max-width: 85%;
   }
 
   .foodGenSubmitButton {
-    max-width: 100%;
+    max-width: 70%;
+    font-size: 1.1rem !important;
   }
-
-  .foodGenDisplay {max-width: 90%;font-size: 24px;}
 }

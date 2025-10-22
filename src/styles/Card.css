@@ -1,68 +1,98 @@
+/* ===============================
+   🧩 Card Container (Trainer Dashboard)
+=============================== */
 .cardContainer {
   width: 100%;
-  margin: 0 auto;
-  padding: 0; /* Start small for mobile */
-  margin-bottom: 30px;
+  margin: 0 auto 30px auto;
+  padding: 0;
   box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* 🆕 subtle depth for cards */
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.cardContainer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ===============================
+   👤 Avatar Styling
+=============================== */
+.avatarContainer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 .cardAvatar {
   width: 130px !important;
   height: 130px !important;
-  border: 2px solid;
+  border: 2px solid #ab0303;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* 🆕 polished look */
 }
 
-.avatarContainer {
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 10px;
-}
-
+/* ===============================
+   🏷 Title & Text
+=============================== */
 .cardH1 {
   text-align: center;
-  font-size: 1.7rem; /* Start small for mobile */
-  font-weight: 600;
-  color: #333;
-  margin: 15px 0; /* Start small for mobile */
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #222;
+  margin: 15px 0;
   padding: 0 20px;
   line-height: 1.4;
+  text-transform: capitalize;
 }
 
-/* Trainer Dashboard specific styles */
+/* Trainer Dashboard Typography */
 .cardContainer .MuiTypography-h6 {
   text-align: center;
   color: #555;
   font-weight: 500;
+  margin-bottom: 20px;
 }
 
-/* Tablet and up - make things BIGGER */
+/* ===============================
+   💻 Tablet View
+=============================== */
 @media (min-width: 768px) {
   .cardContainer {
-    max-width: 100%;
+    max-width: 90%;
+  }
+
+  .cardAvatar {
+    width: 160px !important;
+    height: 160px !important;
   }
 
   .cardH1 {
     font-size: 2rem;
     margin: 20px 0;
   }
-  .cardAvatar {
-    width: 160px !important;
-    height: 160px !important;
-  }
 }
 
-/* Desktop and up - make things even BIGGER */
+/* ===============================
+   🖥 Desktop View
+=============================== */
 @media (min-width: 1200px) {
   .cardContainer {
-    max-width: 100%;
+    max-width: 85%;
   }
-  .cardH1 {
-    font-size: 3rem;
-    margin: 10px 0;
-  }
+
   .cardAvatar {
     width: 190px !important;
     height: 190px !important;
+  }
+
+  .cardH1 {
+    font-size: 2.5rem;
+    margin: 25px 0;
   }
 }

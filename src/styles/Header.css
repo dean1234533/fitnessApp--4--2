@@ -1,27 +1,46 @@
+/* ===========================
+   🖼 Header Image Styling
+=========================== */
 .headerImg {
   display: flex;
   flex-direction: column;
-  padding-top: 50px;
-  width: 100%;
-  max-width: 200px;
-  height: 200px;
   justify-content: center;
   align-items: center;
+
+  /* Size & layout */
+  width: 100%;
+  max-width: 200px;
+  height: auto; /* 🆕 auto height for better scaling */
+  aspect-ratio: 1 / 1; /* 🆕 keeps it perfectly square at all sizes */
+
+  /* Spacing & transform */
   margin: 0 auto;
+  padding-top: 50px;
   transform: scale(1.1);
   box-sizing: border-box;
+
+  /* Optional extras (if it's an <img>) */
+  border-radius: 50%; /* 🆕 if it’s a logo/profile image */
+  object-fit: cover; /* 🆕 ensures image doesn’t stretch */
+  overflow: hidden; /* 🆕 prevents overflow with round shapes */
 }
 
+/* ===========================
+   📱 Tablet
+=========================== */
 @media (min-width: 768px) {
   .headerImg {
     max-width: 250px;
-    height: 250px;
+    transform: scale(1.05); /* 🔧 slightly reduced to look smoother */
   }
 }
 
+/* ===========================
+   🖥 Desktop
+=========================== */
 @media (min-width: 1200px) {
   .headerImg {
     max-width: 300px;
-    height: 300px;
+    transform: scale(1); /* 🔧 natural size at large viewports */
   }
 }
