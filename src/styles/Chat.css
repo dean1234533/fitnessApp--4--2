@@ -15,6 +15,7 @@
   border: 2px solid;
 }
 
+/* Header */
 .chatHeader {
   background-color: #030303;
   background-image: url("/images/OIUFKE0.jpg");
@@ -27,6 +28,7 @@
   height: 120px;
 }
 
+/* Chat Username */
 .chatUserName {
   display: flex;
   justify-content: center;
@@ -38,19 +40,43 @@
   text-align: center;
 }
 
-.chatMessages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px 0;
-  min-height: 400px;
+/* Messages (Client Side) */
+.chatMessages > div[style*="justify-content: flex-start"] {
   overflow-wrap: anywhere;
-  width: 100%;
+  overflow-y: auto;
+  margin: 0 auto;
+  min-height: 10px;
+  width: 60%;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
 }
 
+/* Message Text (Client) */
+.chatMessages > div[style*="justify-content: flex-start"] > div {
+  max-width: 80%;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+/* Messages (Trainer Side) */
+.chatMessages > div[style*="justify-content: flex-end"] {
+  margin: 0 auto;
+  overflow-y: auto;
+  padding: 20px 0;
+  min-height: 10px;
+  overflow-wrap: anywhere;
+  width: 60%;
+  margin-bottom: 20px;
+}
+
+/* Input Container */
 .chatInputContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 1 10px;
   padding: 20px 40px;
   background-color: rgba(0, 0, 0, 0.1);
@@ -58,6 +84,7 @@
   border-bottom-right-radius: 10px;
 }
 
+/* Input Field */
 .chatInput {
   flex: 1;
   height: 40px;
@@ -73,6 +100,7 @@
   border-color: white;
 }
 
+/* Send Button */
 .sendButton {
   height: 40px;
   padding: 10px 20px !important;
@@ -91,7 +119,31 @@
   opacity: 0.8;
 }
 
-/* Responsive adjustments */
+/* ===========================
+   📱 Mobile View
+=========================== */
+@media (max-width: 767px) {
+  .chatContainer {
+    max-width: 95%;
+  }
+
+  .chatUserName {
+    font-size: 16px;
+    padding: 15px;
+  }
+
+  .chatInputContainer {
+    padding: 15px 20px;
+  }
+
+  .chatMessages {
+    width: 95%;
+  }
+}
+
+/* ===========================
+   💻 Tablet
+=========================== */
 @media (min-width: 768px) {
   .chatContainer {
     max-width: 800px;
@@ -105,18 +157,22 @@
   .chatInputContainer {
     padding: 20px 50px;
   }
+
   .chatMessages {
     width: 100%;
   }
 }
 
+/* ===========================
+   🖥 Desktop
+=========================== */
 @media (min-width: 1200px) {
   .chatContainer {
     max-width: 900px;
   }
 
   .chatMessages {
-    width: 700px;
+    width: 900px;
   }
 
   .chatUserName {

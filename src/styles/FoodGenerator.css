@@ -63,13 +63,9 @@
   margin-bottom: 10px;
   color: #333;
   font-size: 1.1rem;
-  
-  
- 
 }
 
 .foodType {
-  
   margin: 0 auto;
   width: 100%;
   padding: 12px;
@@ -115,13 +111,6 @@
   color: black !important;
 }
 
-.errorMessage {
-  color: red;
-  font-size: 16px;
-  margin-top: 10px;
-  text-align: center;
-}
-
 /* ==============================
    Recipe Display Card
 ============================== */
@@ -160,17 +149,16 @@
 .foodGenDisplay ul {
   list-style-type: disc;
   padding-left: 20px;
- 
   margin-bottom: 15px;
- align-items: center;
- justify-content: center;
- display: flex;
- flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
 }
 
 .foodGenDisplay li {
-   margin-top: 20px;
+  margin-top: 20px;
   margin-bottom: 6px;
   text-align: center;
 }
@@ -178,11 +166,10 @@
 .foodGenDisplay p {
   margin: 5px 0;
   color: white;
-  
 }
 
 /* ==============================
-   Animations
+   Animation
 ============================== */
 @keyframes fadeInUp {
   0% {
@@ -195,9 +182,30 @@
   }
 }
 
-/* ==============================
-   Media Queries
-============================== */
+@media (max-width: 767px) {
+  .foodGenContainer {
+    max-width: 80%;
+    margin: 10px auto;
+    border-radius: 15px;
+    min-height: 50vh !important;
+  }
+
+  .foodGenH1 {
+    font-size: 1.2rem;
+  }
+
+  .foodGenDisplay {
+    font-size: 12px;
+    padding: 10px;
+    max-width: 70%;
+  }
+
+  .foodGenSubmitButton {
+    padding: 10px;
+    max-width: 70%;
+  }
+}
+
 @media (min-width: 768px) {
   .foodGenContainer {
     max-width: 90%;
@@ -220,7 +228,6 @@
     padding: 10px;
     max-width: 80%;
   }
-
 }
 
 @media (min-width: 1200px) {
@@ -235,5 +242,8 @@
     max-width: 100%;
   }
 
-  .foodGenDisplay {max-width: 90%;font-size: 24px;}
+  .foodGenDisplay {
+    max-width: 90%;
+    font-size: 24px;
+  }
 }

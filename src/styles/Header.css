@@ -1,17 +1,44 @@
 .headerImg {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   padding-top: 50px;
   width: 100%;
   max-width: 200px;
   height: 200px;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
   transform: scale(1.1);
   box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.headerImg img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  border: 3px solid #ab0303;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.headerImg:hover {
+  transform: scale(1.15);
+}
+
+/* ===========================
+   📱 Mobile
+=========================== */
+@media (max-width: 767px) {
+  .headerImg {
+    max-width: 150px;
+    height: 150px;
+    padding-top: 30px;
+  }
+}
+
+/* ===========================
+   💻 Tablet
+=========================== */
 @media (min-width: 768px) {
   .headerImg {
     max-width: 250px;
@@ -19,6 +46,9 @@
   }
 }
 
+/* ===========================
+   🖥 Desktop
+=========================== */
 @media (min-width: 1200px) {
   .headerImg {
     max-width: 300px;

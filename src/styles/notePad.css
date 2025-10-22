@@ -66,22 +66,20 @@
   background: white;
 }
 
-/* ✅ Button Container - Better positioning */
+/* ✅ Button Container */
 .notePadButtonContainer {
   width: 100%;
   max-width: 600px;
-
   margin-bottom: 30px;
 }
 
-/* ✅ Add Button - Positioned correctly */
+/* ✅ Add Button */
 .notePadButton {
   position: absolute !important;
   right: 10px;
-  border-radius: 50% !important;
   width: 50px !important;
-  height: 50px !important;
-  min-width: 50px;
+  height: 60px !important;
+  border-radius: 50% !important;
   font-size: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   border: 1px solid black;
@@ -109,7 +107,7 @@
   color: #444;
 }
 
-/* ✅ Each Saved Note */
+/* ✅ Saved Note */
 .savedNotes {
   display: flex;
   justify-content: space-between;
@@ -132,7 +130,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* ✅ Note text */
 .savedNotes p {
   flex: 1;
   margin: 0;
@@ -142,7 +139,6 @@
   padding-right: 10px;
 }
 
-/* ✅ Action icons */
 .savedNotes svg {
   cursor: pointer;
   margin-left: 10px;
@@ -156,7 +152,24 @@
   transform: scale(1.15);
 }
 
-/* ✅ Responsive Design */
+@media (max-width: 767px) {
+  .text {
+    height: 150px;
+    font-size: 10px;
+  }
+
+  .notePadButton {
+    font-size: 16px;
+    right: 15px;
+    bottom: -30px;
+    height: 60px !important;
+  }
+
+  .savedNotes {
+    padding: 10px 10px;
+  }
+}
+
 @media (min-width: 768px) {
   .text {
     height: 250px;
@@ -164,11 +177,10 @@
   }
 
   .notePadButton {
-    width: 60px;
-    height: 60px;
     font-size: 24px;
     right: 15px;
     bottom: -30px;
+    height: 60px !important;
   }
 
   .savedNotes {
@@ -183,11 +195,11 @@
   }
 
   .notePadButton {
-    width: 70px;
-    height: 70px;
     font-size: 28px;
     right: 20px;
     bottom: -35px;
+    width: 70px !important;
+    height: 70px !important;
   }
 
   .savedNotes {

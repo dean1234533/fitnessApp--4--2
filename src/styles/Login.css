@@ -1,3 +1,6 @@
+/* ===========================
+   Login Form Container
+=========================== */
 .loginFormContainer {
   display: flex;
   justify-content: center;
@@ -12,6 +15,9 @@
   box-sizing: border-box;
 }
 
+/* ===========================
+   Login Form
+=========================== */
 .loginForm {
   display: flex;
   justify-content: center;
@@ -20,10 +26,12 @@
   flex-direction: column;
   box-sizing: border-box;
   padding: 40px;
-
   width: 100%;
 }
 
+/* ===========================
+   Input Fields
+=========================== */
 .loginInput {
   border-radius: 30px;
   border: 2px solid #ddd;
@@ -37,8 +45,12 @@
 
 .loginInput:focus {
   outline: none;
+  border-color: #9e0303;
 }
 
+/* ===========================
+   Submit Button
+=========================== */
 .submitButton {
   margin-top: 20px !important;
   padding: 8px !important;
@@ -54,6 +66,14 @@
   box-sizing: border-box;
 }
 
+.submitButton:hover {
+  background-color: rgb(88, 3, 3) !important;
+  color: black !important;
+}
+
+/* ===========================
+   Other Buttons
+=========================== */
 .CoachDashboardButton {
   padding: 10px 20px;
   margin-top: 15px;
@@ -71,10 +91,23 @@
   text-decoration: underline #ab0303;
 }
 
-@media (min-width: 768) {
-  max-width: 500px;
+@media (max-width: 767px) {
+  .loginFormContainer {
+    max-width: 95%;
+  }
 }
 
-@media (min-width: 1200) {
-  max-width: 600px;
+/* ===========================
+   Responsive Design
+=========================== */
+@media (min-width: 768px) {
+  .loginFormContainer {
+    max-width: 500px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .loginFormContainer {
+    max-width: 600px;
+  }
 }
