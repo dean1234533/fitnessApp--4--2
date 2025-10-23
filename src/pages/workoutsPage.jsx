@@ -187,13 +187,14 @@ function WorkOuts({ userRole }) {
                   </td>
                   <td>
                     {ex.url && (
-                      <iframe
-                        className="exerciseVideo"
-                        src={ex.url}
-                        title={ex.name}
-                        frameBorder="0"
-                        allowFullScreen
-                      />
+                      <div className="videoWrapper">
+                        <iframe
+                          src={ex.url}
+                          title={ex.name}
+                          frameBorder="0"
+                          allowFullScreen
+                        ></iframe>
+                      </div>
                     )}
                   </td>
                 </tr>
@@ -251,15 +252,18 @@ function WorkoutCard({ workout, onDelete }) {
                 <td>{ex.name}</td>
                 <td>{ex.sets}</td>
                 <td>{ex.reps}</td>
-                <td><WorkoutTimer duration={ex.duration} compact></WorkoutTimer></td>
+                <td>
+                  {ex.duration && <WorkoutTimer duration={ex.duration} />}
+                </td>
                 <td>
                   {embedUrl && (
-                    <iframe
-                      className="exerciseVideo"
-                      src={embedUrl}
-                      title={ex.name}
-                      allowFullScreen
-                    />
+                    <div className="videoWrapper">
+                      <iframe
+                        src={embedUrl}
+                        title={ex.name}
+                        allowFullScreen
+                      ></iframe>
+                    </div>
                   )}
                 </td>
               </tr>
