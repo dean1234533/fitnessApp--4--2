@@ -561,13 +561,14 @@ table {
   .exerciseVideo {
     max-width: 380px;
     cursor: pointer;
+    position: relative;
+      z-index: 10;
   }
 
   @supports not (aspect-ratio: 16/9) {
     .exerciseVideo {
       height: 213px;
-      position: relative;
-      z-index: 10;
+      
     }
   }
 
