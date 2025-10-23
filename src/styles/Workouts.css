@@ -566,6 +566,8 @@ table {
   @supports not (aspect-ratio: 16/9) {
     .exerciseVideo {
       height: 213px;
+      position: relative;
+      z-index: 10;
     }
   }
 
