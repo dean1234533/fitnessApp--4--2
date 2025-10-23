@@ -560,7 +560,7 @@ table {
 
   .exerciseVideo {
     max-width: 380px;
-    touch-action: pan-y;
+    cursor: pointer;
   }
 
   @supports not (aspect-ratio: 16/9) {
