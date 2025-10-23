@@ -108,21 +108,15 @@ function WorkOuts({ userRole }) {
     setExercise({ name: "", sets: "", reps: "", duration: "", url: "" });
   };
 
-  // Convert YouTube link
+  // Convert YouTube link to embeddable format
   const makeEmbed = (url) => {
     if (url.includes("v="))
-      return `https://www.youtube.com/embed/${
-        url.split("v=")[1].split("&")[0]
-      }`;
+      return `https://www.youtube.com/embed/${url.split("v=")[1].split("&")[0]}`;
     if (url.includes("/shorts/"))
-      return `https://www.youtube.com/embed/${
-        url.split("/shorts/")[1].split("?")[0]
-      }`;
+      return `https://www.youtube.com/embed/${url.split("/shorts/")[1].split("?")[0]}`;
     if (url.includes("youtu.be/"))
-      return `https://www.youtube.com/embed/${
-        url.split("youtu.be/")[1].split("?")[0]
-      }`;
-    return "";
+      return `https://www.youtube.com/embed/${url.split("youtu.be/")[1].split("?")[0]}`;
+    return url;
   };
 
   return (
@@ -244,25 +238,33 @@ function WorkoutCard({ workout, onDelete }) {
           </tr>
         </thead>
         <tbody>
-          {workout.exercises?.map((ex) => (
-            <tr key={ex.id}>
-              <td>{ex.name}</td>
-              <td>{ex.sets}</td>
-              <td>{ex.reps}</td>
-              <td>{ex.duration}</td>
-              <td>
-                {ex.url && (
-                  <iframe
-                    className="exerciseVideo"
-                    src={ex.url}
-                    title={ex.name}
-                    frameBorder="0"
-                    allowFullScreen
-                  />
-                )}
-              </td>
-            </tr>
-          ))}
+          {workout.exercises?.map((ex) => {
+            const embedUrl = ex.url
+              ? ex.url
+                  .replace("watch?v=", "embed/")
+                  .replace("youtu.be/", "youtube.com/embed/")
+                  .replace("/shorts/", "/embed/")
+              : "";
+
+            return (
+              <tr key={ex.id}>
+                <td>{ex.name}</td>
+                <td>{ex.sets}</td>
+                <td>{ex.reps}</td>
+                <td><WorkoutTimer duration={ex.duration} compact></WorkoutTimer></td>
+                <td>
+                  {embedUrl && (
+                    <iframe
+                      className="exerciseVideo"
+                      src={embedUrl}
+                      title={ex.name}
+                      allowFullScreen
+                    />
+                  )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
