@@ -1,0 +1,24 @@
+
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;       /* stops all side scrolling */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+}
+
+/* Fixes iOS “rubber band” scroll bounce horizontally */
+body {
+  position: relative;
+  overscroll-behavior-x: none;
+}
+
+/* Ensure all elements respect viewport width */
+img, iframe, video, canvas, table, div {
+  max-width: 100%;
+}

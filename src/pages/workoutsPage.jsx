@@ -108,15 +108,25 @@ function WorkOuts({ userRole }) {
     setExercise({ name: "", sets: "", reps: "", duration: "", url: "" });
   };
 
-  // Convert YouTube link to embeddable format
+  // ✅ FIXED: Proper YouTube embed URL conversion
   const makeEmbed = (url) => {
-    if (url.includes("v="))
-      return `https://www.youtube.com/embed/${url.split("v=")[1].split("&")[0]}`;
-    if (url.includes("/shorts/"))
-      return `https://www.youtube.com/embed/${url.split("/shorts/")[1].split("?")[0]}`;
-    if (url.includes("youtu.be/"))
-      return `https://www.youtube.com/embed/${url.split("youtu.be/")[1].split("?")[0]}`;
-    return url;
+    if (!url) return "";
+
+    try {
+      let videoId = "";
+
+      if (url.includes("v=")) {
+        videoId = url.split("v=")[1].split("&")[0];
+      } else if (url.includes("youtu.be/")) {
+        videoId = url.split("youtu.be/")[1].split("?")[0];
+      } else if (url.includes("/shorts/")) {
+        videoId = url.split("/shorts/")[1].split("?")[0];
+      }
+
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
+    } catch {
+      return "";
+    }
   };
 
   return (
@@ -173,7 +183,7 @@ function WorkOuts({ userRole }) {
                 <th>Sets</th>
                 <th>Reps</th>
                 <th>Duration</th>
-                <th>Url</th>
+                <th>Video</th>
               </tr>
             </thead>
             <tbody>
@@ -187,14 +197,12 @@ function WorkOuts({ userRole }) {
                   </td>
                   <td>
                     {ex.url && (
-                      <div className="videoWrapper">
-                        <iframe
-                          src={ex.url}
-                          title={ex.name}
-                          frameBorder="0"
-                          allowFullScreen
-                        ></iframe>
-                      </div>
+                      <iframe
+                        className="exerciseVideo"
+                        src={ex.url}
+                        title={ex.name}
+                        allowFullScreen
+                      ></iframe>
                     )}
                   </td>
                 </tr>
@@ -232,43 +240,32 @@ function WorkoutCard({ workout, onDelete }) {
         <thead>
           <tr>
             <th>Exercise Name</th>
-            <th>Duration</th>
+            <th>Sets</th>
             <th>Reps</th>
-            <th>Secs</th>
-            <th>Url</th>
+            <th>Duration</th>
+            <th>Video</th>
           </tr>
         </thead>
         <tbody>
-          {workout.exercises?.map((ex) => {
-            const embedUrl = ex.url
-              ? ex.url
-                  .replace("watch?v=", "embed/")
-                  .replace("youtu.be/", "youtube.com/embed/")
-                  .replace("/shorts/", "/embed/")
-              : "";
-
-            return (
-              <tr key={ex.id}>
-                <td>{ex.name}</td>
-                <td>{ex.sets}</td>
-                <td>{ex.reps}</td>
-                <td>
-                  {ex.duration && <WorkoutTimer duration={ex.duration} />}
-                </td>
-                <td>
-                  {embedUrl && (
-                    <div className="videoWrapper">
-                      <iframe
-                        src={embedUrl}
-                        title={ex.name}
-                        allowFullScreen
-                      ></iframe>
-                    </div>
-                  )}
-                </td>
-              </tr>
-            );
-          })}
+          {workout.exercises?.map((ex) => (
+            <tr key={ex.id}>
+              <td>{ex.name}</td>
+              <td>{ex.sets}</td>
+              <td>{ex.reps}</td>
+              <td> {ex.duration && <WorkoutTimer duration={ex.duration} />}
+</td>
+              <td>
+                {ex.url && (
+                  <iframe
+                    className="exerciseVideo"
+                    src={ex.url}
+                    title={ex.name}
+                    allowFullScreen
+                  ></iframe>
+                )}
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

@@ -182,8 +182,9 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
 
   return (
     <div className="loginFormContainer">
-      <Header />
-
+       <div className=" secondImg">
+       <img  src="/../images/IMG_4346.PNG" alt="logo" />
+</div>
       {mode === "login" ? (
         <>
           <form className="loginForm" onSubmit={handleLogin}>

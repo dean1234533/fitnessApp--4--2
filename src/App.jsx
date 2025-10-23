@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom"; // ✅ remove BrowserRouter here
 import { supabase } from "./client";
+import "./styles/App.css"; 
 
 import LoginPage from "./pages/LoginPage";
 import LoginApp from "./LoginApp";

@@ -1,5 +1,4 @@
-.timerContainer {
-}
+
 
 .timer {
   margin-left: 40px;
@@ -13,6 +12,7 @@
   border: none;
   background: none;
   display: inline;
+  cursor: pointer;
 }
 
 .timerReset {
@@ -20,6 +20,7 @@
   border: none;
   background: none;
   display: inline;
+  cursor: pointer;
 }
 .buttonWrap {
   display: flex;
