@@ -477,6 +477,7 @@ table {
 
   .exerciseVideo {
     max-width: 320px;
+    cursor: pointer;
   }
 
   @supports not (aspect-ratio: 16/9) {
