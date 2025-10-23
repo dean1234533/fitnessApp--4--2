@@ -560,11 +560,18 @@ table {
 
   .exerciseVideo {
     max-width: 380px;
-    cursor: pointer;
-    position: relative;
-      z-index: 10;
-      touch-action: manipulation;
-      pointer-events: auto;
+     width: 160px;
+  height: 90px;
+  border: none;
+  border-radius: 8px;
+  display: block;
+  margin: 0 auto;
+  background-color: #000;
+  cursor: pointer;              /* lets browser treat it as clickable */
+  touch-action: manipulation;   /* removes tap delay */
+  pointer-events: auto;         /* makes sure iframe receives touch */
+  z-index: 10;
+
   }
 
   @supports not (aspect-ratio: 16/9) {
