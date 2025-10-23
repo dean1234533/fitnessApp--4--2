@@ -5,11 +5,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 0 auto;
   flex-direction: column;
-  min-height: 10vh;
-  padding: 20px;
-  transform: scale(1.2);
+  min-height: 100vh;
+  padding: 24px;
+  margin: 0 auto;
   width: 100%;
   max-width: 600px;
   box-sizing: border-box;
@@ -20,12 +19,8 @@
 =========================== */
 .loginForm {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 0 auto;
   flex-direction: column;
-  box-sizing: border-box;
-  padding: 40px;
   width: 100%;
 }
 
@@ -34,13 +29,13 @@
 =========================== */
 .loginInput {
   border-radius: 30px;
-  border: 2px solid #ddd;
-  padding: 12px 20px;
-  margin-top: 15px;
-  width: 100%;
+  border: none;
+  padding: 0 22px;
+  width: 85%;
+  height: 54%;
   box-sizing: border-box;
   font-size: 16px;
-  transition: border-color 0.3s ease;
+  background-color: white;
 }
 
 .loginInput:focus {
@@ -48,21 +43,26 @@
   border-color: #9e0303;
 }
 
+.loginInput::placeholder {font-size: 16px;}
+
 /* ===========================
    Submit Button
 =========================== */
 .submitButton {
-  margin-top: 20px !important;
-  padding: 8px !important;
-  border: 1px solid white !important;
-  border-radius: 25px !important;
+  margin-top: 10px !important;
+  
+  border: none;
+  border-radius: 30px !important;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
   color: white;
   background-color: #9e0303 !important;
-  font-size: 16px;
+  font-size: 96px;
   cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 1px;
   transition: background-color 0.3s ease;
-  width: 100%;
+  height: 58%;
+  width: 85px;
   box-sizing: border-box;
 }
 
@@ -75,39 +75,159 @@
    Other Buttons
 =========================== */
 .CoachDashboardButton {
-  padding: 10px 20px;
-  margin-top: 15px;
-  box-sizing: border-box;
+ font-size: 15px;
+  margin-top: 22px;
 }
 
 .forgotPasswordButton {
   background: none;
   border: none;
+  color: black;
   cursor: pointer;
+   font-size: 15px;
+  margin-top: 22px;
 }
 
 .linkButton {
   color: black;
   text-decoration: underline #ab0303;
+  cursor: pointer;
+   font-size: 15px;
+  margin-top: 22px;
 }
 
-@media (max-width: 767px) {
-  .loginFormContainer {
-    max-width: 95%;
-  }
-}
+
 
 /* ===========================
    Responsive Design
 =========================== */
 @media (min-width: 768px) {
   .loginFormContainer {
-    max-width: 500px;
-  }
+  
+  padding: 40px;
+  
+}
+
+/* ===========================
+   Login Form
+=========================== */
+.loginForm {
+
+  max-width: 500px;
+  gap:26px;
+}
+
+/* ===========================
+   Input Fields
+=========================== */
+.loginInput {
+  
+  padding: 0 26px;
+  width: 400px;
+  height: 58px;
+  box-sizing: border-box;
+  font-size: 17px;
+  
+}
+
+.loginInput::placeholder {font-size: 17px;}
+
+
+/* ===========================
+   Submit Button
+=========================== */
+.submitButton {
+  margin-top: 12px !important;
+  font-size: 20px;
+ height: 62px;
+  width: 400px;
+ }
+
+.submitButton:hover {
+  background-color: rgb(88, 3, 3) !important;
+  color: black !important;
+}
+
+/* ===========================
+   Other Buttons
+=========================== */
+.CoachDashboardButton {
+ font-size: 16px;
+  margin-top: 26px;
+}
+
+.forgotPasswordButton {
+  font-size: 16px;
+  margin-top: 26px;
+}
+
+.linkButton {
+  font-size: 16px;
+  margin-top: 26px;
+}
 }
 
 @media (min-width: 1200px) {
-  .loginFormContainer {
-    max-width: 600px;
-  }
+    .loginFormContainer {
+  
+  padding: 40px;
+  
+}
+
+/* ===========================
+   Login Form
+=========================== */
+.loginForm {
+
+  max-width: 550px;
+  gap:30px;
+}
+
+/* ===========================
+   Input Fields
+=========================== */
+.loginInput {
+  
+  padding: 0 28px;
+  width: 450px;
+  height: 60px;
+  box-sizing: border-box;
+  font-size: 18px;
+  
+}
+
+.loginInput::placeholder {font-size: 18px;}
+
+/* ===========================
+   Submit Button
+=========================== */
+.submitButton {
+  margin-top: 15px !important;
+  font-size: 21px;
+ height: 65px;
+  width: 450px;
+ }
+
+.submitButton:hover {
+  background-color: rgb(88, 3, 3) !important;
+  transition: background-color 0.3s ease;
+}
+
+/* ===========================
+   Other Buttons
+=========================== */
+.CoachDashboardButton {
+ font-size: 16px;
+  margin-top: 26px;
+}
+
+.forgotPasswordButton {
+  font-size: 17px;
+  margin-top: 30px;
+}
+
+.linkButton {
+ font-size: 17px;
+  margin-top: 30px;
+}
 }

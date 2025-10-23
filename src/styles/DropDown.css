@@ -7,8 +7,8 @@
     align-items: flex-start;
     padding: 20px;
     min-height: 5vh;
-    top: 20px 
-    right: 10px 
+    top: 20px; 
+    right: 10px;
     width:100%;
     box-sizing:border-box;
 }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { supabase } from "./client";
+import { supabase } from "/src/client";
 import "../styles/FoodGenerator.css";
 
 const FoodGenerator = () => {

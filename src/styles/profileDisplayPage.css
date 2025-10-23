@@ -6,7 +6,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: black;
+  background: black
+    url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
   border-radius: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
@@ -63,7 +64,7 @@
   padding: 15px 25px;
   cursor: pointer;
   text-align: left;
-  width: 100%;
+  width: 100%; /* Changed from fixed width */
   background-color: #fff;
   color: #000;
   font-size: 18px;
@@ -108,15 +109,23 @@
   font-size: 18px;
 }
 
+/* MOBILE - max-width: 767px */
 @media (max-width: 767px) {
   .container {
-    padding: 15px;
+    padding: 15px !important;
     width: 95% !important;
-    border-width: 3px;
+    max-width: 100%;
+    border-width: 3px !important;
+    margin: 20px auto;
+  }
+
+  .avatar {
+    padding: 30px 0;
   }
 
   .editProfile {
-    padding: 12px;
+    padding: 10px 20px;
+    font-size: 14px;
   }
 
   .profileAvatar {
@@ -125,7 +134,17 @@
   }
 
   .EditProfileButton {
-    padding: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+
+  .profileH1 {
+    font-size: 22px;
+  }
+
+  .name,
+  .Age {
+    font-size: 16px;
   }
 
   .phone,
@@ -136,28 +155,53 @@
   .fitnessGoal,
   .activityLevel {
     font-size: 14px;
-    padding: 14px 20px;
-    width: 400px;
+    padding: 12px 18px;
+    width: 100%; /* Use full width */
+    min-height: 50px;
+  }
+
+  .physicalStatsContainer,
+  .fitnessProfileContainer,
+  .contactInfoContainer {
+    font-size: 18px;
+    margin: 15px 0 8px;
   }
 }
 
+/* TABLET - min-width: 768px */
 @media (min-width: 768px) {
   .container {
-    padding: 30px;
+    padding: 30px !important;
     max-width: 550px !important;
+    margin: 40px auto;
+  }
+
+  .avatar {
+    padding: 50px 0;
   }
 
   .editProfile {
-    padding: 16px;
+    padding: 14px 28px;
+    font-size: 16px;
   }
 
   .profileAvatar {
-    width: 200px !important;
-    height: 200px !important;
+    width: 160px !important;
+    height: 160px !important;
   }
 
   .EditProfileButton {
-    padding: 13px;
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  .profileH1 {
+    font-size: 30px;
+  }
+
+  .name,
+  .Age {
+    font-size: 19px;
   }
 
   .phone,
@@ -167,29 +211,66 @@
   .height,
   .fitnessGoal,
   .activityLevel {
-    font-size: 18px;
-    padding: 16px 22px;
-    width: 500px;
+    font-size: 17px;
+    padding: 16px 24px;
+    width: 100%; /* Use full width */
+    min-height: 62px;
+  }
+
+  .physicalStatsContainer,
+  .fitnessProfileContainer,
+  .contactInfoContainer {
+    font-size: 21px;
+    margin: 22px 0 12px;
   }
 }
 
+/* DESKTOP - min-width: 1200px */
 @media (min-width: 1200px) {
   .container {
-    padding: 40px;
+    padding: 40px !important;
     max-width: 600px !important;
+    margin: 50px auto;
+  }
+
+  .avatar {
+    padding: 60px 0;
   }
 
   .editProfile {
-    padding: 18px;
+    padding: 16px 32px;
+    font-size: 17px;
+  }
+
+  .editProfile:hover {
+    background: #8f0202
+      url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+    transition: background 0.3s ease;
   }
 
   .profileAvatar {
-    width: 240px !important;
-    height: 240px !important;
+    width: 180px !important;
+    height: 180px !important;
   }
 
   .EditProfileButton {
-    padding: 16px;
+    padding: 14px 28px;
+    font-size: 17px;
+  }
+
+  .EditProfileButton:hover {
+    background: #8f0202
+      url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
+    transition: background 0.3s ease;
+  }
+
+  .profileH1 {
+    font-size: 32px;
+  }
+
+  .name,
+  .Age {
+    font-size: 20px;
   }
 
   .phone,
@@ -200,7 +281,15 @@
   .fitnessGoal,
   .activityLevel {
     font-size: 18px;
-    padding: 20px 25px;
-    width: 550px;
+    padding: 18px 26px;
+    width: 100%; /* Use full width */
+    min-height: 65px;
+  }
+
+  .physicalStatsContainer,
+  .fitnessProfileContainer,
+  .contactInfoContainer {
+    font-size: 22px;
+    margin: 24px 0 14px;
   }
 }

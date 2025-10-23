@@ -75,7 +75,7 @@ export default function ProfileView() {
   }
 
   return (
-    <div className="container" style={{ maxWidth: 600, margin: "0 auto" }}>
+    <div className="container" style={{ maxWidth: 600, marginTop: "0 auto" }}>
       <div
         className="PicContainer "
         style={{ textAlign: "center", marginBottom: 16 }}
