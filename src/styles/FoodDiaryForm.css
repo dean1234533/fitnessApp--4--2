@@ -1,10 +1,12 @@
+/* BASE STYLES - Mobile First */
 .DiaryContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin: 0 auto 100px auto;
-  width: 80%;
+  width: 90%;
+  max-width: 1200px;
   border: 5px solid black;
   border-radius: 20px;
   background-color: white;
@@ -16,24 +18,26 @@
 
 .mealSelect:focus {
   border-color: #ab0303 !important;
-  box-shadow: 0 0 5px rgba(108, 99, 255, 0.4);
+  box-shadow: 0 0 5px rgba(171, 3, 3, 0.4);
   outline: none;
 }
 
 .mealType {
-  font-size: 25px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .timeStamp {
-  margin-left: 66%;
-  font-size: 12px;
+  margin-left: auto;
+  font-size: 10px;
+  text-align: right;
 }
 
 .waterIntake div {
   border-left: 1px solid red;
-  width: 70%;
+  width: 100%;
   border-radius: 10px;
-  padding: 20px;
+  padding: 15px;
   background-image: repeating-linear-gradient(
     45deg,
     transparent,
@@ -41,18 +45,21 @@
     rgba(255, 255, 255, 0.1),
     rgba(255, 255, 255, 0.1)
   );
+  box-sizing: border-box;
 }
 
 .waterIntake {
   text-align: left;
-  margin-left: 40px;
+  margin-left: 20px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
+  width: calc(100% - 40px);
 }
 
 .foodItem div {
   border-left: 1px solid red;
-  width: 70%;
+  width: 100%;
   background-image: repeating-linear-gradient(
     45deg,
     transparent,
@@ -60,27 +67,32 @@
     rgba(255, 255, 255, 0.1),
     rgba(255, 255, 255, 0.1)
   );
-  padding: 30px;
+  padding: 15px;
   border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .foodItem {
-  margin-top: 30px;
+  margin-top: 20px;
   text-align: left;
-  margin-left: 40px;
-  margin-bottom: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+  width: calc(100% - 40px);
 }
 
 .DiaryInput {
   border: 1px solid black;
   border-radius: 30px;
-  width: 80%;
+  width: 90%;
+  max-width: 470px;
   margin-top: 10px;
   text-align: center;
-  max-width: 470px;
-  height: 30px;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -89,23 +101,36 @@
   border-radius: 30px !important;
   border-style: none;
   background-color: #ab0303 !important;
+  color: white;
   margin-top: 10px;
   margin-bottom: 40px !important;
-  width: 80%;
-  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
+  width: 90%;
   max-width: 470px;
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
   cursor: pointer;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.DiaryButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.DiaryButton:active {
+  transform: translateY(0);
 }
 
 .foodDiaryH2 {
-  padding: 40px;
+  padding: 30px 20px;
   border: 10px solid black;
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
     "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   box-shadow: 1px 3px 9px rgba(0, 0, 0, 0.3);
-  color: rgb(21, 21, 26);
   background-image: url("/../images/pexels-taryn-elliott-4099236.jpg");
   background-size: cover;
   background-position: center;
@@ -116,151 +141,212 @@
   text-align: center;
   box-sizing: border-box;
   color: white;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .DiaryEntries {
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-  width: 95%;
+  width: 100%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background-color: black;
   background-image: url("https://www.transparenttextures.com/patterns/maze-white.png");
   margin-bottom: 20px !important;
   text-align: center;
+  box-sizing: border-box;
+  padding: 15px 0;
 }
 
+/* MOBILE - max-width: 767px */
 @media (max-width: 767px) {
   .DiaryContainer {
-    max-width: 95%;
-    padding: 7px;
-    box-sizing: border-box;
+    width: 95%;
+    border-width: 3px;
   }
+
   .mealType {
     font-size: 16px;
   }
 
   .foodDiaryH2 {
-    padding: 20px;
-    font-size: 16px;
-    width: 100%;
-    margin-top: 0px;
-    margin-left: 20px;
-    margin-right: 20px;
-    box-sizing: border-box;
+    padding: 25px 15px;
+    font-size: 18px;
   }
 
   .DiaryInput {
-    max-width: 95%;
-    padding: 10px;
+    width: 95%;
+    height: 42px;
+    font-size: 14px;
+    padding: 0 15px;
   }
 
   .DiaryButton {
-    max-width: 95%;
-  }
-  .DiaryEntries {
     width: 95%;
+    padding: 10px 15px;
+    font-size: 14px;
   }
+
+  .DiaryEntries {
+    width: 100%;
+    padding: 10px 0;
+  }
+
   .timeStamp {
-    margin-left: 56%;
-    font-size: 8px;
+    font-size: 9px;
   }
 
   .waterIntake {
-    font-size: 10px;
-    padding: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 20px);
+    font-size: 12px;
+  }
+
+  .waterIntake div {
+    padding: 12px;
   }
 
   .foodItem {
-    font-size: 10px;
-    padding: 8px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: calc(100% - 20px);
+    font-size: 12px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .foodItem div {
+    padding: 12px;
   }
 }
 
+/* TABLET - min-width: 768px */
 @media (min-width: 768px) {
   .DiaryContainer {
-    max-width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
+    width: 85%;
+    border-width: 5px;
   }
+
   .mealType {
-    font-size: 30px;
+    font-size: 24px;
   }
 
   .foodDiaryH2 {
-    padding: 50px;
-    font-size: 30px;
-    width: 100%;
-    margin-top: 0px;
-    margin-left: 20px;
-    margin-right: 20px;
-    box-sizing: border-box;
+    padding: 40px 30px;
+    font-size: 28px;
   }
 
   .DiaryInput {
-    max-width: 100%;
-    padding: 20px;
+    width: 85%;
+    height: 48px;
+    font-size: 16px;
+    padding: 0 22px;
   }
 
   .DiaryButton {
-    max-width: 100%;
+    width: 85%;
+    padding: 14px 24px;
+    font-size: 17px;
   }
+
   .DiaryEntries {
     width: 100%;
+    padding: 18px 0;
   }
+
   .timeStamp {
-    margin-left: 66%;
+    font-size: 12px;
+  }
+
+  .waterIntake {
+    margin-left: 30px;
+    margin-right: 30px;
+    width: calc(100% - 60px);
+    font-size: 16px;
+  }
+
+  .waterIntake div {
+    padding: 18px;
+    width: 85%;
+  }
+
+  .foodItem {
+    margin-left: 30px;
+    margin-right: 30px;
+    width: calc(100% - 60px);
+    font-size: 16px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+
+  .foodItem div {
+    padding: 25px;
+    width: 85%;
+  }
+}
+
+/* DESKTOP - min-width: 1200px */
+@media (min-width: 1200px) {
+  .DiaryContainer {
+    width: 80%;
+    border-width: 5px;
+  }
+
+  .mealType {
+    font-size: 28px;
+  }
+
+  .foodDiaryH2 {
+    padding: 50px 40px;
+    font-size: 36px;
+  }
+
+  .DiaryInput {
+    width: 80%;
+    height: 52px;
+    font-size: 18px;
+    padding: 0 25px;
+  }
+
+  .DiaryButton {
+    width: 80%;
+    padding: 16px 28px;
+    font-size: 18px;
+  }
+
+  .DiaryEntries {
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  .timeStamp {
     font-size: 14px;
   }
 
   .waterIntake {
+    margin-left: 40px;
+    margin-right: 40px;
+    width: calc(100% - 80px);
     font-size: 20px;
-    padding: 10px;
+  }
+
+  .waterIntake div {
+    padding: 22px;
+    width: 75%;
   }
 
   .foodItem {
+    margin-left: 40px;
+    margin-right: 40px;
+    width: calc(100% - 80px);
     font-size: 20px;
-    padding: 10px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .DiaryContainer {
-    max-width: 95%;
-    padding: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
   }
 
-  .mealType {
-    font-size: 35px;
-  }
-
-  .foodDiaryH2 {
-    padding: 70px;
-    max-width: 100%;
-    box-sizing: border-box;
-    margin-top: 0px;
-    font-size: 40px;
-  }
-
-  .DiaryInput {
-    max-width: 100%;
-    padding: 25px;
-  }
-
-  .DiaryButton {
-    max-width: 100%;
-  }
-  .timeStamp {
-    margin-left: 70%;
-    font-size: 16px;
-  }
-
-  .waterIntake {
-    padding: 20px;
-    font-size: 22px;
-  }
-
-  .foodItem {
-    font-size: 22px;
-    padding: 20px;
+  .foodItem div {
+    padding: 30px;
+    width: 75%;
   }
 }

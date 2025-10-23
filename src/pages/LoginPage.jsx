@@ -1,24 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-
-// ✅ Corrected path — public files aren't imported directly
-// Move `Login.css` into `src/styles/` or `src/` then import like this:
 import "../styles/Login.css";
-
-// ✅ Corrected folder name (should be components, not componants)
 import Header from "../components/header";
-
-// ✅ Firebase config path — from src/firebaseConfig.js
 import { auth, db } from "../utils/firebaseConfig";
-
-// ✅ Firebase auth & firestore imports
 import {
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-
 import {
   doc,
   setDoc,
@@ -37,6 +27,11 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   const [loadingTrainers, setLoadingTrainers] = useState(false);
   const [chooseManually, setChooseManually] = useState(false);
 
+  // ✅ Fix: re-sync mode when navigating between /SignUpPage and /ManualSignUp
+  useEffect(() => {
+    setMode(showSignup ? "signup" : "login");
+  }, [showSignup]);
+
   // -------- Load Trainers ----------
   useEffect(() => {
     const needDropdown =
@@ -49,9 +44,13 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
       try {
         const snap = await getDocs(collection(db, "trainerDirectory"));
         const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        console.log("🔥 Trainers fetched:", list);
         setTrainers(list);
       } catch (err) {
-        console.error("Error loading trainer directory:", err);
+        console.error("❌ Error loading trainer directory:", err);
+        alert(
+          "Could not load trainers. Check Firestore rules and collection name (trainerDirectory)."
+        );
         setTrainers([]);
       } finally {
         setLoadingTrainers(false);
@@ -117,7 +116,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
             : inviteToken || null;
 
         if (!trainerId) {
-          alert("Please select a trainer");
+          alert("Please select a trainer before signing up.");
           return;
         }
 
@@ -130,15 +129,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
             email: user.email || "",
             trainer_id: trainerId,
             contact_email: user.email || "",
-            phone: "",
-            profile_pic_url: "",
-            age: null,
-            gender: "",
-            body_weight: null,
-            body_fat: null,
-            height: null,
-            fitness_goal: "",
-            daily_activity_level: "",
             created_at: serverTimestamp(),
             updated_at: serverTimestamp(),
           },
@@ -161,8 +151,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
             name,
             email: user.email || "",
             contact_email: user.email || "",
-            phone: "",
-            profile_pic_url: "",
             created_at: serverTimestamp(),
             updated_at: serverTimestamp(),
           },
@@ -195,6 +183,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   return (
     <div className="loginFormContainer">
       <Header />
+
       {mode === "login" ? (
         <>
           <form className="loginForm" onSubmit={handleLogin}>
@@ -301,20 +290,24 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                     <label className="trainerSelectLabel">Select Trainer</label>
                     {loadingTrainers ? (
                       <p className="inviteNotice">Loading trainers…</p>
-                    ) : (
+                    ) : trainers.length > 0 ? (
                       <select
                         className="trainerSelect"
                         value={selectedTrainerId}
                         onChange={(e) => setSelectedTrainerId(e.target.value)}
                         required
                       >
-                        <option value="">— No trainer selected —</option>
+                        <option value="">— Select a trainer —</option>
                         {trainers.map((t) => (
                           <option key={t.id} value={t.id}>
                             {t.name?.trim() ? t.name : t.email}
                           </option>
                         ))}
                       </select>
+                    ) : (
+                      <p className="inviteNotice">
+                        ⚠️ No trainers found. Make sure at least one trainer has signed up.
+                      </p>
                     )}
                   </>
                 ) : (

@@ -5,7 +5,9 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  padding: 40px 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 15px;
   box-sizing: border-box;
 }
 
@@ -15,48 +17,53 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 95%;
   max-width: 600px;
   background-color: #fafafa;
-  padding: 0 10px;
-  border-radius: 10px;
+  padding: 20px 15px 70px 15px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 2px solid;
+  border: 3px solid #333;
+  box-sizing: border-box;
+  margin-bottom: 30px;
 }
 
 /* ✅ Title */
 .notePadName {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 2rem;
-  color: #333;
-  padding: 50px;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  padding: 40px 20px;
   box-sizing: border-box;
   border-radius: 10px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 0;
   background-image: url("/images/pexels-jessbaileydesign-750913.jpg");
   background-position: center;
-  background-repeat: repeat;
+  background-repeat: no-repeat;
   background-size: cover;
-  border: 4px solid #333;
+  border: 3px solid #333;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 /* ✅ Textarea */
 .text {
   width: 100%;
-  height: 200px;
-  max-width: 600px;
+  height: 180px;
+  max-width: 100%;
   padding: 15px;
-  border: 1px solid #ddd;
+  border: 2px solid #ddd;
   border-radius: 8px;
-  resize: none;
+  resize: vertical;
   outline: none;
-  background-color: #fafafa;
+  background-color: white;
   box-sizing: border-box;
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
   color: #333;
+  font-family: inherit;
   text-align: left;
   transition: border-color 0.2s ease, background-color 0.2s ease;
 }
@@ -64,47 +71,72 @@
 .text:focus {
   border-color: #8b0000;
   background: white;
+  box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+}
+
+.text::placeholder {
+  color: #999;
 }
 
 /* ✅ Button Container */
 .notePadButtonContainer {
   width: 100%;
-  max-width: 600px;
-  margin-bottom: 30px;
+  max-width: 100%;
+  position: relative;
+  height: 50px;
+  box-sizing: border-box;
 }
 
 /* ✅ Add Button */
 .notePadButton {
   position: absolute !important;
-  right: 10px;
-  width: 50px !important;
-  height: 60px !important;
+  right: 0;
+  bottom: -55px;
+  width: 56px !important;
+  height: 56px !important;
+  min-width: 56px;
   border-radius: 50% !important;
-  font-size: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  border: 1px solid black;
+  font-size: 24px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+  border: 2px solid black;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
   background-color: #8b0000 !important;
-  color: white;
+  color: white !important;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 .notePadButton:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: scale(1.08);
+  box-shadow: 0 5px 15px rgba(139, 0, 0, 0.4);
 }
 
 .notePadButton:active {
-  transform: scale(0.98);
+  transform: scale(0.95);
 }
 
 /* ✅ Notes Heading */
 .notes {
   text-align: center;
-  margin: 40px 0 20px;
-  font-size: 1.5rem;
-  color: #444;
+  margin: 50px 0 30px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  text-decoration: underline #8b0000;
+}
+
+/* ✅ Saved Notes Container */
+.savedNotesContainer {
+  width: 95%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
 }
 
 /* ✅ Saved Note */
@@ -113,96 +145,233 @@
   justify-content: space-between;
   align-items: flex-start;
   background-color: white;
-  border: 1.5px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 100%;
   width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 15px;
+  padding: 15px 18px;
+  margin-bottom: 0;
   word-wrap: break-word;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   overflow-wrap: anywhere;
+  box-sizing: border-box;
 }
 
 .savedNotes:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
 }
 
 .savedNotes p {
   flex: 1;
   margin: 0;
   color: #333;
-  line-height: 1.4;
-  font-size: 16px;
-  padding-right: 10px;
+  line-height: 1.5;
+  font-size: 15px;
+  padding-right: 15px;
+  word-break: break-word;
 }
 
 .savedNotes svg {
   cursor: pointer;
   margin-left: 10px;
-  color: #444;
+  color: #666;
   transition: color 0.2s ease, transform 0.2s ease;
   flex-shrink: 0;
+  width: 20px;
+  height: 20px;
 }
 
 .savedNotes svg:hover {
-  color: #1976d2;
-  transform: scale(1.15);
+  color: #8b0000;
+  transform: scale(1.2);
 }
 
+/* ==============================
+   MOBILE - max-width: 767px
+============================== */
 @media (max-width: 767px) {
+  .notePadContainer {
+    padding: 25px 12px;
+  }
+
+  .notePad {
+    width: 95%;
+    padding: 15px 12px 65px 12px;
+    border-width: 2px;
+  }
+
+  .notePadName {
+    font-size: 1.4rem;
+    padding: 30px 15px;
+    margin-bottom: 20px;
+    border-width: 2px;
+  }
+
   .text {
     height: 150px;
-    font-size: 10px;
+    font-size: 14px;
+    padding: 12px;
   }
 
   .notePadButton {
-    font-size: 16px;
-    right: 15px;
-    bottom: -30px;
-    height: 60px !important;
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px;
+    font-size: 20px;
+    bottom: -50px;
+    right: 5px;
+  }
+
+  .notes {
+    font-size: 1.4rem;
+    margin: 40px 0 25px;
+  }
+
+  .savedNotesContainer {
+    width: 95%;
+    gap: 12px;
   }
 
   .savedNotes {
-    padding: 10px 10px;
+    padding: 12px 14px;
+    border-width: 1.5px;
+  }
+
+  .savedNotes p {
+    font-size: 14px;
+    padding-right: 12px;
+  }
+
+  .savedNotes svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
+/* ==============================
+   TABLET - min-width: 768px
+============================== */
 @media (min-width: 768px) {
+  .notePadContainer {
+    padding: 40px 20px;
+  }
+
+  .notePad {
+    width: 90%;
+    padding: 25px 20px 75px 20px;
+    border-width: 3px;
+  }
+
+  .notePadName {
+    font-size: 2rem;
+    padding: 45px 25px;
+    margin-bottom: 28px;
+    border-width: 3px;
+  }
+
+  .text {
+    height: 220px;
+    font-size: 16px;
+    padding: 16px;
+  }
+
+  .notePadButton {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px;
+    font-size: 26px;
+    bottom: -58px;
+    right: 10px;
+  }
+
+  .notes {
+    font-size: 2rem;
+    margin: 55px 0 32px;
+  }
+
+  .savedNotesContainer {
+    width: 90%;
+    gap: 16px;
+  }
+
+  .savedNotes {
+    padding: 16px 20px;
+    border-width: 2px;
+  }
+
+  .savedNotes p {
+    font-size: 16px;
+    padding-right: 15px;
+  }
+
+  .savedNotes svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ==============================
+   DESKTOP - min-width: 1200px
+============================== */
+@media (min-width: 1200px) {
+  .notePadContainer {
+    padding: 50px 30px;
+  }
+
+  .notePad {
+    width: 85%;
+    max-width: 650px;
+    padding: 30px 25px 85px 25px;
+    border-width: 4px;
+  }
+
+  .notePadName {
+    font-size: 2.2rem;
+    padding: 50px 30px;
+    margin-bottom: 32px;
+    border-width: 4px;
+  }
+
   .text {
     height: 250px;
-    font-size: 16px;
+    font-size: 17px;
+    padding: 18px;
   }
 
   .notePadButton {
-    font-size: 24px;
-    right: 15px;
-    bottom: -30px;
-    height: 60px !important;
-  }
-
-  .savedNotes {
-    padding: 15px 20px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .text {
-    height: 300px;
-    font-size: 18px;
-  }
-
-  .notePadButton {
+    width: 65px !important;
+    height: 65px !important;
+    min-width: 65px;
     font-size: 28px;
-    right: 20px;
-    bottom: -35px;
-    width: 70px !important;
-    height: 70px !important;
+    bottom: -62px;
+    right: 15px;
+  }
+
+  .notes {
+    font-size: 2.2rem;
+    margin: 60px 0 35px;
+  }
+
+  .savedNotesContainer {
+    width: 85%;
+    max-width: 650px;
+    gap: 18px;
   }
 
   .savedNotes {
-    padding: 18px 25px;
+    padding: 18px 24px;
+    border-width: 2px;
+  }
+
+  .savedNotes p {
+    font-size: 17px;
+    padding-right: 18px;
+  }
+
+  .savedNotes svg {
+    width: 24px;
+    height: 24px;
   }
 }

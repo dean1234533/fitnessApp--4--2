@@ -5,149 +5,308 @@ body {
   background-position: center;
 }
 
-
+/* ==============================
+   Profile Form Container
+============================== */
 .profileFormContainer {
   min-height: 100vh;
-  margin-bottom: 100px;
-  width: 100%;
-  max-width: 470px;
-  margin: 0 auto;
+  width: 90%;
+  max-width: 550px;
+  margin: 0 auto 100px auto;
   color: white;
+  box-sizing: border-box;
+  padding: 20px 0;
 }
 
+/* ==============================
+   Profile Form
+============================== */
 .profileForm {
-  font-size: 25px;
-  border: 2px solid #ab0303;
+  font-size: 18px;
+  border: 3px solid #ab0303;
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 400px;
+  width: 100%;
   flex-direction: column;
-
-  min-height: 100vh;
-  padding: 30px;
-  padding-bottom: 1px;
+  min-height: auto;
+  padding: 30px 20px;
+  padding-bottom: 40px;
   background-color: black;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* ==============================
+   Profile Picture Container
+============================== */
 .profilePicContainer {
   background: #ab0303
     url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
   color: #fff;
   border-radius: 20px 20px 0 0;
   text-align: center;
-  padding: 40px 0;
+  padding: 35px 20px;
   width: 100%;
-  border: 1px solid white;
+  border: 2px solid white;
+  box-sizing: border-box;
+  margin-bottom: 25px;
 }
 
 .profilePic {
-  width: 200px !important;
-  height: 200px !important;
-  border: 2px solid white;
+  width: 140px !important;
+  height: 140px !important;
+  border: 3px solid white;
   border-radius: 50%;
   display: block;
   object-fit: cover;
+  margin: 0 auto;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
-.ProfileForm,
-Label {
+/* ==============================
+   Form Labels
+============================== */
+.ProfileForm label,
+label {
   display: flex;
   text-align: left;
   flex-direction: column;
-  padding-top: 10px;
-}
-
-.formButton {
-  padding: 20px;
-  margin-bottom: 10px;
+  padding-top: 15px;
   font-size: 16px;
-  color: #ab0303 !important;
+  font-weight: 600;
+  color: white;
+  margin-bottom: 8px;
 }
 
-.ProfileForm,
+/* ==============================
+   Form Inputs
+============================== */
+.ProfileForm input,
+.ProfileForm select,
+input,
 select {
-  width: 350px;
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 12px 15px;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   border: 2px solid #ab0303;
+  font-size: 15px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background-color: white;
 }
 
-.ProfileForm,
-input {
-  width: 400px;
-  box-sizing: border-box;
-  padding: 10px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  border: 2px solid #ab0303;
+.ProfileForm input:focus,
+.ProfileForm select:focus,
+input:focus,
+select:focus {
+  outline: none;
+  border-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
 }
+
+/* ==============================
+   Gender Select
+============================== */
 .gender {
-  width: 400px;
+  width: 100%;
   box-sizing: border-box;
-  padding: 10px;
+  padding: 12px 15px;
   border-radius: 10px;
+  margin-bottom: 15px;
+  border: 2px solid #ab0303;
+  font-size: 15px;
+  background-color: white;
+}
+
+/* ==============================
+   Form Button
+============================== */
+.formButton {
+  width: 100%;
+  padding: 14px 20px;
+  margin-top: 15px;
   margin-bottom: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  color: white !important;
+  background-color: #ab0303 !important;
+  background-image: url("https://www.transparenttextures.com/patterns/maze-white.png") !important;
+  border: 2px solid white !important;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-transform: none;
 }
 
+.formButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(171, 3, 3, 0.4);
+}
+
+.formButton:active {
+  transform: translateY(0);
+}
+
+/* ==============================
+   MOBILE - max-width: 767px
+============================== */
 @media (max-width: 767px) {
-  .profileContainer {
-    max-width: 95%;
-    padding: 15px;
+  .profileFormContainer {
+    width: 95%;
+    max-width: 100%;
+    padding: 15px 0;
+    margin-bottom: 60px;
   }
 
-  .profileInput {
-    font-size: 14px;
-  }
-
-  .profileButton {
-    font-size: 14px;
-  }
-
-  .profileH2 {
-    padding: 20px;
+  .profileForm {
     font-size: 16px;
+    padding: 20px 15px 30px 15px;
+    border-width: 2px;
+  }
+
+  .profilePicContainer {
+    padding: 25px 15px;
+    margin-bottom: 20px;
+    border-width: 2px;
+  }
+
+  .profilePic {
+    width: 110px !important;
+    height: 110px !important;
+    border-width: 2px;
+  }
+
+  .ProfileForm label,
+  label {
+    font-size: 14px;
+    padding-top: 12px;
+    margin-bottom: 6px;
+  }
+
+  .ProfileForm input,
+  .ProfileForm select,
+  input,
+  select,
+  .gender {
+    padding: 10px 12px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .formButton {
+    padding: 12px 16px;
+    font-size: 15px;
+    margin-top: 12px;
   }
 }
 
+/* ==============================
+   TABLET - min-width: 768px
+============================== */
 @media (min-width: 768px) {
-  .profileContainer {
+  .profileFormContainer {
+    width: 85%;
     max-width: 600px;
+    padding: 20px 0;
+    margin-bottom: 80px;
   }
 
-  .profileInput {
+  .profileForm {
     font-size: 18px;
+    padding: 28px 25px 40px 25px;
+    border-width: 3px;
   }
 
-  .profileButton {
+  .profilePicContainer {
+    padding: 35px 20px;
+    margin-bottom: 28px;
+    border-width: 2px;
+  }
+
+  .profilePic {
+    width: 150px !important;
+    height: 150px !important;
+    border-width: 3px;
+  }
+
+  .ProfileForm label,
+  label {
+    font-size: 17px;
+    padding-top: 16px;
+    margin-bottom: 10px;
+  }
+
+  .ProfileForm input,
+  .ProfileForm select,
+  input,
+  select,
+  .gender {
+    padding: 13px 16px;
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+
+  .formButton {
+    padding: 15px 22px;
     font-size: 18px;
-  }
-
-  .profileH2 {
-    padding: 40px;
-    font-size: 24px;
+    margin-top: 18px;
   }
 }
 
+/* ==============================
+   DESKTOP - min-width: 1200px
+============================== */
 @media (min-width: 1200px) {
-  .profileContainer {
+  .profileFormContainer {
+    width: 80%;
     max-width: 650px;
+    padding: 25px 0;
+    margin-bottom: 100px;
   }
 
-  .profileInput {
-    font-size: 20px;
+  .profileForm {
+    font-size: 19px;
+    padding: 35px 30px 50px 30px;
+    border-width: 4px;
   }
 
-  .profileButton {
-    font-size: 20px;
+  .profilePicContainer {
+    padding: 40px 25px;
+    margin-bottom: 32px;
+    border-width: 3px;
   }
 
-  .profileH2 {
-    padding: 60px;
-    font-size: 28px;
+  .profilePic {
+    width: 170px !important;
+    height: 170px !important;
+    border-width: 4px;
+  }
+
+  .ProfileForm label,
+  label {
+    font-size: 18px;
+    padding-top: 18px;
+    margin-bottom: 12px;
+  }
+
+  .ProfileForm input,
+  .ProfileForm select,
+  input,
+  select,
+  .gender {
+    padding: 14px 18px;
+    font-size: 17px;
+    margin-bottom: 18px;
+  }
+
+  .formButton {
+    padding: 16px 26px;
+    font-size: 19px;
+    margin-top: 20px;
   }
 }

@@ -2,11 +2,12 @@
 .workoutInput,
 .exerciseInput {
   border-radius: 10px;
-  padding: 10px;
+  padding: 12px 15px;
   width: 100%;
   box-sizing: border-box;
   font-size: 16px;
-  transition: border-color 0.3s ease;
+  border: 2px solid #ddd;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .workoutInput:focus,
@@ -25,8 +26,8 @@
 .saveWorkoutButton,
 .addExerciseButton {
   margin-top: 10px;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 14px 24px;
+  border-radius: 8px;
   border: none;
   background-color: #ab0303 !important;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
@@ -35,6 +36,7 @@
   transition: all 0.3s ease;
   box-sizing: border-box;
   font-weight: 600;
+  font-size: 16px;
   width: 100%;
 }
 
@@ -46,10 +48,21 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
+.workoutsButton:active,
+.saveWorkoutButton:active,
+.addExerciseButton:active {
+  transform: translateY(0);
+}
+
 .addExerciseButton {
-  color: black !important;
+  color: white !important;
   margin-bottom: 10px !important;
-  border: 1px solid white !important;
+  border: 2px solid white !important;
+  background-color: #333 !important;
+}
+
+.addExerciseButton:hover {
+  background-color: #555 !important;
 }
 
 /* ---------- Page Container ---------- */
@@ -73,12 +86,12 @@
   background-repeat: no-repeat;
   margin: 0 auto 40px auto;
   padding: 40px 20px;
-  width: 100%;
-  max-width: 800px;
+  width: 95%;
+  max-width: 700px;
   border-radius: 10px;
   box-shadow: 1px 3px 9px rgba(0, 0, 0, 0.3);
   color: rgb(239, 239, 243);
-  min-height: 250px;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,8 +99,10 @@
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
-  border: 2px solid #ab0303;
+  border: 3px solid #ab0303;
   font-size: clamp(1.5rem, 5vw, 2.5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* ---------- Section Headings ---------- */
@@ -99,26 +114,32 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  max-width: 800px;
+  width: 95%;
+  max-width: 700px;
   text-align: center;
   background-color: #ab0303;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  box-sizing: border-box;
 }
 
 /* ---------- Workout Form ---------- */
 .workoutsForm {
-  width: 100%;
+  width: 95%;
   max-width: 600px;
   margin: 30px auto 20px auto;
-  padding: 20px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
   background-color: black;
   background-image: url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
-  border-radius: 10px;
+  border-radius: 12px;
   box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   margin-bottom: 50px;
@@ -127,34 +148,45 @@
 }
 
 .workoutsForm h2 {
-  margin: 15px 0 10px 0;
+  margin: 15px 0 20px 0;
   color: white;
   text-decoration: underline #ab0303;
+  font-size: 1.4rem;
 }
 
 .workoutsForm input,
 .workoutsForm select,
 .workoutsForm textarea {
   width: 100%;
-  border: none;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.workoutsForm textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* ---------- Display Sections ---------- */
 .DisplayExercise,
 .DisplayWorkouts {
-  width: 100%;
+  width: 95%;
   text-align: center;
   max-width: 700px;
   margin: 20px auto;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .DisplayExercise table {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  overflow: hidden;
 }
 
 /* ---------- Table Styling ---------- */
@@ -171,13 +203,14 @@ table {
 .DisplayExercise td,
 .DisplayWorkouts th,
 .DisplayWorkouts td {
-  padding: 12px;
+  padding: 12px 10px;
   text-align: left;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   word-wrap: break-word;
   white-space: normal;
   vertical-align: middle;
   box-sizing: border-box;
+  font-size: 14px;
 }
 
 .DisplayExercise th,
@@ -185,17 +218,26 @@ table {
   background-color: #f8f9fa;
   font-weight: 600;
   color: #333;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .DisplayExercise tr:hover,
 .DisplayWorkouts tr:hover {
   background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+.DisplayExercise tr:last-child td,
+.DisplayWorkouts tr:last-child td {
+  border-bottom: none;
 }
 
 /* ---------- Video Styling ---------- */
 .exerciseVideo {
   width: 100%;
-  max-width: 300px;
+  max-width: 280px;
   aspect-ratio: 16/9;
   border: none;
   display: block;
@@ -207,17 +249,18 @@ table {
 /* For older browsers without aspect-ratio support */
 @supports not (aspect-ratio: 16/9) {
   .exerciseVideo {
-    height: 169px;
+    height: 157px;
   }
 }
 
 .videoWrapper {
   display: block;
   width: 100%;
-  max-width: 700px;
+  max-width: 100%;
   margin: 15px auto;
   border-radius: 10px;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .videoUrlText {
@@ -228,26 +271,28 @@ table {
   word-break: break-all;
   overflow-wrap: anywhere;
   margin-bottom: 15px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  padding: 0 10px;
 }
 
 /* ---------- Workout Card Container ---------- */
 .workoutCardContainer {
   position: relative;
-  width: 100%;
+  width: 95%;
   max-width: 700px;
   margin: 20px auto;
   border-radius: 10px;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* ---------- Workout Name Header ---------- */
 .workoutName {
-  color: white;
-  margin: 0;
-  padding: 19px;
   color: black;
+  margin: 0;
+  padding: 20px 15px;
   text-align: center;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
@@ -256,18 +301,21 @@ table {
   font-size: 1.3rem;
   font-weight: 600;
   text-decoration: underline #ab0303;
+  background-color: #f8f9fa;
 }
 
 /* ---------- Delete Button ---------- */
 .deleteWorkoutButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
   border: 2px solid black;
   border-radius: 50%;
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px;
   background-color: white;
   padding: 8px;
-  margin-left: 90%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   display: flex;
@@ -275,6 +323,7 @@ table {
   justify-content: center;
   transition: all 0.3s ease;
   color: #ab0303 !important;
+  z-index: 10;
 }
 
 .deleteWorkoutButton:hover {
@@ -286,113 +335,248 @@ table {
 
 /* ---------- Misc Elements ---------- */
 .ExercisesPreview {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
-/* ---------- Responsive: Mobile ---------- */
+/* ---------- Responsive: Mobile (max-width: 767px) ---------- */
 @media (max-width: 767px) {
+  .workoutsPageContainer {
+    padding: 15px;
+  }
+
   .workoutsH1 {
-    max-width: 400px;
-    padding: 30px;
-    min-height: 210px;
+    width: 95%;
+    padding: 30px 15px;
+    min-height: 150px;
+    font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+    border-width: 2px;
+  }
+
+  .workoutsH2,
+  .savedWorkouts,
+  .ExercisesPreview {
+    width: 95%;
+    padding: 12px;
+    font-size: 1.2rem;
   }
 
   .workoutName {
-    padding: 25px;
-    font-size: 1.5rem;
+    padding: 18px 50px 18px 15px;
+    font-size: 1.1rem;
   }
 
   .workoutsForm {
-    max-width: 500px;
-    padding: 20px;
+    width: 95%;
+    padding: 20px 15px;
+  }
+
+  .workoutsForm h2 {
+    font-size: 1.2rem;
+  }
+
+  .workoutsButton,
+  .saveWorkoutButton,
+  .addExerciseButton {
+    padding: 12px 18px;
+    font-size: 14px;
   }
 
   .DisplayExercise,
   .DisplayWorkouts,
   .workoutCardContainer {
-    max-width: 600px;
+    width: 95%;
+  }
+
+  .DisplayExercise th,
+  .DisplayExercise td,
+  .DisplayWorkouts th,
+  .DisplayWorkouts td {
+    padding: 10px 8px;
+    font-size: 13px;
   }
 
   .exerciseVideo {
-    max-width: 300px;
+    max-width: 250px;
+  }
+
+  @supports not (aspect-ratio: 16/9) {
+    .exerciseVideo {
+      height: 140px;
+    }
   }
 
   .deleteWorkoutButton {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px;
     padding: 7px;
+    top: 12px;
+    right: 12px;
+  }
+
+  .videoUrlText {
+    font-size: 0.8rem;
   }
 }
 
-/* ---------- Responsive: Tablet ---------- */
+/* ---------- Responsive: Tablet (min-width: 768px) ---------- */
 @media (min-width: 768px) {
-  .workoutsH1 {
-    max-width: 500px;
-    padding: 40px;
-    min-height: 310px;
-  }
-
-  .workoutName {
-    padding: 25px;
-    font-size: 1.5rem;
-  }
-
-  .workoutsForm {
-    max-width: 600px;
+  .workoutsPageContainer {
     padding: 25px;
   }
 
-  .DisplayExercise,
-  .DisplayWorkouts,
-  .workoutCardContainer {
-    max-width: 700px;
-  }
-
-  .exerciseVideo {
-    max-width: 350px;
-  }
-
-  .deleteWorkoutButton {
-    width: 45px;
-    height: 45px;
-    min-width: 45px;
-    padding: 10px;
-  }
-}
-
-/* ---------- Responsive: Desktop ---------- */
-@media (min-width: 1200px) {
   .workoutsH1 {
-    max-width: 600px;
-    padding: 50px;
-    min-height: 350px;
+    width: 90%;
+    padding: 45px 25px;
+    min-height: 220px;
+    border-width: 3px;
   }
 
-  .workoutName {
-    padding: 30px;
+  .workoutsH2,
+  .savedWorkouts,
+  .ExercisesPreview {
+    width: 90%;
+    padding: 18px;
     font-size: 1.6rem;
   }
 
+  .workoutName {
+    padding: 22px 60px 22px 20px;
+    font-size: 1.4rem;
+  }
+
   .workoutsForm {
-    max-width: 600px;
-    padding: 30px;
+    width: 90%;
+    padding: 28px;
+  }
+
+  .workoutsForm h2 {
+    font-size: 1.5rem;
+  }
+
+  .workoutsButton,
+  .saveWorkoutButton,
+  .addExerciseButton {
+    padding: 15px 26px;
+    font-size: 17px;
   }
 
   .DisplayExercise,
   .DisplayWorkouts,
   .workoutCardContainer {
-    max-width: 800px;
+    width: 90%;
+  }
+
+  .DisplayExercise th,
+  .DisplayExercise td,
+  .DisplayWorkouts th,
+  .DisplayWorkouts td {
+    padding: 14px 12px;
+    font-size: 15px;
   }
 
   .exerciseVideo {
-    max-width: 400px;
+    max-width: 320px;
+  }
+
+  @supports not (aspect-ratio: 16/9) {
+    .exerciseVideo {
+      height: 180px;
+    }
   }
 
   .deleteWorkoutButton {
-    width: 47px;
-    height: 47px;
-    min-width: 47px;
-    padding: 11px;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px;
+    padding: 9px;
+    top: 15px;
+    right: 15px;
+  }
+
+  .videoUrlText {
+    font-size: 0.9rem;
+  }
+}
+
+/* ---------- Responsive: Desktop (min-width: 1200px) ---------- */
+@media (min-width: 1200px) {
+  .workoutsPageContainer {
+    padding: 30px;
+  }
+
+  .workoutsH1 {
+    width: 85%;
+    padding: 55px 35px;
+    min-height: 250px;
+    border-width: 4px;
+  }
+
+  .workoutsH2,
+  .savedWorkouts,
+  .ExercisesPreview {
+    width: 85%;
+    padding: 20px;
+    font-size: 1.8rem;
+  }
+
+  .workoutName {
+    padding: 25px 70px 25px 25px;
+    font-size: 1.5rem;
+  }
+
+  .workoutsForm {
+    width: 85%;
+    max-width: 650px;
+    padding: 32px;
+  }
+
+  .workoutsForm h2 {
+    font-size: 1.6rem;
+  }
+
+  .workoutsButton,
+  .saveWorkoutButton,
+  .addExerciseButton {
+    padding: 16px 30px;
+    font-size: 18px;
+  }
+
+  .DisplayExercise,
+  .DisplayWorkouts,
+  .workoutCardContainer {
+    width: 85%;
+    max-width: 800px;
+  }
+
+  .DisplayExercise th,
+  .DisplayExercise td,
+  .DisplayWorkouts th,
+  .DisplayWorkouts td {
+    padding: 16px 14px;
+    font-size: 16px;
+  }
+
+  .exerciseVideo {
+    max-width: 380px;
+  }
+
+  @supports not (aspect-ratio: 16/9) {
+    .exerciseVideo {
+      height: 213px;
+    }
+  }
+
+  .deleteWorkoutButton {
+    width: 45px !important;
+    height: 45px !important;
+    min-width: 45px;
+    padding: 10px;
+    top: 18px;
+    right: 18px;
+  }
+
+  .videoUrlText {
+    font-size: 0.95rem;
   }
 }
