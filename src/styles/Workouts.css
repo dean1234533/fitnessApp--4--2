@@ -563,6 +563,7 @@ table {
     cursor: pointer;
     position: relative;
       z-index: 10;
+      touch-action: manipulation;
   }
 
   @supports not (aspect-ratio: 16/9) {
