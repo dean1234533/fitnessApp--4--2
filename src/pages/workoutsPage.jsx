@@ -256,12 +256,14 @@ function WorkoutCard({ workout, onDelete }) {
 </td>
               <td>
                 {ex.url && (
-                  <iframe
-                    className="exerciseVideo"
-                    src={ex.url}
-                    title={ex.name}
-                    allowFullScreen
-                  ></iframe>
+                 <iframe
+  className="exerciseVideo"
+  src={`${ex.url}?playsinline=1&rel=0`}
+  title={ex.name}
+  frameBorder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+  allowFullScreen
+></iframe>
                 )}
               </td>
             </tr>
