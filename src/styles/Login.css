@@ -3,12 +3,13 @@
 ============================== */
 html,
 body {
- width: 100%;
-  max-width: 100%;
-  overflow-x: hidden;       /* stops all side scrolling */
+  height: 100%;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+  font-family: "Inter", sans-serif;
 }
 
 /* ==============================

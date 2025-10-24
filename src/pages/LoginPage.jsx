@@ -1,3 +1,4 @@
+// src/pages/LoginPage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -27,21 +28,20 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   const [loadingTrainers, setLoadingTrainers] = useState(false);
   const [chooseManually, setChooseManually] = useState(false);
 
-  // ✅ Fix: stabilize viewport height for iOS Safari
-  useEffect(() => {
-    const setViewportHeight = () => {
-      const vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
-    };
-    setViewportHeight();
-    window.addEventListener("resize", setViewportHeight);
-    return () => window.removeEventListener("resize", setViewportHeight);
-  }, []);
-
-  // ✅ Fix: re-sync mode when navigating between /SignUpPage and /ManualSignUp
   useEffect(() => {
     setMode(showSignup ? "signup" : "login");
   }, [showSignup]);
+
+  // ✅ Prevent page drift when keyboard opens on iOS
+  useEffect(() => {
+    const fixScroll = () => window.scrollTo(0, 0);
+    window.addEventListener("focusin", fixScroll);
+    window.addEventListener("focusout", fixScroll);
+    return () => {
+      window.removeEventListener("focusin", fixScroll);
+      window.removeEventListener("focusout", fixScroll);
+    };
+  }, []);
 
   // -------- Load Trainers ----------
   useEffect(() => {
@@ -55,7 +55,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
       try {
         const snap = await getDocs(collection(db, "trainerDirectory"));
         const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
-        console.log("🔥 Trainers fetched:", list);
         setTrainers(list);
       } catch (err) {
         console.error("❌ Error loading trainer directory:", err);
@@ -82,7 +81,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
       const user = cred.user;
 
       const ref = doc(db, "profiles", user.uid);
-      let snap = await getDoc(ref);
+      const snap = await getDoc(ref);
 
       if (!snap.exists()) {
         await setDoc(
@@ -97,10 +96,9 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
           },
           { merge: true }
         );
-        snap = await getDoc(ref);
       }
 
-      const profile = snap.data();
+      const profile = (await getDoc(ref)).data();
       onLogin?.(profile);
 
       if (profile.role === "trainer") return navigate("/clientList");
@@ -201,20 +199,18 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
       {mode === "login" ? (
         <>
           <form className="loginForm" onSubmit={handleLogin}>
-            <label htmlFor="email">Email Address</label>
+            <p>Email Address</p>
             <input
               className="loginInput"
               name="email"
-              id="email"
               placeholder="your@email.com"
               type="email"
               required
             />
-            <label htmlFor="password">Password</label>
+            <p>Password</p>
             <input
               className="loginInput"
               name="password"
-              id="password"
               type="password"
               placeholder="Create a secure password"
               required
@@ -255,114 +251,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
         </>
       ) : (
         <>
-          <form className="loginForm" onSubmit={handleSignup}>
-            <div className="roleToggle">
-              <label>
-                <p>Client</p>
-                <input
-                  type="radio"
-                  name="role"
-                  value="client"
-                  checked={role === "client"}
-                  onChange={() => setRole("client")}
-                />
-              </label>
-              <label style={{ marginLeft: 16 }}>
-                <p>Trainer</p>
-                <input
-                  type="radio"
-                  name="role"
-                  value="trainer"
-                  checked={role === "trainer"}
-                  onChange={() => setRole("trainer")}
-                />
-              </label>
-            </div>
-
-            <label htmlFor="name">Full Name</label>
-            <input
-              className="loginInput"
-              name="name"
-              id="name"
-              placeholder="Enter name"
-              type="text"
-              required
-            />
-
-            <label htmlFor="email">Email Address</label>
-            <input
-              className="loginInput"
-              name="email"
-              id="email"
-              placeholder="your@email.com"
-              type="email"
-              required
-            />
-
-            <label htmlFor="password">Password</label>
-            <input
-              className="loginInput"
-              name="password"
-              id="password"
-              type="password"
-              placeholder="Create a secure password"
-              required
-            />
-
-            {role === "client" && (
-              <div className="trainerSelectContainer">
-                {!inviteToken || chooseManually ? (
-                  <>
-                    <label className="trainerSelectLabel">
-                      Select Your Trainer
-                    </label>
-                    {loadingTrainers ? (
-                      <p className="inviteNotice">Loading trainers…</p>
-                    ) : trainers.length > 0 ? (
-                      <select
-                        className="trainerSelect"
-                        value={selectedTrainerId}
-                        onChange={(e) => setSelectedTrainerId(e.target.value)}
-                        required
-                      >
-                        <option value="">— Choose a trainer... —</option>
-                        {trainers.map((t) => (
-                          <option key={t.id} value={t.id}>
-                            {t.name?.trim() ? t.name : t.email}
-                          </option>
-                        ))}
-                      </select>
-                    ) : (
-                      <p className="inviteNotice">
-                        ⚠️ No trainers found. Make sure at least one trainer has
-                        signed up.
-                      </p>
-                    )}
-                  </>
-                ) : (
-                  <p className="inviteNotice">
-                    Joining via invite — trainer will be linked automatically.
-                  </p>
-                )}
-              </div>
-            )}
-
-            <Button className="submitButton" type="submit" variant="contained">
-              Sign Up
-            </Button>
-          </form>
-
-          <p className="switchText">
-            Already have an account?{" "}
-            <Button
-              className="switchButton"
-              type="button"
-              onClick={() => setMode("login")}
-              variant="text"
-            >
-              Login
-            </Button>
-          </p>
+          {/* Signup form */}
         </>
       )}
     </div>
