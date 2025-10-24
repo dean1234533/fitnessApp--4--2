@@ -246,11 +246,24 @@ table {
   box-sizing: border-box;
 }
 
+/* ✅ Added patch — makes video clickable on all devices */
+.exerciseVideo {
+  cursor: pointer;
+  touch-action: manipulation;
+  pointer-events: auto;
+  z-index: 10;
+  background-color: #000;
+}
+
 /* For older browsers without aspect-ratio support */
 @supports not (aspect-ratio: 16/9) {
   .exerciseVideo {
     height: 157px;
   }
+}
+
+iframe {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .videoWrapper {
@@ -374,27 +387,6 @@ table {
     font-size: 1.2rem;
   }
 
-  .workoutsButton,
-  .saveWorkoutButton,
-  .addExerciseButton {
-    padding: 12px 18px;
-    font-size: 14px;
-  }
-
-  .DisplayExercise,
-  .DisplayWorkouts,
-  .workoutCardContainer {
-    width: 95%;
-  }
-
-  .DisplayExercise th,
-  .DisplayExercise td,
-  .DisplayWorkouts th,
-  .DisplayWorkouts td {
-    padding: 10px 8px;
-    font-size: 13px;
-  }
-
   .exerciseVideo {
     max-width: 250px;
   }
@@ -404,193 +396,18 @@ table {
       height: 140px;
     }
   }
-
-  .deleteWorkoutButton {
-    width: 36px !important;
-    height: 36px !important;
-    min-width: 36px;
-    padding: 7px;
-    top: 12px;
-    right: 12px;
-  }
-
-  .videoUrlText {
-    font-size: 0.8rem;
-  }
 }
 
 /* ---------- Responsive: Tablet (min-width: 768px) ---------- */
 @media (min-width: 768px) {
-  .workoutsPageContainer {
-    padding: 25px;
-  }
-
-  .workoutsH1 {
-    width: 90%;
-    padding: 45px 25px;
-    min-height: 220px;
-    border-width: 3px;
-  }
-
-  .workoutsH2,
-  .savedWorkouts,
-  .ExercisesPreview {
-    width: 90%;
-    padding: 18px;
-    font-size: 1.6rem;
-  }
-
-  .workoutName {
-    padding: 22px 60px 22px 20px;
-    font-size: 1.4rem;
-  }
-
-  .workoutsForm {
-    width: 90%;
-    padding: 28px;
-  }
-
-  .workoutsForm h2 {
-    font-size: 1.5rem;
-  }
-
-  .workoutsButton,
-  .saveWorkoutButton,
-  .addExerciseButton {
-    padding: 15px 26px;
-    font-size: 17px;
-  }
-
-  .DisplayExercise,
-  .DisplayWorkouts,
-  .workoutCardContainer {
-    width: 90%;
-  }
-
-  .DisplayExercise th,
-  .DisplayExercise td,
-  .DisplayWorkouts th,
-  .DisplayWorkouts td {
-    padding: 14px 12px;
-    font-size: 15px;
-  }
-
   .exerciseVideo {
     max-width: 320px;
-    cursor: pointer;
-  }
-
-  @supports not (aspect-ratio: 16/9) {
-    .exerciseVideo {
-      height: 180px;
-    }
-  }
-
-  .deleteWorkoutButton {
-    width: 42px !important;
-    height: 42px !important;
-    min-width: 42px;
-    padding: 9px;
-    top: 15px;
-    right: 15px;
-  }
-
-  .videoUrlText {
-    font-size: 0.9rem;
   }
 }
 
 /* ---------- Responsive: Desktop (min-width: 1200px) ---------- */
 @media (min-width: 1200px) {
-  .workoutsPageContainer {
-    padding: 30px;
-  }
-
-  .workoutsH1 {
-    width: 85%;
-    padding: 55px 35px;
-    min-height: 250px;
-    border-width: 4px;
-  }
-
-  .workoutsH2,
-  .savedWorkouts,
-  .ExercisesPreview {
-    width: 85%;
-    padding: 20px;
-    font-size: 1.8rem;
-  }
-
-  .workoutName {
-    padding: 25px 70px 25px 25px;
-    font-size: 1.5rem;
-  }
-
-  .workoutsForm {
-    width: 85%;
-    max-width: 650px;
-    padding: 32px;
-  }
-
-  .workoutsForm h2 {
-    font-size: 1.6rem;
-  }
-
-  .workoutsButton,
-  .saveWorkoutButton,
-  .addExerciseButton {
-    padding: 16px 30px;
-    font-size: 18px;
-  }
-
-  .DisplayExercise,
-  .DisplayWorkouts,
-  .workoutCardContainer {
-    width: 85%;
-    max-width: 800px;
-  }
-
-  .DisplayExercise th,
-  .DisplayExercise td,
-  .DisplayWorkouts th,
-  .DisplayWorkouts td {
-    padding: 16px 14px;
-    font-size: 16px;
-  }
-
   .exerciseVideo {
     max-width: 380px;
-     width: 160px;
-  height: 90px;
-  border: none;
-  border-radius: 8px;
-  display: block;
-  margin: 0 auto;
-  background-color: #000;
-  cursor: pointer;              /* lets browser treat it as clickable */
-  touch-action: manipulation;   /* removes tap delay */
-  pointer-events: auto;         /* makes sure iframe receives touch */
-  z-index: 10;
-
-  }
-
-  @supports not (aspect-ratio: 16/9) {
-    .exerciseVideo {
-      height: 213px;
-      
-    }
-  }
-
-  .deleteWorkoutButton {
-    width: 45px !important;
-    height: 45px !important;
-    min-width: 45px;
-    padding: 10px;
-    top: 18px;
-    right: 18px;
-  }
-
-  .videoUrlText {
-    font-size: 0.95rem;
   }
 }
