@@ -187,6 +187,7 @@ select:focus {
   }
 
   .contentContainer {
+
     font-size: 14px;
     padding-top: 12px;
     margin-bottom: 6px;
@@ -198,7 +199,7 @@ select:focus {
   select,
   .gender {
     max-width: 100%;
-    padding: 10px 12px;
+    padding: 10px 12px !important;
     font-size: 14px;
     margin-bottom: 12px;
   }

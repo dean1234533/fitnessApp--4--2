@@ -1,9 +1,7 @@
-// src/pages/LoginPage.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import "../styles/Login.css";
-import Header from "../components/header";
 import { auth, db } from "../utils/firebaseConfig";
 import {
   signInWithEmailAndPassword,
@@ -32,7 +30,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
     setMode(showSignup ? "signup" : "login");
   }, [showSignup]);
 
-  // ✅ Prevent page drift when keyboard opens on iOS
+  // ✅ Prevent scroll jump on iOS keyboard
   useEffect(() => {
     const fixScroll = () => window.scrollTo(0, 0);
     window.addEventListener("focusin", fixScroll);
@@ -212,7 +210,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               className="loginInput"
               name="password"
               type="password"
-              placeholder="Create a secure password"
+              placeholder="Enter your password"
               required
             />
             <Button className="submitButton" type="submit" variant="contained">
@@ -243,7 +241,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
 
           {!showSignup && (
             <p className="switchText">
-              <Link className="linkButton" to="/ManualSignUp">
+              <Link className="linkButton" to="#" onClick={() => setMode("signup")}>
                 Create an account and pick your trainer
               </Link>
             </p>
@@ -251,7 +249,109 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
         </>
       ) : (
         <>
-          {/* Signup form */}
+          {/* ✅ Full SIGN-UP FORM */}
+          <form className="loginForm" onSubmit={handleSignup}>
+            <div className="roleToggle">
+              <label>
+                <p>Client</p>
+                <input
+                  type="radio"
+                  name="role"
+                  value="client"
+                  checked={role === "client"}
+                  onChange={() => setRole("client")}
+                />
+              </label>
+              <label style={{ marginLeft: 16 }}>
+                <p>Trainer</p>
+                <input
+                  type="radio"
+                  name="role"
+                  value="trainer"
+                  checked={role === "trainer"}
+                  onChange={() => setRole("trainer")}
+                />
+              </label>
+            </div>
+
+            <p>Full Name</p>
+            <input
+              className="loginInput"
+              name="name"
+              placeholder="Enter your name"
+              type="text"
+              required
+            />
+
+            <p>Email Address</p>
+            <input
+              className="loginInput"
+              name="email"
+              placeholder="your@email.com"
+              type="email"
+              required
+            />
+
+            <p>Password</p>
+            <input
+              className="loginInput"
+              name="password"
+              type="password"
+              placeholder="Create a secure password"
+              required
+            />
+
+            {role === "client" && (
+              <div className="trainerSelectContainer">
+                {!inviteToken || chooseManually ? (
+                  <>
+                    <label className="trainerSelectLabel">Select Your Trainer</label>
+                    {loadingTrainers ? (
+                      <p className="inviteNotice">Loading trainers…</p>
+                    ) : trainers.length > 0 ? (
+                      <select
+                        className="trainerSelect"
+                        value={selectedTrainerId}
+                        onChange={(e) => setSelectedTrainerId(e.target.value)}
+                        required
+                      >
+                        <option value="">— Choose a trainer... —</option>
+                        {trainers.map((t) => (
+                          <option key={t.id} value={t.id}>
+                            {t.name?.trim() ? t.name : t.email}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <p className="inviteNotice">
+                        ⚠️ No trainers found. Make sure at least one trainer has signed up.
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="inviteNotice">
+                    Joining via invite — trainer will be linked automatically.
+                  </p>
+                )}
+              </div>
+            )}
+
+            <Button className="submitButton" type="submit" variant="contained">
+              Sign Up
+            </Button>
+          </form>
+
+          <p className="switchText">
+            Already have an account?{" "}
+            <Button
+              className="switchButton"
+              type="button"
+              onClick={() => setMode("login")}
+              variant="text"
+            >
+              Login
+            </Button>
+          </p>
         </>
       )}
     </div>
