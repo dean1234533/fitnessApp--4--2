@@ -30,42 +30,6 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
     setMode(showSignup ? "signup" : "login");
   }, [showSignup]);
 
-  // ✅ Prevent scroll jump on iOS keyboard
-  useEffect(() => {
-    const viewportHeight = window.visualViewport?.height || window.innerHeight;
-    
-    const handleViewportResize = () => {
-      if (window.visualViewport) {
-        // Adjust layout when keyboard appears
-        const currentHeight = window.visualViewport.height;
-        document.documentElement.style.setProperty('--viewport-height', `${currentHeight}px`);
-      }
-    };
-
-    const handleFocus = () => {
-      // Small delay to let keyboard appear
-      setTimeout(() => {
-        const activeElement = document.activeElement;
-        if (activeElement && activeElement.tagName === 'INPUT') {
-          activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 300);
-    };
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', handleViewportResize);
-    }
-    
-    document.addEventListener('focusin', handleFocus);
-
-    return () => {
-      if (window.visualViewport) {
-        window.visualViewport.removeEventListener('resize', handleViewportResize);
-      }
-      document.removeEventListener('focusin', handleFocus);
-    };
-  }, []);
-
   // -------- Load Trainers ----------
   useEffect(() => {
     const needDropdown =

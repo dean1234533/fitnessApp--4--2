@@ -253,10 +253,10 @@ export default function Profile() {
               />
             </label>
 
-            <label>
+            <label  >
               Daily Activity Level
-              <select
-                name="dailyActivityLevel"
+              <select className="dailyActivityLevel"
+               
                 value={form.daily_activity_level}
                 onChange={onChange}
               >
