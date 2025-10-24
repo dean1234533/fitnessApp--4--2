@@ -27,6 +27,17 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   const [loadingTrainers, setLoadingTrainers] = useState(false);
   const [chooseManually, setChooseManually] = useState(false);
 
+  // ✅ Fix: stabilize viewport height for iOS Safari
+  useEffect(() => {
+    const setViewportHeight = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+    setViewportHeight();
+    window.addEventListener("resize", setViewportHeight);
+    return () => window.removeEventListener("resize", setViewportHeight);
+  }, []);
+
   // ✅ Fix: re-sync mode when navigating between /SignUpPage and /ManualSignUp
   useEffect(() => {
     setMode(showSignup ? "signup" : "login");
@@ -71,7 +82,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
       const user = cred.user;
 
       const ref = doc(db, "profiles", user.uid);
-      const snap = await getDoc(ref);
+      let snap = await getDoc(ref);
 
       if (!snap.exists()) {
         await setDoc(
@@ -86,9 +97,10 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
           },
           { merge: true }
         );
+        snap = await getDoc(ref);
       }
 
-      const profile = (await getDoc(ref)).data();
+      const profile = snap.data();
       onLogin?.(profile);
 
       if (profile.role === "trainer") return navigate("/clientList");
@@ -182,27 +194,27 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
 
   return (
     <div className="loginFormContainer">
-       <div className=" secondImg">
-       <img  src="/../images/IMG_4346.PNG" alt="logo" />
-</div>
+      <div className="secondImg">
+        <img src="/../images/IMG_4346.PNG" alt="logo" />
+      </div>
+
       {mode === "login" ? (
         <>
           <form className="loginForm" onSubmit={handleLogin}>
-           
-           <label htmlFor="email" className="formLabel">Email Address</label>
+            <label htmlFor="email">Email Address</label>
             <input
               className="loginInput"
               name="email"
+              id="email"
               placeholder="your@email.com"
               type="email"
               required
             />
-
-
-            <label htmlFor="password" className="formLabel">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               className="loginInput"
               name="password"
+              id="password"
               type="password"
               placeholder="Create a secure password"
               required
@@ -245,49 +257,53 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
         <>
           <form className="loginForm" onSubmit={handleSignup}>
             <div className="roleToggle">
-              <label> <p>Client</p>
-                <input className="clientToggle"
+              <label>
+                <p>Client</p>
+                <input
                   type="radio"
                   name="role"
                   value="client"
                   checked={role === "client"}
                   onChange={() => setRole("client")}
                 />
-               
               </label>
-              <label className="TrainerToggleContainer" style={{ marginLeft: 16 }}>
+              <label style={{ marginLeft: 16 }}>
                 <p>Trainer</p>
-                <input className="TrainerToggle"
+                <input
                   type="radio"
                   name="role"
                   value="trainer"
                   checked={role === "trainer"}
                   onChange={() => setRole("trainer")}
                 />
-              
               </label>
             </div>
-             <label htmlFor="full name"className="formLabel" >Full Name</label>
+
+            <label htmlFor="name">Full Name</label>
             <input
               className="loginInput"
               name="name"
+              id="name"
               placeholder="Enter name"
               type="text"
               required
             />
-<label htmlFor="email" className="formLabel">Email Address</label>
+
+            <label htmlFor="email">Email Address</label>
             <input
               className="loginInput"
               name="email"
+              id="email"
               placeholder="your@email.com"
               type="email"
               required
             />
 
-            <label htmlFor="password" className="formLabel">Password</label>
+            <label htmlFor="password">Password</label>
             <input
               className="loginInput"
               name="password"
+              id="password"
               type="password"
               placeholder="Create a secure password"
               required
@@ -297,9 +313,9 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               <div className="trainerSelectContainer">
                 {!inviteToken || chooseManually ? (
                   <>
-
-
-                    <label className="trainerSelectLabel">Select Your Trainer</label>
+                    <label className="trainerSelectLabel">
+                      Select Your Trainer
+                    </label>
                     {loadingTrainers ? (
                       <p className="inviteNotice">Loading trainers…</p>
                     ) : trainers.length > 0 ? (
@@ -318,7 +334,8 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                       </select>
                     ) : (
                       <p className="inviteNotice">
-                        ⚠️ No trainers found. Make sure at least one trainer has signed up.
+                        ⚠️ No trainers found. Make sure at least one trainer has
+                        signed up.
                       </p>
                     )}
                   </>

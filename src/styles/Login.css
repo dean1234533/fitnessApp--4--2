@@ -21,8 +21,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;        /* ✅ visually centered */
-  min-height: 100vh;
-  min-height: 100dvh;             /* ✅ prevents iOS keyboard drift */
+   min-height: calc(var(--vh, 1vh) * 100);    /* ✅ prevents iOS keyboard drift */
   padding: 20px;
   background-image: url("/../images/white-brick-wall.png");
   background-size: cover;
