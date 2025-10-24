@@ -23,14 +23,16 @@ body {
   justify-content: center;        /* ✅ visually centered */
   min-height: 100dvh;             /* ✅ prevents iOS keyboard drift */
   padding: 20px;
-  background-image: url("/../images/white-brick-wall.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
   box-sizing: border-box;
   overflow-y: auto;               /* ✅ allows scrolling when keyboard opens */
   overscroll-behavior: none;
   -webkit-overflow-scrolling: touch;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 
 /* ==============================

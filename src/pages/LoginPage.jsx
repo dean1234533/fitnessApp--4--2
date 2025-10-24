@@ -32,12 +32,30 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
 
   // ✅ Prevent scroll jump on iOS keyboard
   useEffect(() => {
-    const fixScroll = () => window.scrollTo(0, 0);
-    window.addEventListener("focusin", fixScroll);
-    window.addEventListener("focusout", fixScroll);
+    // Lock scroll position
+    const lockScroll = () => {
+      window.scrollTo(0, 0);
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    };
+
+    // Prevent any scrolling
+    const preventScroll = (e) => {
+      e.preventDefault();
+      lockScroll();
+    };
+
+    lockScroll();
+    window.addEventListener("scroll", lockScroll, { passive: false });
+    window.addEventListener("touchmove", preventScroll, { passive: false });
+    window.addEventListener("focusin", lockScroll);
+    window.addEventListener("focusout", lockScroll);
+
     return () => {
-      window.removeEventListener("focusin", fixScroll);
-      window.removeEventListener("focusout", fixScroll);
+      window.removeEventListener("scroll", lockScroll);
+      window.removeEventListener("touchmove", preventScroll);
+      window.removeEventListener("focusin", lockScroll);
+      window.removeEventListener("focusout", lockScroll);
     };
   }, []);
 
