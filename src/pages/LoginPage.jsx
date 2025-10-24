@@ -188,18 +188,23 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
       {mode === "login" ? (
         <>
           <form className="loginForm" onSubmit={handleLogin}>
+           
+           <label htmlFor="email" className="formLabel">Email Address</label>
             <input
               className="loginInput"
               name="email"
-              placeholder="Email"
+              placeholder="your@email.com"
               type="email"
               required
             />
+
+
+            <label htmlFor="password" className="formLabel">Password</label>
             <input
               className="loginInput"
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="Create a secure password"
               required
             />
             <Button className="submitButton" type="submit" variant="contained">
@@ -240,47 +245,51 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
         <>
           <form className="loginForm" onSubmit={handleSignup}>
             <div className="roleToggle">
-              <label>
-                <input
+              <label> <p>Client</p>
+                <input className="clientToggle"
                   type="radio"
                   name="role"
                   value="client"
                   checked={role === "client"}
                   onChange={() => setRole("client")}
                 />
-                Client
+               
               </label>
-              <label style={{ marginLeft: 16 }}>
-                <input
+              <label className="TrainerToggleContainer" style={{ marginLeft: 16 }}>
+                <p>Trainer</p>
+                <input className="TrainerToggle"
                   type="radio"
                   name="role"
                   value="trainer"
                   checked={role === "trainer"}
                   onChange={() => setRole("trainer")}
                 />
-                Trainer
+              
               </label>
             </div>
-
+             <label htmlFor="full name"className="formLabel" >Full Name</label>
             <input
               className="loginInput"
               name="name"
-              placeholder="Full Name"
+              placeholder="Enter name"
               type="text"
               required
             />
+<label htmlFor="email" className="formLabel">Email Address</label>
             <input
               className="loginInput"
               name="email"
-              placeholder="Email"
+              placeholder="your@email.com"
               type="email"
               required
             />
+
+            <label htmlFor="password" className="formLabel">Password</label>
             <input
               className="loginInput"
               name="password"
               type="password"
-              placeholder="Password"
+              placeholder="Create a secure password"
               required
             />
 
@@ -288,7 +297,9 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               <div className="trainerSelectContainer">
                 {!inviteToken || chooseManually ? (
                   <>
-                    <label className="trainerSelectLabel">Select Trainer</label>
+
+
+                    <label className="trainerSelectLabel">Select Your Trainer</label>
                     {loadingTrainers ? (
                       <p className="inviteNotice">Loading trainers…</p>
                     ) : trainers.length > 0 ? (
@@ -298,7 +309,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                         onChange={(e) => setSelectedTrainerId(e.target.value)}
                         required
                       >
-                        <option value="">— Select a trainer —</option>
+                        <option value="">— Choose a trainer... —</option>
                         {trainers.map((t) => (
                           <option key={t.id} value={t.id}>
                             {t.name?.trim() ? t.name : t.email}
