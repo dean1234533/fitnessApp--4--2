@@ -176,34 +176,36 @@ function WorkOuts({ userRole }) {
       {exercises.length > 0 && (
         <div className="DisplayExercise">
           <h2 className="ExercisesPreview">Exercises Preview</h2>
-          <table>
-            <thead>
-              <tr>
-                <th>Exercise Name</th>
-                <th>Sets</th>
-                <th>Reps</th>
-                <th>Duration</th>
-                <th>Video</th>
-              </tr>
-            </thead>
-            <tbody>
-              {exercises.map((ex, i) => (
-                <tr key={i}>
-                  <td>{ex.name}</td>
-                  <td>{ex.sets}</td>
-                  <td>{ex.reps}</td>
-                  <td>
-                    {ex.duration && <WorkoutTimer duration={ex.duration} />}
-                  </td>
-                  <td>
-                    {ex.url && (
-                      <VideoPlayer url={ex.url} title={ex.name} />
-                    )}
-                  </td>
+          <div className="tableScrollWrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Exercise Name</th>
+                  <th>Sets</th>
+                  <th>Reps</th>
+                  <th>Duration</th>
+                  <th>Video</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {exercises.map((ex, i) => (
+                  <tr key={i}>
+                    <td>{ex.name}</td>
+                    <td>{ex.sets}</td>
+                    <td>{ex.reps}</td>
+                    <td>
+                      {ex.duration && <WorkoutTimer duration={ex.duration} />}
+                    </td>
+                    <td>
+                      {ex.url && (
+                        <VideoPlayer url={ex.url} title={ex.name} />
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
@@ -309,34 +311,36 @@ function WorkoutCard({ workout, onDelete }) {
         onClick={() => onDelete(workout.id)}
       />
       <h3 className="workoutName">{workout.name}</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Exercise Name</th>
-            <th>Sets</th>
-            <th>Reps</th>
-            <th>Duration</th>
-            <th>Video</th>
-          </tr>
-        </thead>
-        <tbody>
-          {workout.exercises?.map((ex) => (
-            <tr key={ex.id}>
-              <td>{ex.name}</td>
-              <td>{ex.sets}</td>
-              <td>{ex.reps}</td>
-              <td>
-                {ex.duration && <WorkoutTimer duration={ex.duration} />}
-              </td>
-              <td>
-                {ex.url && (
-                  <VideoPlayer url={ex.url} title={ex.name} />
-                )}
-              </td>
+      <div className="tableScrollWrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Exercise Name</th>
+              <th>Sets</th>
+              <th>Reps</th>
+              <th>Duration</th>
+              <th>Video</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {workout.exercises?.map((ex) => (
+              <tr key={ex.id}>
+                <td>{ex.name}</td>
+                <td>{ex.sets}</td>
+                <td>{ex.reps}</td>
+                <td>
+                  {ex.duration && <WorkoutTimer duration={ex.duration} />}
+                </td>
+                <td>
+                  {ex.url && (
+                    <VideoPlayer url={ex.url} title={ex.name} />
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
