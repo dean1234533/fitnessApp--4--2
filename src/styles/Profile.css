@@ -115,7 +115,7 @@ select:focus {
 /* ==============================
    Gender Select
 ============================== */
-.gender {
+.gender, .daily_activity_level {
   width: 100% !important;
   max-width: 100% !important;
   box-sizing: border-box;
