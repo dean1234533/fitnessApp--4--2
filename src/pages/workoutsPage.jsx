@@ -197,12 +197,7 @@ function WorkOuts({ userRole }) {
                   </td>
                   <td>
                     {ex.url && (
-                      <iframe
-                        className="exerciseVideo"
-                        src={ex.url}
-                        title={ex.name}
-                        allowFullScreen
-                      ></iframe>
+                      <VideoPlayer url={ex.url} title={ex.name} />
                     )}
                   </td>
                 </tr>
@@ -222,6 +217,84 @@ function WorkOuts({ userRole }) {
         ) : (
           <p>No workouts found</p>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ✅ NEW: Video Player Component with Mobile Touch Support
+function VideoPlayer({ url, title }) {
+  const handleVideoClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Convert embed URL back to watch URL for better mobile experience
+    const videoId = url.split("/embed/")[1]?.split("?")[0];
+    const watchUrl = videoId 
+      ? `https://www.youtube.com/watch?v=${videoId}`
+      : url;
+    window.open(watchUrl, '_blank');
+  };
+
+  return (
+    <div 
+      style={{
+        position: 'relative',
+        width: '160px',
+        height: '90px',
+        margin: '0 auto'
+      }}
+    >
+      <iframe
+        className="exerciseVideo"
+        src={`${url}?playsinline=1&rel=0`}
+        title={title}
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        style={{ pointerEvents: 'none' }}
+      />
+      <div
+        onClick={handleVideoClick}
+        onTouchEnd={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          handleVideoClick(e);
+        }}
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          cursor: 'pointer',
+          zIndex: 10,
+          WebkitTapHighlightColor: 'transparent',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        {/* Play button overlay */}
+        <div style={{
+          width: '40px',
+          height: '40px',
+          backgroundColor: 'rgba(255, 0, 0, 0.9)',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          pointerEvents: 'none',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)'
+        }}>
+          <div style={{
+            width: 0,
+            height: 0,
+            borderLeft: '14px solid white',
+            borderTop: '9px solid transparent',
+            borderBottom: '9px solid transparent',
+            marginLeft: '3px'
+          }} />
+        </div>
       </div>
     </div>
   );
@@ -252,18 +325,12 @@ function WorkoutCard({ workout, onDelete }) {
               <td>{ex.name}</td>
               <td>{ex.sets}</td>
               <td>{ex.reps}</td>
-              <td> {ex.duration && <WorkoutTimer duration={ex.duration} />}
-</td>
+              <td>
+                {ex.duration && <WorkoutTimer duration={ex.duration} />}
+              </td>
               <td>
                 {ex.url && (
-                 <iframe
-  className="exerciseVideo"
-  src={`${ex.url}?playsinline=1&rel=0`}
-  title={ex.name}
-  frameBorder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowFullScreen
-></iframe>
+                  <VideoPlayer url={ex.url} title={ex.name} />
                 )}
               </td>
             </tr>
