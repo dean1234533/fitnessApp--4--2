@@ -32,30 +32,37 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
 
   // ✅ Prevent scroll jump on iOS keyboard
   useEffect(() => {
-    // Lock scroll position
-    const lockScroll = () => {
-      window.scrollTo(0, 0);
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
+    const viewportHeight = window.visualViewport?.height || window.innerHeight;
+    
+    const handleViewportResize = () => {
+      if (window.visualViewport) {
+        // Adjust layout when keyboard appears
+        const currentHeight = window.visualViewport.height;
+        document.documentElement.style.setProperty('--viewport-height', `${currentHeight}px`);
+      }
     };
 
-    // Prevent any scrolling
-    const preventScroll = (e) => {
-      e.preventDefault();
-      lockScroll();
+    const handleFocus = () => {
+      // Small delay to let keyboard appear
+      setTimeout(() => {
+        const activeElement = document.activeElement;
+        if (activeElement && activeElement.tagName === 'INPUT') {
+          activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }, 300);
     };
 
-    lockScroll();
-    window.addEventListener("scroll", lockScroll, { passive: false });
-    window.addEventListener("touchmove", preventScroll, { passive: false });
-    window.addEventListener("focusin", lockScroll);
-    window.addEventListener("focusout", lockScroll);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', handleViewportResize);
+    }
+    
+    document.addEventListener('focusin', handleFocus);
 
     return () => {
-      window.removeEventListener("scroll", lockScroll);
-      window.removeEventListener("touchmove", preventScroll);
-      window.removeEventListener("focusin", lockScroll);
-      window.removeEventListener("focusout", lockScroll);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', handleViewportResize);
+      }
+      document.removeEventListener('focusin', handleFocus);
     };
   }, []);
 
