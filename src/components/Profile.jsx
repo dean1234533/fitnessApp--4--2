@@ -155,7 +155,8 @@ export default function Profile() {
 
         <h1>Edit Profile</h1>
 
-        <label>
+<div className="contentContainer" >
+        <label >
           Full Name
           <input
             name="name"
@@ -266,9 +267,10 @@ export default function Profile() {
                 <option>Very Active</option>
               </select>
             </label>
-          </>
+           
+          </> 
         )}
-
+</div>
         <Button className="formButton" type="button" onClick={onSave}>
           Save Profile
         </Button>
