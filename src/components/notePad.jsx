@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../client";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
@@ -9,6 +9,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 export default function NotePad() {
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState([]);
+  const textareaRef = useRef(null); // 👈 create a ref
 
   useEffect(() => {
     loadEntries();
@@ -38,7 +39,11 @@ export default function NotePad() {
       console.error("Error adding note:", error.message);
     } else {
       setNote("");
-      document.activeElement.blur(); // 👈 This makes Safari zoom back out
+      // 👇 ensure focus and zoom reset
+      if (textareaRef.current) {
+        textareaRef.current.blur();
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" }); // optional — scrolls back up
       loadEntries();
     }
   };
@@ -75,6 +80,7 @@ export default function NotePad() {
         <h1 className="notePadName">Note Pad</h1>
 
         <textarea
+          ref={textareaRef} // 👈 attach ref here
           className="text"
           value={note}
           onChange={(e) => setNote(e.target.value)}
