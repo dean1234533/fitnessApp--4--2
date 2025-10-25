@@ -112,7 +112,7 @@
   cursor: pointer;
   transition: opacity 0.3s ease;
   text-transform: none !important;
-  margin-bottom: 10px !important;
+  margin-bottom: 0px !important;
 }
 
 .sendButton:hover {
