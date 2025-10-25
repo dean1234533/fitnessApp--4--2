@@ -37,7 +37,8 @@ export default function NotePad() {
     if (error) {
       console.error("Error adding note:", error.message);
     } else {
-      setNote(null);
+      setNote("");
+      document.activeElement.blur(); // 👈 This makes Safari zoom back out
       loadEntries();
     }
   };
@@ -82,7 +83,7 @@ export default function NotePad() {
 
         <div className="notePadButtonContainer">
           <Button
-            style={{  border: "2px solid white" }}
+            style={{ border: "2px solid white" }}
             className="notePadButton"
             variant="contained"
             onClick={addNote}
