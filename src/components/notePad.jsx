@@ -37,7 +37,7 @@ export default function NotePad() {
     if (error) {
       console.error("Error adding note:", error.message);
     } else {
-      setNote("");
+      setNote(null);
       loadEntries();
     }
   };
