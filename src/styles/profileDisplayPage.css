@@ -18,7 +18,7 @@
   border-radius: 50px !important;
   margin-top: 10px !important;
   background: #ab0303
-    url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
+    url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important ;
   border: 1px solid white !important;
 }
 
@@ -26,8 +26,8 @@
   border-radius: 40px !important;
   margin-top: 10px !important;
   background: #ab0303
-    url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png");
-  border: 1px solid white;
+    url("https://www.transparenttextures.com/patterns/45-degree-fabric-light.png") !important;
+  border: 1px solid white !important;
 }
 
 .avatar {
