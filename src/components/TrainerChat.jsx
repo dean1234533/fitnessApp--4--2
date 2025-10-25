@@ -17,7 +17,7 @@ import SendIcon from "@mui/icons-material/Send";
 import Button from "@mui/material/Button";
 import "../styles/Chat.css";
 
-export default function TrainerChat() {
+function TrainerChat() {
   const { userId: routeClientId } = useParams();
   const [me, setMe] = useState(null);
   const [trainerId, setTrainerId] = useState(null);
@@ -26,94 +26,173 @@ export default function TrainerChat() {
   const [clientName, setClientName] = useState("");
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
+  const [sending, setSending] = useState(false);
   const bottomRef = useRef(null);
 
-  // Track logged-in user
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
+      console.log("Auth state changed:", user?.uid);
       setMe(user?.uid || null);
     });
     return () => unsub();
   }, []);
 
-  // Resolve trainer/client roles
   useEffect(() => {
     async function resolvePair() {
-      if (!me) return;
+      if (!me) {
+        console.log("No user logged in yet");
+        return;
+      }
 
-      const mySnap = await getDoc(doc(db, "profiles", me));
-      if (!mySnap.exists()) return;
-      const myProfile = mySnap.data();
+      console.log("Resolving pair for user:", me);
 
-      if (myProfile.role === "trainer") {
-        setTrainerId(me);
-        setTrainerName(myProfile.name || "Trainer");
-        setClientId(routeClientId || null);
+      try {
+        const mySnap = await getDoc(doc(db, "profiles", me));
+        if (!mySnap.exists()) {
+          console.error("Profile not found for user:", me);
+          return;
+        }
+        const myProfile = mySnap.data();
+        console.log("My profile:", myProfile);
 
-        if (routeClientId) {
-          const clientSnap = await getDoc(doc(db, "profiles", routeClientId));
-          if (clientSnap.exists()) {
-            const cp = clientSnap.data();
-            setClientName(cp.name || cp.email || "Client");
+        if (myProfile.role === "trainer") {
+          setTrainerId(me);
+          setTrainerName(myProfile.name || "Trainer");
+          setClientId(routeClientId || null);
+
+          if (routeClientId) {
+            const clientSnap = await getDoc(doc(db, "profiles", routeClientId));
+            if (clientSnap.exists()) {
+              const cp = clientSnap.data();
+              setClientName(cp.name || cp.email || "Client");
+              console.log("Client found:", cp.name);
+            } else {
+              console.error("Client profile not found:", routeClientId);
+            }
+          }
+        } else {
+          setClientId(me);
+          setClientName(myProfile.name || "Client");
+          
+          if (myProfile.trainer_id) {
+            setTrainerId(myProfile.trainer_id);
+            const trainerSnap = await getDoc(
+              doc(db, "profiles", myProfile.trainer_id)
+            );
+            if (trainerSnap.exists()) {
+              const tp = trainerSnap.data();
+              setTrainerName(tp.name || tp.email || "Trainer");
+              console.log("Trainer found:", tp.name);
+            } else {
+              console.error("Trainer profile not found:", myProfile.trainer_id);
+            }
+          } else {
+            console.error("Client has no trainer_id assigned");
           }
         }
-      } else {
-        setClientId(me);
-        setClientName(myProfile.name || "Client");
-        if (myProfile.trainer_id) {
-          setTrainerId(myProfile.trainer_id);
-          const trainerSnap = await getDoc(
-            doc(db, "profiles", myProfile.trainer_id)
-          );
-          if (trainerSnap.exists()) {
-            const tp = trainerSnap.data();
-            setTrainerName(tp.name || tp.email || "Trainer");
-          }
-        }
+      } catch (error) {
+        console.error("Error resolving pair:", error);
       }
     }
     resolvePair();
   }, [me, routeClientId]);
 
-  // Thread ID
   const threadId = trainerId && clientId ? `${trainerId}_${clientId}` : null;
 
-  // Listen for messages
   useEffect(() => {
-    if (!threadId) return;
+    if (!threadId) {
+      console.log("No threadId yet", { trainerId, clientId });
+      return;
+    }
+
+    console.log("Setting up message listener for thread:", threadId);
 
     const q = query(
       collection(db, "threads", threadId, "messages"),
       orderBy("createdAt", "asc")
     );
 
-    const unsub = onSnapshot(q, (snap) => {
-      const out = [];
-      snap.forEach((d) => out.push({ id: d.id, ...d.data() }));
-      setMessages(out);
-    });
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const out = [];
+        snap.forEach((d) => out.push({ id: d.id, ...d.data() }));
+        console.log("Messages loaded:", out.length);
+        setMessages(out);
+      },
+      (error) => {
+        console.error("Error listening to messages:", error);
+      }
+    );
 
     if (trainerId && clientId) {
       setDoc(
         doc(db, "threads", threadId),
-        { participants: [trainerId, clientId], updatedAt: serverTimestamp() },
+        { 
+          participants: [trainerId, clientId], 
+          updatedAt: serverTimestamp() 
+        },
         { merge: true }
-      );
+      ).then(() => {
+        console.log("Thread document created/updated");
+      }).catch((error) => {
+        console.error("Error creating thread document:", error);
+      });
     }
 
     return () => unsub();
   }, [threadId, trainerId, clientId]);
 
   async function send() {
-    if (!text.trim() || !me || !threadId) return;
+    const trimmedText = text.trim();
+    
+    if (!trimmedText) {
+      console.log("Empty message, not sending");
+      return;
+    }
+    
+    if (!me) {
+      console.error("Cannot send: user not logged in");
+      alert("You must be logged in to send messages");
+      return;
+    }
+    
+    if (!threadId) {
+      console.error("Cannot send: no threadId", { trainerId, clientId });
+      alert("Chat not ready. Please refresh the page.");
+      return;
+    }
 
-    await addDoc(collection(db, "threads", threadId, "messages"), {
-      text: text.trim(),
-      senderId: me,
-      createdAt: serverTimestamp(),
-    });
+    if (sending) {
+      console.log("Already sending a message");
+      return;
+    }
 
-    setText("");
+    setSending(true);
+    console.log("Sending message:", trimmedText);
+
+    try {
+      const messageData = {
+        text: trimmedText,
+        senderId: me,
+        createdAt: serverTimestamp(),
+      };
+
+      console.log("Message data:", messageData);
+
+      await addDoc(
+        collection(db, "threads", threadId, "messages"), 
+        messageData
+      );
+
+      console.log("Message sent successfully");
+      setText("");
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Failed to send message: " + error.message);
+    } finally {
+      setSending(false);
+    }
   }
 
   const formatTime = (ts) => {
@@ -126,14 +205,36 @@ export default function TrainerChat() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  if (!me) return <div>Loading chat…</div>;
-  if (!trainerId || !clientId) return <div>No chat partner linked yet.</div>;
+  if (!me) {
+    return <div style={{ padding: "20px", color: "white" }}>Loading chat…</div>;
+  }
+  
+  if (!trainerId || !clientId) {
+    return (
+      <div style={{ padding: "20px", color: "white" }}>
+        <p>No chat partner linked yet.</p>
+        <p style={{ fontSize: "0.9rem", opacity: 0.7 }}>
+          Debug: trainerId={trainerId || "null"}, clientId={clientId || "null"}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="chatContainer">
-      <div className="chatHeader"></div>
+      <div className="chatHeader">
+        <h3 style={{ margin: 0, color: "white" }}>
+          {me === trainerId ? `Chat with ${clientName}` : `Chat with ${trainerName}`}
+        </h3>
+      </div>
 
       <div className="chatMessages">
+        {messages.length === 0 && (
+          <div style={{ textAlign: "center", padding: "20px", color: "#999" }}>
+            No messages yet. Start the conversation!
+          </div>
+        )}
+        
         {messages.map((m) => {
           const isTrainerMessage = m.senderId === trainerId;
 
@@ -144,13 +245,12 @@ export default function TrainerChat() {
                 display: "flex",
                 justifyContent: isTrainerMessage ? "flex-start" : "flex-end",
                 padding: "4px 8px",
-    
                 marginTop: "10px",
               }}
             >
               <div
                 style={{
-                  maxWidth: "100%",
+                  maxWidth: "70%",
                   padding: "10px 14px",
                   borderRadius: "16px",
                   backgroundColor: isTrainerMessage ? "white" : "#272829",
@@ -182,18 +282,27 @@ export default function TrainerChat() {
           className="chatInput"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && send()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              send();
+            }
+          }}
           placeholder="Type a message…"
+          disabled={sending}
         />
         <Button
           className="sendButton"
           onClick={send}
           variant="contained"
           endIcon={<SendIcon />}
+          disabled={sending || !text.trim()}
         >
-          Send
+          {sending ? "..." : "Send"}
         </Button>
       </div>
     </div>
   );
 }
+
+export default TrainerChat;

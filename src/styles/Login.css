@@ -371,7 +371,7 @@ p.switchText:has(.linkButton) {
   }
 
   .secondImg img {
-    max-width: 250px;
+    width: 250px;
     height: 250px;
   }
 
@@ -462,7 +462,7 @@ p.switchText:has(.linkButton) {
   }
 
   .secondImg img {
-    max-width: 300px;
+   width: 300px;
     height: 300px;
   }
 

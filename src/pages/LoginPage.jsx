@@ -25,6 +25,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   const [selectedTrainerId, setSelectedTrainerId] = useState("");
   const [loadingTrainers, setLoadingTrainers] = useState(false);
   const [chooseManually, setChooseManually] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     setMode(showSignup ? "signup" : "login");
@@ -60,6 +61,9 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   // ---------- LOGIN ----------
   async function handleLogin(e) {
     e.preventDefault();
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
     const email = e.currentTarget.email.value.trim();
     const password = e.currentTarget.password.value;
 
@@ -85,19 +89,31 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
         );
       }
 
-      const profile = (await getDoc(ref)).data();
+      // Read the complete profile after ensuring it exists
+      const profileSnap = await getDoc(ref);
+      const profile = profileSnap.data();
+      
       onLogin?.(profile);
 
-      if (profile.role === "trainer") return navigate("/clientList");
-      return navigate("/ClientDashboard");
+      if (profile.role === "trainer") {
+        navigate("/clientList");
+      } else {
+        navigate("/ClientDashboard");
+      }
     } catch (err) {
+      console.error("Login error:", err);
       alert(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
   // ---------- SIGNUP ----------
   async function handleSignup(e) {
     e.preventDefault();
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
     const email = e.currentTarget.email.value.trim();
     const password = e.currentTarget.password.value;
     const name = e.currentTarget.name?.value?.trim() || "";
@@ -114,46 +130,61 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
 
         if (!trainerId) {
           alert("Please select a trainer before signing up.");
+          setIsSubmitting(false);
           return;
         }
 
-        await setDoc(
-          doc(db, "profiles", user.uid),
-          {
-            id: user.uid,
-            role: "client",
-            name,
-            email: user.email || "",
-            trainer_id: trainerId,
-            contact_email: user.email || "",
-            created_at: serverTimestamp(),
-            updated_at: serverTimestamp(),
-          },
-          { merge: true }
-        );
-
-        onLogin?.({
+        // ✅ Create complete client profile with all fields initialized
+        const clientProfileData = {
           id: user.uid,
           role: "client",
           name,
           email: user.email || "",
-        });
+          trainer_id: trainerId,
+          contact_email: user.email || "",
+          // Initialize physical stats fields
+          bodyWeight: null,
+          height: null,
+          bodyFat: null,
+          // Initialize other common fields
+          phone: "",
+          goals: "",
+          notes: "",
+          created_at: serverTimestamp(),
+          updated_at: serverTimestamp(),
+        };
+
+        // Write the profile to Firestore
+        await setDoc(doc(db, "profiles", user.uid), clientProfileData);
+
+        // ✅ Read back the complete profile after write completes
+        const profileSnap = await getDoc(doc(db, "profiles", user.uid));
+        const completeProfile = profileSnap.data();
+
+        console.log("Client profile created:", completeProfile);
+
+        // Pass complete profile to onLogin
+        onLogin?.(completeProfile);
+        
+        // Navigate to profile page
         navigate("/Profile");
       } else {
-        await setDoc(
-          doc(db, "profiles", user.uid),
-          {
-            id: user.uid,
-            role: "trainer",
-            name,
-            email: user.email || "",
-            contact_email: user.email || "",
-            created_at: serverTimestamp(),
-            updated_at: serverTimestamp(),
-          },
-          { merge: true }
-        );
+        // ✅ Create complete trainer profile
+        const trainerProfileData = {
+          id: user.uid,
+          role: "trainer",
+          name,
+          email: user.email || "",
+          contact_email: user.email || "",
+          phone: "",
+          created_at: serverTimestamp(),
+          updated_at: serverTimestamp(),
+        };
 
+        // Write trainer profile
+        await setDoc(doc(db, "profiles", user.uid), trainerProfileData);
+
+        // Write to trainer directory
         await setDoc(
           doc(db, "trainerDirectory", user.uid),
           {
@@ -164,16 +195,23 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
           { merge: true }
         );
 
-        onLogin?.({
-          id: user.uid,
-          role: "trainer",
-          name,
-          email: user.email || "",
-        });
+        // ✅ Read back the complete profile
+        const profileSnap = await getDoc(doc(db, "profiles", user.uid));
+        const completeProfile = profileSnap.data();
+
+        console.log("Trainer profile created:", completeProfile);
+
+        // Pass complete profile to onLogin
+        onLogin?.(completeProfile);
+        
+        // Navigate to profile page
         navigate("/Profile");
       }
     } catch (err) {
+      console.error("Signup error:", err);
       alert(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -193,6 +231,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               placeholder="your@email.com"
               type="email"
               required
+              disabled={isSubmitting}
             />
             <p>Password</p>
             <input
@@ -201,9 +240,15 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               type="password"
               placeholder="Enter your password"
               required
+              disabled={isSubmitting}
             />
-            <Button className="submitButton" type="submit" variant="contained">
-              Login
+            <Button 
+              className="submitButton" 
+              type="submit" 
+              variant="contained"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Logging in..." : "Login"}
             </Button>
           </form>
 
@@ -223,6 +268,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                   alert(err.message);
                 }
               }}
+              disabled={isSubmitting}
             >
               Forgot password?
             </button>
@@ -230,7 +276,11 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
 
           {!showSignup && (
             <p className="switchText">
-              <Link className="linkButton" to="#" onClick={() => setMode("signup")}>
+              <Link 
+                className="linkButton" 
+                to="#" 
+                onClick={() => setMode("signup")}
+              >
                 Create an account and pick your trainer
               </Link>
             </p>
@@ -249,6 +299,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                   value="client"
                   checked={role === "client"}
                   onChange={() => setRole("client")}
+                  disabled={isSubmitting}
                 />
               </label>
               <label style={{ marginLeft: 16 }}>
@@ -259,6 +310,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                   value="trainer"
                   checked={role === "trainer"}
                   onChange={() => setRole("trainer")}
+                  disabled={isSubmitting}
                 />
               </label>
             </div>
@@ -270,6 +322,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               placeholder="Enter your name"
               type="text"
               required
+              disabled={isSubmitting}
             />
 
             <p>Email Address</p>
@@ -279,6 +332,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               placeholder="your@email.com"
               type="email"
               required
+              disabled={isSubmitting}
             />
 
             <p>Password</p>
@@ -288,6 +342,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               type="password"
               placeholder="Create a secure password"
               required
+              disabled={isSubmitting}
             />
 
             {role === "client" && (
@@ -303,6 +358,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
                         value={selectedTrainerId}
                         onChange={(e) => setSelectedTrainerId(e.target.value)}
                         required
+                        disabled={isSubmitting}
                       >
                         <option value="">— Choose a trainer... —</option>
                         {trainers.map((t) => (
@@ -325,8 +381,13 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               </div>
             )}
 
-            <Button className="submitButton" type="submit" variant="contained">
-              Sign Up
+            <Button 
+              className="submitButton" 
+              type="submit" 
+              variant="contained"
+              disabled={isSubmitting || (role === "client" && !selectedTrainerId && (!inviteToken || chooseManually))}
+            >
+              {isSubmitting ? "Creating Account..." : "Sign Up"}
             </Button>
           </form>
 
@@ -337,6 +398,7 @@ function LoginPage({ onLogin, inviteToken, showSignup = false }) {
               type="button"
               onClick={() => setMode("login")}
               variant="text"
+              disabled={isSubmitting}
             >
               Login
             </Button>

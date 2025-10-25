@@ -1,280 +1,431 @@
-// components/Profile.jsx
 import React, { useEffect, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "@mui/material/Button";
-import { useNavigate } from "react-router-dom";
-import "../styles/Profile.css";
-
+import "../styles/Login.css";
 import { auth, db } from "../utils/firebaseConfig";
-import { doc, getDoc, setDoc } from "firebase/firestore";
-import { supabase } from "../client";
-import UploadAvatar from "../components/UploadAvatar";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import {
+  doc,
+  setDoc,
+  getDoc,
+  collection,
+  getDocs,
+  serverTimestamp,
+} from "firebase/firestore";
 
-export default function Profile() {
+function LoginPage({ onLogin, inviteToken, showSignup = false }) {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [mode, setMode] = useState(showSignup ? "signup" : "login");
   const [role, setRole] = useState("client");
-  const [user, setUser] = useState(null);
+  const [trainers, setTrainers] = useState([]);
+  const [selectedTrainerId, setSelectedTrainerId] = useState("");
+  const [loadingTrainers, setLoadingTrainers] = useState(false);
+  const [chooseManually, setChooseManually] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [form, setForm] = useState({
-    name: "",
-    age: "",
-    gender: "",
-    phone: "",
-    contact_email: "",
-    body_weight: "",
-    body_fat: "",
-    height: "",
-    fitness_goal: "",
-    daily_activity_level: "",
-    profile_pic_url: "",
-  });
-
-  // ✅ Load the current user from Supabase first, then Firestore data
   useEffect(() => {
-    (async () => {
-      setLoading(true);
+    setMode(showSignup ? "signup" : "login");
+  }, [showSignup]);
 
-      // Get Supabase user
-      const {
-        data: { user: supaUser },
-        error,
-      } = await supabase.auth.getUser();
+  // -------- Load Trainers ----------
+  useEffect(() => {
+    const needDropdown =
+      mode === "signup" &&
+      role === "client" &&
+      (!inviteToken || chooseManually);
 
-      if (!supaUser || error) {
-        console.warn("⚠️ No Supabase user found, falling back to Firebase");
-        const firebaseUser = auth.currentUser;
-        if (!firebaseUser) {
-          alert("Please log in first.");
-          setLoading(false);
-          return;
-        }
-        setUser(firebaseUser);
-      } else {
-        setUser({ uid: supaUser.id, email: supaUser.email });
+    async function fetchTrainers() {
+      setLoadingTrainers(true);
+      try {
+        const snap = await getDocs(collection(db, "trainerDirectory"));
+        const list = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+        setTrainers(list);
+      } catch (err) {
+        console.error("❌ Error loading trainer directory:", err);
+        alert(
+          "Could not load trainers. Check Firestore rules and collection name (trainerDirectory)."
+        );
+        setTrainers([]);
+      } finally {
+        setLoadingTrainers(false);
       }
-
-      const uid = supaUser?.id || auth.currentUser?.uid;
-      const email = supaUser?.email || auth.currentUser?.email;
-
-      if (!uid || !email) {
-        alert("Could not find logged-in user");
-        setLoading(false);
-        return;
-      }
-
-      // Load Firestore profile
-      const ref = doc(db, "profiles", uid);
-      const snap = await getDoc(ref);
-
-      if (snap.exists()) {
-        const data = snap.data();
-        setRole(data.role || "client");
-        setForm({
-          name: data.name || "",
-          age: data.age ?? "",
-          gender: data.gender || "",
-          phone: data.phone || "",
-          contact_email: data.contact_email || email || "",
-          body_weight: data.body_weight ?? "",
-          body_fat: data.body_fat ?? "",
-          height: data.height ?? "",
-          fitness_goal: data.fitness_goal || "",
-          daily_activity_level: data.daily_activity_level || "",
-          profile_pic_url: data.profile_pic_url || "",
-        });
-      } else {
-        // Auto-create minimal profile
-        await setDoc(ref, {
-          id: uid,
-          email: email,
-          role: "client",
-          created_at: new Date().toISOString(),
-        });
-      }
-
-      setLoading(false);
-    })();
-  }, []);
-
-  function onChange(e) {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  }
-
-  function handleAvatarChange(url) {
-    setForm((prev) => ({ ...prev, profile_pic_url: url }));
-  }
-
-  // ✅ Save profile to Firestore (works for Supabase or Firebase users)
-  async function onSave() {
-    setLoading(true);
-
-    const uid = user?.uid || auth.currentUser?.uid;
-    const email = user?.email || auth.currentUser?.email;
-
-    if (!uid) {
-      alert("Please log in again");
-      setLoading(false);
-      return;
     }
 
-    const payload = {
-      role,
-      ...form,
-      email,
-      age: form.age !== "" ? Number(form.age) : null,
-      body_weight: form.body_weight !== "" ? Number(form.body_weight) : null,
-      body_fat: form.body_fat !== "" ? Number(form.body_fat) : null,
-      height: form.height !== "" ? Number(form.height) : null,
-      updated_at: new Date().toISOString(),
-    };
+    if (needDropdown) fetchTrainers();
+  }, [mode, role, inviteToken, chooseManually]);
+
+  // ---------- LOGIN ----------
+  async function handleLogin(e) {
+    e.preventDefault();
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    const email = e.currentTarget.email.value.trim();
+    const password = e.currentTarget.password.value;
 
     try {
-      await setDoc(doc(db, "profiles", uid), payload, { merge: true });
-      alert("Profile saved successfully!");
-      navigate("/ProfileDisplay");
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      const user = cred.user;
+
+      const ref = doc(db, "profiles", user.uid);
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) {
+        // Create basic profile if doesn't exist
+        await setDoc(ref, {
+          id: user.uid,
+          email: user.email || "",
+          name: "",
+          role: "client",
+          contact_email: user.email || "",
+          created_at: serverTimestamp(),
+          updated_at: serverTimestamp(),
+        });
+      }
+
+      // Read the complete profile after ensuring it exists
+      const profileSnap = await getDoc(ref);
+      const profile = profileSnap.data();
+      
+      onLogin?.(profile);
+
+      if (profile.role === "trainer") {
+        navigate("/clientList");
+      } else {
+        navigate("/ClientDashboard");
+      }
     } catch (err) {
-      console.error("Error saving profile:", err);
-      alert("Failed to save profile");
+      console.error("Login error:", err);
+      alert(err.message);
+    } finally {
+      setIsSubmitting(false);
     }
-    setLoading(false);
   }
 
-  if (loading) return <div style={{ color: "white" }}>Loading profile...</div>;
+  // ---------- SIGNUP ----------
+  async function handleSignup(e) {
+    e.preventDefault();
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    const email = e.currentTarget.email.value.trim();
+    const password = e.currentTarget.password.value;
+    const name = e.currentTarget.name?.value?.trim() || "";
+
+    try {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      const user = cred.user;
+
+      if (role === "client") {
+        const trainerId =
+          chooseManually || !inviteToken
+            ? selectedTrainerId
+            : inviteToken || null;
+
+        if (!trainerId) {
+          alert("Please select a trainer before signing up.");
+          setIsSubmitting(false);
+          return;
+        }
+
+        // ✅ CRITICAL FIX: Match exact field names from Profile.jsx
+        const clientProfileData = {
+          id: user.uid,
+          role: "client",
+          name: name,
+          email: user.email || "",
+          trainer_id: trainerId,
+          contact_email: user.email || "",
+          // Physical stats - matching Profile.jsx field names exactly
+          age: null,
+          gender: "",
+          phone: "",
+          body_weight: null,  // Profile uses body_weight not bodyWeight
+          body_fat: null,      // Profile uses body_fat not bodyFat
+          height: null,
+          fitness_goal: "",
+          daily_activity_level: "",
+          profile_pic_url: "",
+          created_at: serverTimestamp(),
+          updated_at: serverTimestamp(),
+        };
+
+        console.log("Creating client profile:", clientProfileData);
+
+        // Write the complete profile
+        await setDoc(doc(db, "profiles", user.uid), clientProfileData);
+
+        // Wait a moment for Firestore to fully commit
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // ✅ Verify the profile was written correctly
+        const profileSnap = await getDoc(doc(db, "profiles", user.uid));
+        const completeProfile = profileSnap.data();
+
+        console.log("Profile verified in Firestore:", completeProfile);
+
+        if (!completeProfile) {
+          throw new Error("Profile was not created properly");
+        }
+
+        // Pass complete profile to onLogin
+        onLogin?.(completeProfile);
+        
+        // Navigate to profile page
+        navigate("/Profile");
+      } else {
+        // ✅ Create complete trainer profile
+        const trainerProfileData = {
+          id: user.uid,
+          role: "trainer",
+          name: name,
+          email: user.email || "",
+          contact_email: user.email || "",
+          phone: "",
+          profile_pic_url: "",
+          created_at: serverTimestamp(),
+          updated_at: serverTimestamp(),
+        };
+
+        console.log("Creating trainer profile:", trainerProfileData);
+
+        // Write trainer profile
+        await setDoc(doc(db, "profiles", user.uid), trainerProfileData);
+
+        // Write to trainer directory
+        await setDoc(
+          doc(db, "trainerDirectory", user.uid),
+          {
+            name: name || user.email || "Trainer",
+            email: user.email || "",
+            updated_at: serverTimestamp(),
+          },
+          { merge: true }
+        );
+
+        // Wait for Firestore
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // ✅ Verify the profile was written
+        const profileSnap = await getDoc(doc(db, "profiles", user.uid));
+        const completeProfile = profileSnap.data();
+
+        console.log("Trainer profile verified:", completeProfile);
+
+        if (!completeProfile) {
+          throw new Error("Trainer profile was not created properly");
+        }
+
+        // Pass complete profile to onLogin
+        onLogin?.(completeProfile);
+        
+        // Navigate to profile page
+        navigate("/Profile");
+      }
+    } catch (err) {
+      console.error("Signup error:", err);
+      alert("Signup failed: " + err.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <div className="profileFormContainer">
-      <form className="profileForm" onSubmit={(e) => e.preventDefault()}>
-        <div className="profilePicContainer">
-          <h2>Edit Photo</h2>
-          <UploadAvatar
-            currentUrl={form.profile_pic_url}
-            onUrlChange={handleAvatarChange}
-          />
-        </div>
+    <div className="loginFormContainer">
+      <div className="secondImg">
+        <img src="/../images/IMG_4346.PNG" alt="logo" />
+      </div>
 
-        <h1>Edit Profile</h1>
+      {mode === "login" ? (
+        <>
+          <form className="loginForm" onSubmit={handleLogin}>
+            <p>Email Address</p>
+            <input
+              className="loginInput"
+              name="email"
+              placeholder="your@email.com"
+              type="email"
+              required
+              disabled={isSubmitting}
+            />
+            <p>Password</p>
+            <input
+              className="loginInput"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              required
+              disabled={isSubmitting}
+            />
+            <Button 
+              className="submitButton" 
+              type="submit" 
+              variant="contained"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Logging in..." : "Login"}
+            </Button>
+          </form>
 
-<div className="contentContainer" >
-        <label >
-          Full Name
-          <input
-            name="name"
-            value={form.name}
-            onChange={onChange}
-            type="text"
-          />
-        </label>
+          <p className="resetLink">
+            <button
+              type="button"
+              className="forgotPasswordButton"
+              onClick={async () => {
+                const email = prompt("Enter your email to reset your password:");
+                if (!email) return;
+                try {
+                  await sendPasswordResetEmail(auth, email, {
+                    url: `${window.location.origin}/reset`,
+                  });
+                  alert("Password reset email sent.");
+                } catch (err) {
+                  alert(err.message);
+                }
+              }}
+              disabled={isSubmitting}
+            >
+              Forgot password?
+            </button>
+          </p>
 
-        <label>
-          Age
-          <input
-            name="age"
-            value={form.age}
-            onChange={onChange}
-            type="number"
-          />
-        </label>
-
-        <label>
-          Gender
-          <select
-            className="gender"
-            name="gender"
-            value={form.gender}
-            onChange={onChange}
-          >
-            <option value="">Select</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-          </select>
-        </label>
-
-        <label>
-          Phone
-          <input
-            name="phone"
-            value={form.phone}
-            onChange={onChange}
-            type="tel"
-          />
-        </label>
-
-        <label>
-          Email
-          <input
-            name="contact_email"
-            value={form.contact_email}
-            onChange={onChange}
-            type="email"
-          />
-        </label>
-
-        {role === "client" && (
-          <>
-            <label>
-              Body Weight
-              <input
-                name="body_weight"
-                value={form.body_weight}
-                onChange={onChange}
-                type="number"
-              />
-            </label>
-
-            <label>
-              Body Fat
-              <input
-                name="body_fat"
-                value={form.body_fat}
-                onChange={onChange}
-                type="number"
-              />
-            </label>
-
-            <label>
-              Height
-              <input
-                name="height"
-                value={form.height}
-                onChange={onChange}
-                type="number"
-              />
-            </label>
-
-            <label>
-              Fitness Goal
-              <input
-                name="fitness_goal"
-                value={form.fitness_goal}
-                onChange={onChange}
-                type="text"
-              />
-            </label>
-
-            <label  >
-              Daily Activity Level
-              <select className="dailyActivityLevel"
-                name="daily_activity_level"
-                value={form.daily_activity_level}
-                onChange={onChange}
+          {!showSignup && (
+            <p className="switchText">
+              <Link 
+                className="linkButton" 
+                to="#" 
+                onClick={() => setMode("signup")}
               >
-                <option value="">Select</option>
-                <option>Sedentary</option>
-                <option>Lightly Active</option>
-                <option>Moderately Active</option>
-                <option>Very Active</option>
-              </select>
-            </label>
-           
-          </> 
-        )}
-</div>
-        <Button className="formButton" type="button" onClick={onSave}>
-          Save Profile
-        </Button>
-      </form>
+                Create an account and pick your trainer
+              </Link>
+            </p>
+          )}
+        </>
+      ) : (
+        <>
+          {/* ✅ Full SIGN-UP FORM */}
+          <form className="loginForm" onSubmit={handleSignup}>
+            <div className="roleToggle">
+              <label>
+                <p>Client</p>
+                <input
+                  type="radio"
+                  name="role"
+                  value="client"
+                  checked={role === "client"}
+                  onChange={() => setRole("client")}
+                  disabled={isSubmitting}
+                />
+              </label>
+              <label style={{ marginLeft: 16 }}>
+                <p>Trainer</p>
+                <input
+                  type="radio"
+                  name="role"
+                  value="trainer"
+                  checked={role === "trainer"}
+                  onChange={() => setRole("trainer")}
+                  disabled={isSubmitting}
+                />
+              </label>
+            </div>
+
+            <p>Full Name</p>
+            <input
+              className="loginInput"
+              name="name"
+              placeholder="Enter your name"
+              type="text"
+              required
+              disabled={isSubmitting}
+            />
+
+            <p>Email Address</p>
+            <input
+              className="loginInput"
+              name="email"
+              placeholder="your@email.com"
+              type="email"
+              required
+              disabled={isSubmitting}
+            />
+
+            <p>Password</p>
+            <input
+              className="loginInput"
+              name="password"
+              type="password"
+              placeholder="Create a secure password"
+              required
+              disabled={isSubmitting}
+            />
+
+            {role === "client" && (
+              <div className="trainerSelectContainer">
+                {!inviteToken || chooseManually ? (
+                  <>
+                    <label className="trainerSelectLabel">Select Your Trainer</label>
+                    {loadingTrainers ? (
+                      <p className="inviteNotice">Loading trainers…</p>
+                    ) : trainers.length > 0 ? (
+                      <select
+                        className="trainerSelect"
+                        value={selectedTrainerId}
+                        onChange={(e) => setSelectedTrainerId(e.target.value)}
+                        required
+                        disabled={isSubmitting}
+                      >
+                        <option value="">— Choose a trainer... —</option>
+                        {trainers.map((t) => (
+                          <option key={t.id} value={t.id}>
+                            {t.name?.trim() ? t.name : t.email}
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <p className="inviteNotice">
+                        ⚠️ No trainers found. Make sure at least one trainer has signed up.
+                      </p>
+                    )}
+                  </>
+                ) : (
+                  <p className="inviteNotice">
+                    Joining via invite — trainer will be linked automatically.
+                  </p>
+                )}
+              </div>
+            )}
+
+            <Button 
+              className="submitButton" 
+              type="submit" 
+              variant="contained"
+              disabled={isSubmitting || (role === "client" && !selectedTrainerId && (!inviteToken || chooseManually))}
+            >
+              {isSubmitting ? "Creating Account..." : "Sign Up"}
+            </Button>
+          </form>
+
+          <p className="switchText">
+            Already have an account?{" "}
+            <Button
+              className="switchButton"
+              type="button"
+              onClick={() => setMode("login")}
+              variant="text"
+              disabled={isSubmitting}
+            >
+              Login
+            </Button>
+          </p>
+        </>
+      )}
     </div>
   );
 }
+
+export default LoginPage;
