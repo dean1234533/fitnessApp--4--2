@@ -1,4 +1,3 @@
-// components/ProfileDisplay.jsx
 import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
@@ -51,15 +50,7 @@ export default function ProfileDisplay({ profileUserId }) {
 
   if (loading) {
     return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          fontSize: "20px",
-        }}
-      >
+      <div className="loading-screen">
         Loading...
       </div>
     );
@@ -67,38 +58,28 @@ export default function ProfileDisplay({ profileUserId }) {
 
   return (
     <div className="container">
-      {/* Avatar */}
+      {/* Avatar Section */}
       <div className="avatar">
-        <h1>Profile</h1>
+        <h1 className="profileH1">Profile</h1>
         <Avatar
           className="profileAvatar"
           alt={profile.name || "Profile Picture"}
           src={profile.profile_pic_url || "/default-avatar.png"}
         />
         <div className="name">{profile.name?.toUpperCase() || "NOT SET"}</div>
-
         <div className="Age">
-          {(profile.age && profile.age.toString().trim()) || "Not set"} years
-          old - {(profile.gender && profile.gender.trim()) || "Not set"}
+          {(profile.age && profile.age.toString().trim()) || "Not set"} years old -{" "}
+          {(profile.gender && profile.gender.trim()) || "Not set"}
         </div>
       </div>
 
-      {/* Profile details */}
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          textAlign: "center",
-          lineHeight: "50px",
-        }}
-      >
+      {/* Profile Details */}
+      <div className="profile-details">
         {profile.role === "client" && (
           <>
             <div className="contactInfoContainer">
               <h3 className="contactInfo">Contact Info</h3>
             </div>
-
             <div className="phone">
               <strong>Phone</strong> <br />
               {(profile.phone && profile.phone.trim()) || "Not set"}
@@ -128,26 +109,29 @@ export default function ProfileDisplay({ profileUserId }) {
             <div className="physicalStatsContainer">
               <h3 className="physicalStats">Physical Stats</h3>
             </div>
-            <div className="weight">
-              <strong>Weight</strong>
-              <br />{" "}
-              {(profile.body_weight && profile.body_weight.toString().trim()) ||
-                "Not set"}
-              KG
-            </div>
-            <div className="bodyFat">
-              <strong>Body Fat</strong>
-              <br />{" "}
-              {(profile.body_fat && profile.body_fat.toString().trim()) ||
-                "Not set"}
-              %
-            </div>
-            <div className="height">
-              <strong>Height</strong>
-              <br />{" "}
-              {(profile.height && profile.height.toString().trim()) ||
-                "Not set"}
-              Cm
+
+            <div className="profileInfo">
+              <div className="weight">
+                <strong>Weight</strong>
+                <br />
+                {(profile.body_weight && profile.body_weight.toString().trim()) ||
+                  "Not set"}{" "}
+                KG
+              </div>
+              <div className="bodyFat">
+                <strong>Body Fat</strong>
+                <br />
+                {(profile.body_fat && profile.body_fat.toString().trim()) ||
+                  "Not set"}{" "}
+                %
+              </div>
+              <div className="height">
+                <strong>Height</strong>
+                <br />
+                {(profile.height && profile.height.toString().trim()) ||
+                  "Not set"}{" "}
+                Cm
+              </div>
             </div>
 
             <div className="fitnessProfileContainer">
@@ -156,22 +140,19 @@ export default function ProfileDisplay({ profileUserId }) {
 
             <div className="fitnessGoal">
               <strong>Fitness Goal</strong>
-              <br />{" "}
-              {(profile.fitness_goal && profile.fitness_goal.trim()) ||
-                "Not set"}
+              <br />
+              {(profile.fitness_goal && profile.fitness_goal.trim()) || "Not set"}
             </div>
             <div className="activityLevel">
               <strong>Activity Level</strong>
-              <br />{" "}
+              <br />
               {(profile.daily_activity_level &&
-                profile.daily_activity_level.trim()) ||
-                "Not set"}
+                profile.daily_activity_level.trim()) || "Not set"}
             </div>
 
             {isOwnProfile && (
               <Button
                 className="EditProfileButton"
-                style={{ borderRadius: "20px", marginTop: "20px" }}
                 variant="contained"
                 onClick={() => navigate("/profile")}
               >
@@ -184,3 +165,5 @@ export default function ProfileDisplay({ profileUserId }) {
     </div>
   );
 }
+   
+
