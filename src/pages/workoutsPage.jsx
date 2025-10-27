@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import WorkoutTimer from "../components/WorkoutTimer";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import VideoScrollText from "../components/videoScrollText";
+import VideoScrollText from "../components/VideoScrollText";
 
 
 function WorkOuts({ userRole }) {
@@ -218,7 +218,7 @@ function WorkOuts({ userRole }) {
             
             </table>
           </div>
-           <SwipeLeftIcon className="VideoScrollText" aria-label="Swipe left to view" />
+           <VideoScrollText className="VideoScrollText" />
         </div>
       )}
 
@@ -356,7 +356,7 @@ function WorkoutCard({ workout, onDelete }) {
         </table>
         
       </div>
-        <SwipeLeftIcon className="VideoScrollText" aria-label="Swipe left to view" />
+        <VideoScrollText className="VideoScrollText"  />
     </div>
   );
 }
