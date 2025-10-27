@@ -1,6 +1,7 @@
 .VideoScrollText {
   display: none !important;
 }
+.Text{display: none !important;}
 
 @keyframes swipe-hint {
   0%, 100% { transform: translateX(0); opacity: 1; }
@@ -12,6 +13,7 @@
     display: block !important;
     width: 20px;
     height: 20px;
+    margin-left: 20px;
     animation: swipe-hint 2s ease-in-out infinite;
   }
 }

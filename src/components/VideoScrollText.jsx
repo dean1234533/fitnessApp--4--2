@@ -7,7 +7,7 @@ export default function VideoScrollText(){
   return(
     <div className="VideoScrollText-container">
       <SwipeLeftIcon className="VideoScrollText" aria-label="Swipe left to view"  />
-      <span>Swipe to View</span>
+      <span className="Text">Swipe to View</span>
     </div>
   )
 }
