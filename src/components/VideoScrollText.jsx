@@ -4,13 +4,10 @@ import "../styles/VideoScrollText.css";
 
 
 export default function VideoScrollText(){
-
-return(
-
-<SwipeLeftIcon className="VideoScrollText" />
-
-
-
-
-)
+  return(
+    <div className="VideoScrollText-container">
+      <SwipeLeftIcon className="VideoScrollText" />
+      <span>Swipe to View</span>
+    </div>
+  )
 }

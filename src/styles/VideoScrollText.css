@@ -1,5 +1,15 @@
 
-.VideoScrollText{ display: none;}
+
+.VideoScrollText {
+  animation: swipe-hint 2s ease-in-out infinite;
+  display: none;
+}
+
+@keyframes swipe-hint {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50% { transform: translateX(-10px); opacity: 0.5; }
+}
+
 
 @media (max-width: 767px ){
 

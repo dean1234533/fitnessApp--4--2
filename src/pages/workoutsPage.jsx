@@ -218,7 +218,7 @@ function WorkOuts({ userRole }) {
             
             </table>
           </div>
-           <VideoScrollText className="SwipeLeft" />
+           <SwipeLeftIcon className="VideoScrollText" aria-label="Swipe left to view" />
         </div>
       )}
 
@@ -356,7 +356,7 @@ function WorkoutCard({ workout, onDelete }) {
         </table>
         
       </div>
-       <VideoScrollText  />
+        <SwipeLeftIcon className="VideoScrollText" aria-label="Swipe left to view" />
     </div>
   );
 }
