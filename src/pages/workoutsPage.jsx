@@ -7,6 +7,7 @@ import { getAuth } from "firebase/auth";
 import WorkoutTimer from "../components/WorkoutTimer";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import VideoScrollText from "../components/VideoScrollText";
+import "../styles/VideoScrollText.css";
 
 
 function WorkOuts({ userRole }) {

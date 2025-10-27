@@ -1,8 +1,5 @@
-
-
 .VideoScrollText {
-  
-  display: none;
+  display: none !important;
 }
 
 @keyframes swipe-hint {
@@ -10,22 +7,11 @@
   50% { transform: translateX(-10px); opacity: 0.5; }
 }
 
-
-@media (max-width: 767px ){
-
-.VideoScrollText{display: block;width: 20px; height: 20px;
-animation: swipe-hint 2s ease-in-out infinite;
-}
-
-}
-
-@media (min-width: 768px ){
-
-.VideoScrollText{display: none;}
-}
-
-
-@media (min-width: 1200px ){
-
-.VideoScrollText{display: none;}
+@media (max-width: 767px) {
+  .VideoScrollText {
+    display: block !important;
+    width: 20px;
+    height: 20px;
+    animation: swipe-hint 2s ease-in-out infinite;
+  }
 }
