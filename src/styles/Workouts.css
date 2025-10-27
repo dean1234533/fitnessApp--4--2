@@ -10,6 +10,8 @@
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.SwipeLeft{height: 100px; width: 100px;}
+
 .workoutInput:focus,
 .exerciseInput:focus {
   outline: none;

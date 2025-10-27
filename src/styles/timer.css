@@ -33,7 +33,7 @@
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .timer {
     font-size: 30px;
     margin-left: 46px;

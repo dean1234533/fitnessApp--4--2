@@ -1,0 +1,8 @@
+
+.VideoScrollText{ display: none;}
+
+@media (max-width: 767px ){
+
+.VideoScrollText{display: block;width: 20px; height: 20px;}
+}
+

@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import { getAuth } from "firebase/auth";
 import WorkoutTimer from "../components/WorkoutTimer";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import VideoScrollText from "../components/videoScrollText";
+
 
 function WorkOuts({ userRole }) {
   const auth = getAuth();
@@ -178,6 +180,7 @@ function WorkOuts({ userRole }) {
           <h2 className="ExercisesPreview">Exercises Preview</h2>
           <div className="tableScrollWrapper">
             <table>
+              
               <thead>
                 <tr>
                   <th>Exercise Name</th>
@@ -185,8 +188,11 @@ function WorkOuts({ userRole }) {
                   <th>Reps</th>
                   <th>Duration</th>
                   <th>Video</th>
+                  
                 </tr>
+                
               </thead>
+              
               <tbody>
                 {exercises.map((ex, i) => (
                   <tr key={i}>
@@ -196,16 +202,23 @@ function WorkOuts({ userRole }) {
                     <td>
                       {ex.duration && <WorkoutTimer duration={ex.duration} />}
                     </td>
+                     
                     <td>
                       {ex.url && (
                         <VideoPlayer url={ex.url} title={ex.name} />
+                        
                       )}
-                    </td>
+                     
+                    </td> 
                   </tr>
+                  
                 ))}
+                
               </tbody>
+            
             </table>
           </div>
+           <VideoScrollText className="SwipeLeft" />
         </div>
       )}
 
@@ -339,8 +352,11 @@ function WorkoutCard({ workout, onDelete }) {
               </tr>
             ))}
           </tbody>
+          
         </table>
+        
       </div>
+       <VideoScrollText  />
     </div>
   );
 }

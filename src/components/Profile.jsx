@@ -129,7 +129,12 @@ export default function Profile() {
     try {
       await setDoc(doc(db, "profiles", uid), payload, { merge: true });
       alert("Profile saved successfully!");
-      navigate("/ProfileDisplay");
+      
+      if (role==="trainer"){navigate("/TrainerDashboard");
+
+    }else {
+ navigate("/ClientDashboard");}
+ 
     } catch (err) {
       console.error("Error saving profile:", err);
       alert("Failed to save profile");
