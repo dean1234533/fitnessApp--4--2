@@ -1,7 +1,7 @@
 
 
 .VideoScrollText {
-  animation: swipe-hint 2s ease-in-out infinite;
+  
   display: none;
 }
 
@@ -13,7 +13,10 @@
 
 @media (max-width: 767px ){
 
-.VideoScrollText{display: block;width: 20px; height: 20px;}
+.VideoScrollText{display: block;width: 20px; height: 20px;
+animation: swipe-hint 2s ease-in-out infinite;
+}
+
 }
 
 @media (min-width: 768px ){
