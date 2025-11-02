@@ -91,7 +91,9 @@ export default function ScrollButton() {
         boxShadow: "0 4px 6px rgba(0,0,0,0.3)",
       }}
     >
+      <div style={{display:"flex",justifyContent:"center",alignItems:"center",margin:"0 auto", }}>
       {toBottom ? "↓" : "↑"}
+      </div>
     </button>
   );
 }
