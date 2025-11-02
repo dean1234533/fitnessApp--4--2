@@ -1,56 +1,74 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 export default function ScrollButton() {
   const [toBottom, setToBottom] = useState(true);
-  const [scrollableElement, setScrollableElement] = useState(null);
+  const location = useLocation();
 
-  useEffect(() => {
-    // Find the scrollable element on mount
-    const findScrollable = () => {
+  const findScrollableElement = () => {
+    // Wait for page to render
+    setTimeout(() => {
       // Check if window is scrollable
       if (document.documentElement.scrollHeight > window.innerHeight) {
         return window;
       }
       
-      // Check body
-      if (document.body.scrollHeight > document.body.clientHeight) {
-        return document.body;
-      }
-      
-      // Find any scrollable div
+      // Find scrollable container
       const allElements = document.querySelectorAll('*');
       for (let el of allElements) {
+        const style = getComputedStyle(el);
         if (el.scrollHeight > el.clientHeight && 
-            getComputedStyle(el).overflow !== 'hidden') {
+            (style.overflow === 'auto' || style.overflow === 'scroll' || 
+             style.overflowY === 'auto' || style.overflowY === 'scroll')) {
           return el;
         }
       }
       
       return window;
-    };
+    }, 100);
+  };
 
-    setScrollableElement(findScrollable());
-  }, []);
+  // Reset state when route changes
+  useEffect(() => {
+    setToBottom(true);
+    findScrollableElement();
+  }, [location.pathname]);
 
   const handleClick = () => {
-    if (!scrollableElement) return;
+    // Find scrollable element fresh each time
+    let scrollableElement = window;
+    
+    // Check if window scrolls
+    if (document.documentElement.scrollHeight > window.innerHeight) {
+      scrollableElement = window;
+    } else {
+      // Find scrollable div
+      const allElements = document.querySelectorAll('*');
+      for (let el of allElements) {
+        const style = getComputedStyle(el);
+        if (el.scrollHeight > el.clientHeight && 
+            (style.overflow === 'auto' || style.overflow === 'scroll' || 
+             style.overflowY === 'auto' || style.overflowY === 'scroll')) {
+          scrollableElement = el;
+          break;
+        }
+      }
+    }
 
     if (toBottom) {
-      // Scroll to bottom
       if (scrollableElement === window) {
-        window.scrollTo({ top: 999999, behavior: "smooth" });
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
       } else {
         scrollableElement.scrollTo({ top: scrollableElement.scrollHeight, behavior: "smooth" });
       }
-      setTimeout(() => setToBottom(false), 100);
+      setTimeout(() => setToBottom(false), 200);
     } else {
-      // Scroll to top
       if (scrollableElement === window) {
         window.scrollTo({ top: 0, behavior: "smooth" });
       } else {
         scrollableElement.scrollTo({ top: 0, behavior: "smooth" });
       }
-      setTimeout(() => setToBottom(true), 100);
+      setTimeout(() => setToBottom(true), 200);
     }
   };
 
