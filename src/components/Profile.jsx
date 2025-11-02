@@ -130,7 +130,7 @@ export default function Profile() {
       await setDoc(doc(db, "profiles", uid), payload, { merge: true });
       alert("Profile saved successfully!");
       
-      if (role==="trainer"){navigate("/TrainerDashboard");
+      if (role==="trainer"){navigate("/ClientList");
 
     }else {
  navigate("/ClientDashboard");}

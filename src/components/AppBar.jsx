@@ -115,6 +115,20 @@ export default function AppBars() {
                 </MenuItem>
               )}
 
+
+{userRole === "client" && (
+                <MenuItem
+                  onClick={() =>
+                    handleMenuItemClick(() => navigate("/ClientDashboard"))
+                  }
+                >
+                  Home
+                </MenuItem>
+
+                
+              )}
+
+              
               <MenuItem
                 onClick={() =>
                   handleMenuItemClick(() => navigate("/ProfileDisplay"))
@@ -152,7 +166,10 @@ export default function AppBars() {
                 >
                   Note Pad
                 </MenuItem>
+
+                
               )}
+               
 
               <MenuItem onClick={() => handleMenuItemClick(handleLogout)}>
                 Logout
